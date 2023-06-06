@@ -7,7 +7,9 @@ const paymentSchema = new mongoose.Schema({
     },
     cardNo: {
         type: Number,
-        required: [true, 'Card number is required']
+        required: [true, 'Card number is required'],
+        min: [1000000000000000, 'Please enter a valid credit card'],
+        max: [9007199254740991, 'Please enter a valid credit card'],
     },
     expire: {
         type: Date,
