@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
-const dotenv = require('dotenv')
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-dotenv.config({ path: `../../config.env` })
+dotenv.config({ path: `../../config.env` });
 
-const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD).replace('NAME', 'TicketBlaster')
+const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD).replace('NAME', 'TicketBlaster');
 
 exports.init = async () => {
     try {
@@ -15,4 +15,4 @@ exports.init = async () => {
     } catch (err) {
         return console.log(err);
     }
-}
+};
