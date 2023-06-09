@@ -23,7 +23,10 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required'],
         validate: [validator.isStrongPassword, 'Please provide a stronger password']
     },
-    profilePicture: String,
+    profilePicture: {
+        type: String,
+        default: 'default.png'
+    },
     basket: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -50,10 +53,10 @@ const userSchema = new mongoose.Schema({
 });
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
-    this.password = bcrypt.hash(this.password, 12);
+    this.password = await bcrypt.hash(this.password, 12);
     next()
 })
 
-const user = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports = user
+module.exports = User
