@@ -4,8 +4,7 @@ const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../../mailer/nodemailer');
 
 const cryptoToken = () => {
-    return crypto.randomBytes(32).toString('hex')// generira random token go heshiram i dodavame vo databaza
-
+    return crypto.randomBytes(32).toString('hex');
 }
 const hashToken = (token) => {
     return crypto.createHash('sha256').update(token).digest('hex');
