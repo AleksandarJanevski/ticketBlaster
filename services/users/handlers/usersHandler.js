@@ -142,3 +142,14 @@ exports.delete = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+exports.admin = async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(req.params.id, {
+            role: 'admin'
+        });
+        res.status(200).json({ status: 'success' });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
