@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const ticketSchema = new mongoose.Schema({
-    eventName: {
+const eventSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: [true, 'Event must have name']
     },
@@ -24,10 +24,18 @@ const ticketSchema = new mongoose.Schema({
     },
     relatedEvents: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'tickets'
-    }]
+        ref: 'event'
+    }],
+    picture: {
+        type: String,
+        default: 'default.png'
+    },
+    tickets: {
+        type: Number,
+        default: 5
+    }
 });
 
-const tickets = mongoose.model('tickets', ticketSchema)
+const Event = mongoose.model('event', eventSchema);
 
-module.exports = tickets
+module.exports = Event;

@@ -2,6 +2,7 @@ const User = require('../../../pkg/user/userSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../../mailer/nodemailer');
+const { promisify } = require('util');
 
 const cryptoToken = () => {
     return crypto.randomBytes(32).toString('hex');
@@ -38,14 +39,6 @@ exports.login = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
-// let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-//     expiresIn: process.env.JWT_EXPIRES
-// });
-// res.cookie('jwt', token, {
-//     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-//     secure: false,
-//     httpOnly: true
-// });
 exports.logout = async (req, res) => {
     try {
         cookie(res, 'jwt', 'sessionExpired');
@@ -99,7 +92,8 @@ const html = (link) => {
       </span>
     </body>
     </html>`
-}
+}// USE FS MODULE TO READ THE FILE INSTEAD OF WRITING IT AND USE REPLACE FOR THE LINK TEXT AND BUTTON
+
 exports.forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
@@ -148,22 +142,34 @@ exports.resetPassword = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
-exports.protectUser = async (req, res) => {
-    try {
-
-    } catch (err) {
-        console.log(err);
-        return res.status(500).send('internal server error');
-    }
-}
 exports.protectAdmin = async (req, res) => {
     try {
-
+        let token;
+        if (req.cookies && req.cookies.jwt) {
+            token = req.cookies.jwt
+        }
+        if (!token) {
+            return res.status(401).send('Unauthorized access');
+        }
+        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
+        if (!user || user.role === 'user') {
+            return res.status(401).send('Unauthorized access');
+        }
+        res.status(200).json({ status: 'success' });
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');
     }
 }
+// exports.protectUser = async (req, res) => {
+//     try {
+
+//     } catch (err) {
+//         console.log(err);
+//         return res.status(500).send('internal server error');
+//     }
+// }
 // exports. = async (req, res) => {
 //     try {
 
