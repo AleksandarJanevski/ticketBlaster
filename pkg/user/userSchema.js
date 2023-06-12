@@ -30,13 +30,13 @@ const userSchema = new mongoose.Schema({
     basket: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'tickets'
+            ref: 'even'
         }
     ],
     purchaseHistory: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'tickets'
+            ref: 'event'
         }
     ],
     payment: {

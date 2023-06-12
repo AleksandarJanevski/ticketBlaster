@@ -2,52 +2,53 @@ const User = require('../../../pkg/user/userSchema');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../../mailer/nodemailer')
 const crypto = require('crypto');
+const { mail } = require('../../mailer/fileReader');
 
-const html = (link) => {
-    return `<html lang="en">
-    <head>
-    <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-    </style>
-    </head>
-    <body>
-      <h1 style="color: white; background-color: black; text-align: center">
-        ticketblaster
-      </h1>
-      <span
-        style="
-          margin: 0 auto;
-          display: flex;
-          justify-content: center;
-          flex-direction: column;
-          align-items: center;
-        "
-        ><p style="text-align: center">
-          Please click the button to verify your Email
-        </p>
-        <br />
-        <a href="${link}">
-          <button
-            style="
-              background-color: #ff48ab;
-              color: black;
-              border-radius: 23px;
-              margin: 0 auto;
-              cursor: pointer;
-              box-style:border-box;
-              padding:5px;
-            "
-          >
-            Verify Email
-          </button>
-        </a>
-      </span>
-    </body>
-    </html>`
-}
+// const html = (link) => {
+//     return `<html lang="en">
+//     <head>
+//     <style>
+//     * {
+//       margin: 0;
+//       padding: 0;
+//     }
+//     </style>
+//     </head>
+//     <body>
+//       <h1 style="color: white; background-color: black; text-align: center">
+//         ticketblaster
+//       </h1>
+//       <span
+//         style="
+//           margin: 0 auto;
+//           display: flex;
+//           justify-content: center;
+//           flex-direction: column;
+//           align-items: center;
+//         "
+//         ><p style="text-align: center">
+//           Please click the button to verify your Email
+//         </p>
+//         <br />
+//         <a href="${link}">
+//           <button
+//             style="
+//               background-color: #ff48ab;
+//               color: black;
+//               border-radius: 23px;
+//               margin: 0 auto;
+//               cursor: pointer;
+//               box-style:border-box;
+//               padding:5px;
+//             "
+//           >
+//             Verify Email
+//           </button>
+//         </a>
+//       </span>
+//     </body>
+//     </html>`
+// }
 
 const cryptoToken = () => {
     return crypto.randomBytes(32).toString('hex')
@@ -62,19 +63,22 @@ exports.create = async (req, res) => {
         if (!fullName || !email || !password) {
             return res.status(400).send('Bad request, please provide the needed information')
         }
+        const verifyToken = cryptoToken()
+        const hashedToken = hashToken(verifyToken)
         const user = await User.create({
             fullName: fullName,
             email: email,
-            password: password
-        })
-        const verifyToken = cryptoToken()
-        const hashedToken = hashToken(verifyToken)
-        const verifyUrl = `${req.protocol}://${req.get('host')}/api/v1/verify/${hashedToken}`
+            password: password,
+            verifyToken: hashedToken
+        });
+        const verifyUrl = `${req.protocol}://${req.get('host')}/api/v1/verify/${verifyToken}`
+        const message = 'Please Verify your account at the link below'
+        const html = await mail('verify', message, verifyUrl);
         try {
             await sendEmail({
                 email: user.email,
                 subject: 'Email Verification',
-                html: html(verifyUrl)
+                html: html
             })
         } catch (err) {
             return console.log(err);

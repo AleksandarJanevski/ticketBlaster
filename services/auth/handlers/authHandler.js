@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../../mailer/nodemailer');
 const { promisify } = require('util');
+const crypto = require('crypto');
 
 const cryptoToken = () => {
     return crypto.randomBytes(32).toString('hex');
@@ -162,14 +163,27 @@ exports.protectAdmin = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
-// exports.protectUser = async (req, res) => {
-//     try {
-
-//     } catch (err) {
-//         console.log(err);
-//         return res.status(500).send('internal server error');
-//     }
-// }
+exports.verify = async (req, res) => {
+    try {
+        const token = req.params.token
+        if (!token) {
+            return res.status(401).send('Unauthorized');
+        }
+        const hashed = hashToken(token);
+        console.log(hashed);
+        const user = await User.findOne({ verifyToken: hashed });
+        if (!user) {
+            return res.status(401).send('Unauthorized');
+        }
+        user.verified = true
+        user.verifyToken = undefined
+        await user.save()
+        res.status(200).json({ status: 'success' });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
 // exports. = async (req, res) => {
 //     try {
 
