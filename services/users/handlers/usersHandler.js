@@ -73,7 +73,7 @@ exports.create = async (req, res) => {
         });
         const verifyUrl = `${req.protocol}://${req.get('host')}/api/v1/verify/${verifyToken}`
         const message = 'Please Verify your account at the link below'
-        const html = await mail('verify', message, verifyUrl);
+        const html = await mail('verify', message, verifyUrl, 'Verify Email');
         try {
             await sendEmail({
                 email: user.email,
