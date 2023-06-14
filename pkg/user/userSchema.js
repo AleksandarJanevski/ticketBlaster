@@ -23,14 +23,14 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required'],
         validate: [validator.isStrongPassword, 'Please provide a stronger password']
     },
-    profilePicture: {
+    picture: {
         type: String,
         default: 'default.png'
     },
     basket: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'even'
+            ref: 'event'
         }
     ],
     purchaseHistory: [

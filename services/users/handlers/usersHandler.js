@@ -1,54 +1,8 @@
 const User = require('../../../pkg/user/userSchema');
 const jwt = require('jsonwebtoken');
-const { sendEmail } = require('../../mailer/nodemailer')
+const { sendEmail } = require('../../../pkg/mailer/nodemailer')
 const crypto = require('crypto');
-const { mail } = require('../../mailer/fileReader');
-
-// const html = (link) => {
-//     return `<html lang="en">
-//     <head>
-//     <style>
-//     * {
-//       margin: 0;
-//       padding: 0;
-//     }
-//     </style>
-//     </head>
-//     <body>
-//       <h1 style="color: white; background-color: black; text-align: center">
-//         ticketblaster
-//       </h1>
-//       <span
-//         style="
-//           margin: 0 auto;
-//           display: flex;
-//           justify-content: center;
-//           flex-direction: column;
-//           align-items: center;
-//         "
-//         ><p style="text-align: center">
-//           Please click the button to verify your Email
-//         </p>
-//         <br />
-//         <a href="${link}">
-//           <button
-//             style="
-//               background-color: #ff48ab;
-//               color: black;
-//               border-radius: 23px;
-//               margin: 0 auto;
-//               cursor: pointer;
-//               box-style:border-box;
-//               padding:5px;
-//             "
-//           >
-//             Verify Email
-//           </button>
-//         </a>
-//       </span>
-//     </body>
-//     </html>`
-// }
+const { mail } = require('../../../pkg/fileRead/fileReader');
 
 const cryptoToken = () => {
     return crypto.randomBytes(32).toString('hex')
@@ -118,10 +72,10 @@ exports.getOne = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         if (req.file) {
-            req.body.profilePicture = req.file.filename
+            req.body.picture = req.file.filename
         }
         const user = await User.findById(req.params.id);
-        if (user.profilePicture && user.profilePicture !== req.body.profilePicture) {
+        if (user.picture && user.picture !== req.body.picture) {
             //delete picture fs module
         }
         const updateData = req.body

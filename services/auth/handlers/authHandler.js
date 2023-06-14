@@ -1,8 +1,9 @@
 const User = require('../../../pkg/user/userSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { sendEmail } = require('../../mailer/nodemailer');
+const { sendEmail } = require('../../../pkg/mailer/nodemailer');
 const { promisify } = require('util');
+const { mail } = require('../../../pkg/fileRead/fileReader');
 const crypto = require('crypto');
 
 const cryptoToken = () => {
@@ -49,51 +50,6 @@ exports.logout = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
-const html = (link) => {
-    return `<html lang="en">
-    <head>
-    <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-    </style>
-    </head>
-    <body>
-      <h1 style="color: white; background-color: black; text-align: center">
-        ticketblaster
-      </h1>
-      <span
-        style="
-          margin: 0 auto;
-          display: flex;
-          justify-content: center;
-          flex-direction: column;
-          align-items: center;
-        "
-        ><p style="text-align: center">
-          Click the link below to reset your password. Link expires in 30 minutes
-        </p>
-        <br />
-        <a href="${link}">
-          <button
-            style="
-              background-color: #ff48ab;
-              color: black;
-              border-radius: 23px;
-              margin: 0 auto;
-              cursor: pointer;
-              box-style:border-box;
-              padding:5px;
-            "
-          >
-            Reset Password
-          </button>
-        </a>
-      </span>
-    </body>
-    </html>`
-}// USE FS MODULE TO READ THE FILE INSTEAD OF WRITING IT AND USE REPLACE FOR THE LINK TEXT AND BUTTON
 
 exports.forgotPassword = async (req, res) => {
     try {
@@ -106,10 +62,12 @@ exports.forgotPassword = async (req, res) => {
         user.passwordResetExpire = Date.now() + 30 * 60 * 1000
         await user.save({ validateBeforeSave: false });
         const resetUrl = `${req.protocol}://localhost:3000/resetPassword/${resetToken}`
+        const message = 'Please click the link below to reset your passowrd. The link expires in 30 minutes'
+        const html = mail('verify', message, resetUrl, 'Reset Password');
         await sendEmail({
             email: user.email,
             subject: 'Password Reset',
-            html: html(resetUrl)
+            html: html
         });
         res.status(200).json({ status: 'success' });
     } catch (err) {

@@ -5,7 +5,7 @@ const read = promisify(fs.readFile);
 
 const readMail = async (template) => {
     try {
-        const mail = await read(`${__dirname}/html/${template}.html`, 'utf-8');
+        const mail = await read(`${__dirname}/../../public/html/${template}.html`, 'utf-8');
         return mail
     } catch (err) {
         return console.log(err);

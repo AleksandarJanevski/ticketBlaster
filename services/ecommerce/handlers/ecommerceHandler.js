@@ -1,1 +1,0 @@
-//koshnicka i naplata
