@@ -80,7 +80,7 @@ exports.update = async (req, res) => {
         }
         const updateData = req.body
         for (let key in updateData) {
-            if (updateData[key]) {
+            if (updateData[key] && key !== 'basket' ) {
                 user[key] = updateData[key]
             }
         }

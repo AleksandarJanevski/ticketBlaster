@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
+const Basket = require('../ecommerce/basketSchema');
 
 const userSchema = new mongoose.Schema({
     fullName: {
@@ -27,12 +28,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'default.png'
     },
-    basket: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'event'
-        }
-    ],
+    basket:{
+        type:[Basket],
+        default:[]
+    },
     purchaseHistory: [
         {
             type: mongoose.Schema.Types.ObjectId,
