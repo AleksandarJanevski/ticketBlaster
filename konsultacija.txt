@@ -1,3 +1,5 @@
 shopping cart , purchase history: posebna kolekcija koj user id koj ticket koj event ? da ne se buta vo user se
 
 pri login , token da vrati sistem, role vo token da se stavi , moze i email i user , da ne se optovaruva sistemot ?
+
+moze i react da se aktivira so eden npm start, res download za sliki? 
