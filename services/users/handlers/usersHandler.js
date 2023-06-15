@@ -100,10 +100,17 @@ exports.delete = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
-exports.admin = async (req, res) => {
+exports.role = async (req, res) => {
     try {
+        const role = req.body.role
+        if(!role || (role !== 'admin' && role !=='user')){
+            return res.status(400).send('Bad request');
+        }
         await User.findByIdAndUpdate(req.params.id, {
-            role: 'admin'
+            role: role
+        },{
+            runValidators:true,
+            new:true
         });
         res.status(200).json({ status: 'success' });
     } catch (err) {
