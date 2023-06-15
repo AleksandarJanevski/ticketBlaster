@@ -9,6 +9,7 @@ exports.getAllStandUp = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+
 exports.getAllConcerts = async (req, res) => {
     try {
         const events = await Event.find({ category: 'Musical Concert' });
@@ -18,6 +19,7 @@ exports.getAllConcerts = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+
 exports.getOne = async (req, res) => {
     try {
         const event = await Event.findById(req.params.id);
@@ -27,6 +29,7 @@ exports.getOne = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+
 exports.create = async (req, res) => {
     try {
         let data = req.body;
@@ -38,7 +41,6 @@ exports.create = async (req, res) => {
                 return res.status(400).send('please provide valid data for the event');
             }
         }
-        //this might fail on picture upload
         await Event.create({
             name: data.name,
             category: data.category,

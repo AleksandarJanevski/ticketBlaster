@@ -41,6 +41,7 @@ exports.login = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+
 exports.logout = async (req, res) => {
     try {
         cookie(res, 'jwt', 'sessionExpired');
@@ -75,6 +76,7 @@ exports.forgotPassword = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+
 exports.resetPassword = async (req, res) => {
     try {
         const { userToken } = req.params.token;
@@ -101,6 +103,7 @@ exports.resetPassword = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+
 exports.protectAdmin = async (req, res) => {
     try {
         let token;
@@ -121,6 +124,7 @@ exports.protectAdmin = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+
 exports.verify = async (req, res) => {
     try {
         const token = req.params.token
