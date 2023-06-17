@@ -4,6 +4,7 @@ const app = express()
 const handler = require('./services/users/handlers/usersHandler')
 const event = require('./services/events/handlers/eventHandler');
 const auth = require('./services/auth/handlers/authHandler');
+const basket = require('./services/ecommerce/handlers/basketHandler');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +20,7 @@ app.get('/standUp', event.getAllStandUp);
 app.route('/event').post(event.create);
 app.route('/event/:id').get(event.getOne).patch(event.update).delete(event.delete);
 app.post('/events', event.createMany);
+app.get('/event', event.search);
 
 app.listen(process.env.PORT, err => {
     if (err) return console.log(err);

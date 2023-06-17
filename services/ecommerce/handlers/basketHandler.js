@@ -1,21 +1,24 @@
 const User = require('../../../pkg/user/userSchema');
+const Basket = require('../../../pkg/ecommerce/basketSchema');
 
 exports.addToBasket = async (req, res) => {
     try {
-        const {ticketId,amount} = req.body;
-        const user = await User.findById(req.params.id);
-       
-        const existingEvent = user.basket.findIndex(element => element.ticket === ticketId);
-        if(existingEvent){
-            user.basket[existingEvent].amount+=amount;
-        }else{
-            user.basket.push({
-                ticket:ticketId,
-                amount:amount
-            });
+        const { event, amount, beholder } = req.body;
+        const basketItem = await Basket.findOne({
+            ticket: ticket,
+            beholder: beholder
+        });
+        if (basketItem) {
+            basketItem.amount += amount
+            await basketItem.save();
+        } else {
+            await Basket.create({
+                event: event,
+                beholder: beholder,
+                amount: amount
+            })
         }
-        await user.save();
-        res.status(201).json({status:'success'});
+        res.status(201).json({ status: 'success' });
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');
@@ -24,7 +27,7 @@ exports.addToBasket = async (req, res) => {
 
 exports.getBasket = async (req, res) => {
     try {
-        const basket = await User.findById().populate('basket');
+        const basket = await Basket.find({ beholder: req.params.id }).populate('ticket').populate('beholder');//?
         res.status(200).json({ status: 'success', data: { basket } });
     } catch (err) {
         console.log(err);
@@ -34,12 +37,8 @@ exports.getBasket = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const {ticketId} = req.body;
-        const user = await User.findById(req.params.id);
-        const array = user.basket.filter(element => element.ticket !==  ticketId);
-        user.basket = array;
-        await user.save();
-        res.status(200).json({status:'success'});
+        await Basket.findByIdAndDelete(req.params.id);
+        res.status(204).json({ status: 'removed' });
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');

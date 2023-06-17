@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
-const Basket = require('../ecommerce/basketSchema');
 
 const userSchema = new mongoose.Schema({
     fullName: {
@@ -28,16 +27,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'default.png'
     },
-    basket:{
-        type:[Basket],
-        default:[]
-    },
-    purchaseHistory: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'event'
-        }
-    ],
+    // purchaseHistory: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'event'
+    //     }
+    // ],
     payment: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'payment'
@@ -53,7 +48,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 12);
-    next()
+    next();
 })
 
 const User = mongoose.model('User', userSchema);

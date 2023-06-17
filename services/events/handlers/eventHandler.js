@@ -103,3 +103,22 @@ exports.delete = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+exports.search = async (req, res) => {
+    try {
+        const keyword = req.query.keyword
+        // const sort = req.query.sort
+        const events = await Event.find()
+        let searchQuery = events.filter(element => element.details.toLowerCase().includes(keyword) || element.name.toLowerCase().includes(keyword));
+        // searchQuery.sort((a, b) => {
+        //     if (sort === 'ascending') {
+        //         return a.date - b.date
+        //     } else if (sort === 'descending') {
+        //         return b.date - a.date
+        //     }
+        // });
+        res.status(200).json({ status: 'success', data: { searchQuery } });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}

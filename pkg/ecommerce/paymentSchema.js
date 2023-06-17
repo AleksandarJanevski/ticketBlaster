@@ -1,5 +1,22 @@
 const mongoose = require('mongoose');
 
+const today = Date.now()
+const max = today.getYear() + 5
+const expiration = new mongoose.Schema({
+    month: {
+        type: Number,
+        min: 1,
+        max: 12,
+        required: true
+    },
+    year: {
+        type: Number,
+        min: today,
+        max: max,
+        required: true
+    },
+});
+
 const paymentSchema = new mongoose.Schema({
     fullName: {
         type: String,
@@ -12,8 +29,8 @@ const paymentSchema = new mongoose.Schema({
         max: [9007199254740991, 'Please enter a valid credit card'],
     },
     expire: {
-        type: Date,
-        required: [true, 'Card expiration is required']
+        type: expiration,
+        required: [true, 'Card expiration is required'],
     },
     pin: {
         type: Number,
@@ -21,6 +38,6 @@ const paymentSchema = new mongoose.Schema({
     }
 });
 
-const payment = mongoose.model('payment', paymentSchema)
+const Payment = mongoose.model('Payment', paymentSchema)
 
-module.exports = payment
+module.exports = Payment

@@ -24,7 +24,7 @@ const eventSchema = new mongoose.Schema({
     },
     relatedEvents: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'event'
+        ref: 'Event'
     }],
     picture: {
         type: String,
@@ -36,6 +36,6 @@ const eventSchema = new mongoose.Schema({
     }
 });
 
-const Event = mongoose.model('event', eventSchema);
+const Event = mongoose.model('Event', eventSchema);
 
 module.exports = Event;

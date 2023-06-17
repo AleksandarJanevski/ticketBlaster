@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
+const uuid = require('uuid');
 
-const basketSchema = new mongoose.Schema({
+const purchaseId = uuid.v4();
+
+const orderSchema = new mongoose.Schema({
     amount: {
         type: Number,
         //default?
@@ -12,9 +15,10 @@ const basketSchema = new mongoose.Schema({
     beholder: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    purchaseNo: purchaseId
 });
 
-const Basket = mongoose.model('Basket', basketSchema);
+const Order = mongoose.model('Order', orderSchema);
 
-module.exports = Basket;
+module.exports = Order;
