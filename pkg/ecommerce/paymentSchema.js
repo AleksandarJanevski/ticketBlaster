@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const today = Date.now()
+const today = Date.now().getYear();
 const max = today.getYear() + 5
 const expiration = new mongoose.Schema({
     month: {
