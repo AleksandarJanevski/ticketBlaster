@@ -80,7 +80,7 @@ exports.update = async (req, res) => {
         }
         const updateData = req.body
         for (let key in updateData) {
-            if (updateData[key] && key !== 'basket' ) {
+            if (updateData[key] && key !== 'role' && key !== 'password') {
                 user[key] = updateData[key]
             }
         }
@@ -103,15 +103,15 @@ exports.delete = async (req, res) => {
 exports.role = async (req, res) => {
     try {
         const role = req.body.role
-        if(!role || (role !== 'admin' && role !=='user')){
+        if (!role || (role !== 'admin' && role !== 'user')) {
             return res.status(400).send('Bad request');
         }
-        await User.findByIdAndUpdate(req.params.id, {
-            role: role
-        },{
-            runValidators:true,
-            new:true
-        });
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        user.role = role
+        await user.save()
         res.status(200).json({ status: 'success' });
     } catch (err) {
         console.log(err);

@@ -3,6 +3,7 @@ const Purchase = require('./../../../pkg/ecommerce/paymentSchema');
 exports.validate = async (req, res) => {
     try {
         const payment = await Purchase.validate(req.body);
+        //validate manuallly first
         if (!payment) {
             return res.status(400).send('Please provide accurate CC information');
         }

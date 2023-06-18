@@ -103,6 +103,25 @@ exports.resetPassword = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+exports.changePassword = async (req, res) => {
+    try {
+        const { oldPassword, newPassword, confirmPassword } = req.body;
+        if (!oldPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword) {
+            return res.status(400).send('Bad request');
+        }
+        const user = await User.findById(req.params.id);
+        const validate = bcrypt.compareSync(oldPassword, user.password);
+        if (!validate) {
+            return res.status(400).send('Invalid email or password');
+        }
+        user.password = newPassword
+        await user.save();
+        res.status(200).json({ status: 'success' });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
 
 exports.protectAdmin = async (req, res) => {
     try {
