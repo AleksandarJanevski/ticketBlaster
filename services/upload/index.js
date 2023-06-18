@@ -1,3 +1,21 @@
+const express = require('express');
+const db = require('../../pkg/database/index');
+const jwt = require('express-jwt');
+const api = express();
+
+api.use(express.json());
+db.init()
+api.use(
+    jwt.expressjwt({
+        algorithms: ["HS256"],
+        secret: process.env.JWT_SECRET,
+    })
+);
+
+api.listen(process.env.UPLOAD, err => {
+    if (err) return console.log(err);
+    console.log(`Upload Service started on ` + process.env.UPLOAD);
+})
 // Customizing Token Location
 // A custom function for extracting the token from a request can be specified with the getToken option. This is useful if you need to pass the token through a query parameter or a cookie. You can throw an error in this function and it will be handled by express-jwt.
 

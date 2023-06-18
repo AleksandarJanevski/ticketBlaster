@@ -146,11 +146,3 @@ exports.verify = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
-// exports. = async (req, res) => {
-//     try {
-
-//     } catch (err) {
-//         console.log(err);
-//         return res.status(500).send('internal server error');
-//     }
-// }
