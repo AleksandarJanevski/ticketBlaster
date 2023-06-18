@@ -2,7 +2,8 @@ const User = require('../../../pkg/user/userSchema');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../../../pkg/mailer/nodemailer')
 const crypto = require('crypto');
-const { mail } = require('../../../pkg/fileRead/fileReader');
+const { mail } = require('../../../pkg/fsModules/fileReader');
+const { unlink } = require('../../../pkg/fsModules/pictureDelete');
 
 const cryptoToken = () => {
     return crypto.randomBytes(32).toString('hex')
@@ -75,8 +76,8 @@ exports.update = async (req, res) => {
             req.body.picture = req.file.filename
         }
         const user = await User.findById(req.params.id);
-        if (user.picture && user.picture !== req.body.picture) {
-            //delete picture fs module
+        if (user.picture !== req.body.picture && user.picture !== 'default.png') {
+            await unlink(user.picture)
         }
         const updateData = req.body
         for (let key in updateData) {

@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../../../pkg/mailer/nodemailer');
 const { promisify } = require('util');
-const { mail } = require('../../../pkg/fileRead/fileReader');
+const { mail } = require('../../../pkg/fsModules/fileReader');
 const crypto = require('crypto');
 
 const cryptoToken = () => {
