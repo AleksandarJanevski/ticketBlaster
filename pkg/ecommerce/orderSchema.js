@@ -16,7 +16,12 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    purchaseNo: purchaseId
+    purchaseNo: {
+        type: String,
+        default: function () {
+            return uuid.v4();
+        }
+    }
 });
 
 const Order = mongoose.model('Order', orderSchema);
