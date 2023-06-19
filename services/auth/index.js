@@ -14,13 +14,14 @@ api.post('/api/v1/auth/forgotPassword', auth.forgotPassword);
 api.post('/api/v1/auth/resetPassword/:token', auth.resetPassword);
 api.get('/api/v1/auth/admin', auth.protectAdmin);
 api.get('/api/v1/auth/verify/:token', auth.verify);
-
+api.get('/api/v1/auth', auth.cookieVerify);
 api.use(
     jwt.expressjwt({
         algorithms: ["HS256"],
         secret: process.env.JWT_SECRET,
     })
 );
+
 api.post('/api/v1/auth/changePassword', auth.changePassword);
 api.get('/api/v1/auth/logout', auth.logout);
 

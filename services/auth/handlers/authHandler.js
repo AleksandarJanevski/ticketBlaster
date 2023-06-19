@@ -28,6 +28,7 @@ const cookie = (res, name, token) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body
+        console.log(email, password);
         if (!email || !password) return res.status(400).send('Invalid email or password');
         const user = await User.findOne({ email });
         if (!user) return res.status(400).send('Invalid email or password');
@@ -138,6 +139,26 @@ exports.protectAdmin = async (req, res) => {
             return res.status(401).send('Unauthorized access');
         }
         res.status(200).json({ status: 'success' });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
+exports.cookieVerify = async (req, res) => {
+    try {
+        let token;
+        if (req.cookies && req.cookies.jwt) {
+            token = req.cookies.jwt
+        }
+        if (!token) {
+            return res.status(401).send('Unauthorized access');
+        }
+        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(401).send('Unauthorized access');
+        }
+        res.status(200).json({ status: 'success', data: decoded.id });
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');

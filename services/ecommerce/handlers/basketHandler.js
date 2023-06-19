@@ -1,4 +1,3 @@
-const User = require('../../../pkg/user/userSchema');
 const Basket = require('../../../pkg/ecommerce/basketSchema');
 
 exports.addToBasket = async (req, res) => {

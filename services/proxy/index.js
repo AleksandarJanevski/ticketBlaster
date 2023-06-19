@@ -1,8 +1,16 @@
 const express = require('express');
 const proxy = require('express-http-proxy');
 const db = require('../../pkg/database/index')
+const cors = require('cors');
+const morgan = require('morgan');
 
 const api = express();
+api.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+
+api.use(morgan('dev'));
 
 const authProxy = proxy(`http://localhost:${process.env.AUTH}`, {
     proxyReqPathResolver: (req) => {

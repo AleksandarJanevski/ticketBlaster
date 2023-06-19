@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 
 export const Navigation = () => {
-    const [loggedIn, setLoggedIn] = useState(false)
-    useEffect(() => { getUser() }, [])
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if (!sessionStorage.getItem('verify')) {
+            getUser();
+        } else {
+            setLoggedIn(true);//experimental
+        }
+    }, []);
 
     const getUser = async () => {
         try {
-            const response = await axios.get('https://swapi.dev/api/people')
-            console.log(response);
-            setLoggedIn(true)
+            const response = await fetch('/api/v1/auth', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'aplication/json'
+                },
+                credentials: 'include'
+            });
+            const result = await response.json();
+            if (result.status === 'success') {
+                sessionStorage.setItem('verify', true);
+                setLoggedIn(true)
+            }
         } catch (err) {
             setLoggedIn(false)
         }
@@ -27,15 +42,18 @@ export const Navigation = () => {
             </nav>
             <div id="rightSide">
                 <div id="search">
-                    <input type="text" placeholder="Search" />
+                    <form action="" method="get">
+                        <input type="text" placeholder="Search" name="keyword" />
+                    </form>
+
                 </div>
                 {!loggedIn ? <div id="userAccess">
                     <button id="loginButton" type="button"><Link to="/login">Log in</Link></button>
                     <button id="signUpButton" type="button"><Link to="/signUp">Create Account</Link></button>
                 </div> : <div id="userNav">
                     <ul>
-                        <li><Link to="/cart"><i class="fa-solid fa-cart-shopping" style={{ color: '#ff48ab' }}></i></Link></li>
-                        <li><Link to="/userProfile"><i class="fa-solid fa-user" style={{ color: '#ff48ab' }}></i></Link></li>
+                        <li><Link to="/cart"><i className="fa-solid fa-cart-shopping" style={{ color: '#ff48ab' }}></i></Link></li>
+                        <li><Link to="/userProfile"><i className="fa-solid fa-user" style={{ color: '#ff48ab' }}></i></Link></li>
                     </ul>
                 </div>}
             </div>
