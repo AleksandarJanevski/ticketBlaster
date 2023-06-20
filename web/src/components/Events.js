@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export const Events = () => {
-    const id = useSelector(state => state.idReducer.id)
     const [hero, setHero] = useState({});
     const concerts = useSelector(state => state.eventsReducer.concerts);
     const standUp = useSelector(state => state.eventsReducer.standUp);
@@ -22,6 +21,9 @@ export const Events = () => {
             if (result.status === 'success') {
                 setHero(result.data.hero);
             }
+            concerts = concerts.filter(element => element !== result.data.hero);
+            standUp = standUp.filter(element => element !== result.data.hero);
+
         } catch (err) {
             return console.log(err);
         }
@@ -53,6 +55,9 @@ export const Events = () => {
     }
     return (
         <div id="events">
+            <div id="hero">
+
+            </div>
             {concerts && concerts.map((element, i) => {
                 let date = formatDate(new Date(element.date).toLocaleDateString('en-GB'))
                 return (
