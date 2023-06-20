@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+const today = new Date();
+
+
+
 const eventSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -30,11 +34,22 @@ const eventSchema = new mongoose.Schema({
         type: String,
         default: 'default.png'
     },
+    location: {
+        type: String,
+        required: [true, 'Event must have location']
+    },
     tickets: {
         type: Number,
         default: 5
     }
 });
+eventSchema.pre('save', async function (next) {
+    this.date.setHours(this.date.getHours() + 2);
+    if (this.date < today) {
+        return next(new Error('Date cannot be less than today'));
+    }
+    next();
+})
 
 const Event = mongoose.model('Event', eventSchema);
 

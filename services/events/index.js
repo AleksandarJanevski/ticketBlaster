@@ -8,10 +8,11 @@ const api = express();
 api.use(express.json());
 db.init()
 
+api.get("/api/v1/events", events.search);
 api.get("/api/v1/events/standUp", events.getAllStandUp);
 api.get("/api/v1/events/concerts", events.getAllConcerts);
+api.get("/api/v1/events/hero", events.getHero);
 api.get("/api/v1/events/:id", events.getOne);
-api.get("/api/v1/events", events.search);
 
 api.use(
     jwt.expressjwt({

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
+import { idActions } from "../redux/actions/idActions";
+import { useDispatch } from "react-redux";
 
 export const Navigation = () => {
     const [loggedIn, setLoggedIn] = useState(false);
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        if (!sessionStorage.getItem('verify')) {
-            getUser();
-        } else {
-            setLoggedIn(true);//experimental
-        }
+        getUser();
     }, []);
-
     const getUser = async () => {
         try {
             const response = await fetch('/api/v1/auth', {
@@ -23,7 +21,7 @@ export const Navigation = () => {
             });
             const result = await response.json();
             if (result.status === 'success') {
-                sessionStorage.setItem('verify', true);
+                dispatch(idActions(result.data))
                 setLoggedIn(true)
             }
         } catch (err) {
@@ -35,7 +33,7 @@ export const Navigation = () => {
         <header>
             <nav>
                 <ul>
-                    <li><Link to="/home">ticketblaster</Link></li>
+                    <li><Link to="/">ticketblaster</Link></li>
                     <li><Link to="/musicalConcerts">Musical Concerts</Link></li>
                     <li><Link to="/standUpComedy">Stand-up Comedy</Link></li>
                 </ul>
@@ -57,7 +55,7 @@ export const Navigation = () => {
                     </ul>
                 </div>}
             </div>
-
         </header>
+
     )
 }

@@ -5,7 +5,7 @@ exports.addToBasket = async (req, res) => {
         const { event, amount, beholder } = req.body;
         const basketItem = await Basket.findOne({
             ticket: ticket,
-            beholder: beholder
+            beholder: beholder,
         });
         if (basketItem) {
             basketItem.amount += amount
@@ -15,7 +15,7 @@ exports.addToBasket = async (req, res) => {
                 event: event,
                 beholder: beholder,
                 amount: amount
-            })
+            });
         }
         res.status(201).json({ status: 'success' });
     } catch (err) {

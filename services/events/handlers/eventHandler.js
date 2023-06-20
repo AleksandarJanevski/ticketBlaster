@@ -3,7 +3,19 @@ const Event = require('../../../pkg/event/eventSchema');
 exports.getAllStandUp = async (req, res) => {
     try {
         const events = await Event.find({ category: 'Stand-up Comedy' });
+        events.sort((a, b) => { return a.date - b.date });
         res.status(200).json({ status: 'success', data: { events } });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
+exports.getHero = async (req, res) => {
+    try {
+        const events = await Event.find();
+        events.sort((a, b) => { return a.date - b.date });
+        const hero = events[0]
+        res.status(200).json({ status: 'success', data: { hero } });
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');
@@ -13,6 +25,7 @@ exports.getAllStandUp = async (req, res) => {
 exports.getAllConcerts = async (req, res) => {
     try {
         const events = await Event.find({ category: 'Musical Concert' });
+        events.sort((a, b) => { return a.date - b.date });
         res.status(200).json({ status: 'success', data: { events } });
     } catch (err) {
         console.log(err);
