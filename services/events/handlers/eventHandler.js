@@ -62,7 +62,8 @@ exports.create = async (req, res) => {
             details: data.details,
             relatedEvents: data.relatedEvents,
             picture: data.picture,
-            ticket: data.tickets
+            ticket: data.tickets,
+            location: data.location
         });
         res.status(201).json({ status: 'success' });
     } catch (err) {

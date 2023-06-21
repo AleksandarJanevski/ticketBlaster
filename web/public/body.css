@@ -1,6 +1,4 @@
 #content {
-  margin-left: 22rem;
-  margin-right: 22rem;
-  margin-top: 3.125rem;
-  background-color: red;
+  max-width: 75rem;
+  margin: 0 auto;
 }

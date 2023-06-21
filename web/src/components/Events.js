@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { EventCard } from "./EventCard";
 
 export const Events = () => {
     const [hero, setHero] = useState({});
     const concerts = useSelector(state => state.eventsReducer.concerts);
     const standUp = useSelector(state => state.eventsReducer.standUp);
+    const [standUpFilter, setStandUpFilter] = useState([]);
+    const [concertFilter, setConcertFilter] = useState([]);
     useEffect(() => {
         getHero();
     }, []);
-
+    useEffect(() => {
+        setStandUpFilter(standUp.filter(element => element.name !== hero.name));
+        setConcertFilter(concerts.filter(element => element.name !== hero.name))
+    }, [hero])
     const getHero = async () => {
         try {
             const response = await fetch('/api/v1/events/hero', {
@@ -21,9 +27,6 @@ export const Events = () => {
             if (result.status === 'success') {
                 setHero(result.data.hero);
             }
-            concerts = concerts.filter(element => element !== result.data.hero);
-            standUp = standUp.filter(element => element !== result.data.hero);
-
         } catch (err) {
             return console.log(err);
         }
@@ -38,11 +41,12 @@ export const Events = () => {
             if (day.startsWith(0)) {
                 day = day.slice(1);
             }
-            if (lastDigit === 1) {
+            const exceptions = '11 12 13'
+            if (lastDigit === 1 && !exceptions.includes(day)) {
                 day = day + "st"
-            } else if (lastDigit === 2) {
+            } else if (lastDigit === 2 && !exceptions.includes(day)) {
                 day = day + "nd"
-            } else if (lastDigit === 3) {
+            } else if (lastDigit === 3 && !exceptions.includes(day)) {
                 day = day + "rd"
             } else {
                 day = day + "th"
@@ -55,34 +59,21 @@ export const Events = () => {
     }
     return (
         <div id="events">
-            <div id="hero">
-
+            <div style={{ backgroundImage: `url(/img/event/${hero.picture})` }} id="hero">
+                <p>{hero.name}</p>
+                <p>{hero.details}</p>
+                <p>{formatDate(new Date(hero.date).toLocaleDateString('en-GB'))}</p>
             </div>
-            {concerts && concerts.map((element, i) => {
-                let date = formatDate(new Date(element.date).toLocaleDateString('en-GB'))
-                return (
-                    <span key={i}>
-                        <p>{element.name}</p>
-                        <p>{element.details}</p>
-                        <p>{element.price}</p>
-                        <p>{date}</p>
-                    </span>
-                )
-            })}
-            <hr />
-            {standUp && standUp.map((element, i) => {
-                let date = formatDate(new Date(element.date).toLocaleDateString('en-GB'))
-                return (
-                    <span key={i}>
-                        <p>{element.name}</p>
-                        <p>{element.name}</p>
-                        <p>{element.details}</p>
-                        <p>{element.price}</p>
-                        <p>{date}</p>
-                    </span>
-                )
-            })}
-            <h1>Hello</h1>
+            <div id="eventList">
+                <div class="vertical">
+                    <h2>Musical Concerts</h2>
+                    <EventCard array={concertFilter} funkcija={formatDate} />
+                </div>
+                <div class="vertical">
+                    <h2>Stand-up Comedy</h2>
+                    <EventCard array={standUpFilter} funkcija={formatDate} />
+                </div>
+            </div>
         </div>
     )
 }

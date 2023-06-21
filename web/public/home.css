@@ -1,0 +1,18 @@
+#hero {
+  height: 29rem;
+  width: 75rem;
+  border-radius: 1.875rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#eventList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+#eventList h2 {
+  offset: all;
+  font-size: 2rem;
+  letter-spacing: -1.81px;
+  margin-bottom: 1.8rem;
+}

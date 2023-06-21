@@ -9,7 +9,7 @@ api.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
 }));
-
+api.use(express.static('public'))
 api.use(morgan('dev'));
 
 const authProxy = proxy(`http://localhost:${process.env.AUTH}`, {
