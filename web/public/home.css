@@ -4,6 +4,7 @@
   border-radius: 1.875rem;
   background-size: cover;
   background-repeat: no-repeat;
+  margin-bottom: 3.125rem;
 }
 #eventList {
   display: flex;

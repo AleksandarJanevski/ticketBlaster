@@ -60,9 +60,12 @@ export const Events = () => {
     return (
         <div id="events">
             <div style={{ backgroundImage: `url(/img/event/${hero.picture})` }} id="hero">
-                <p>{hero.name}</p>
-                <p>{hero.details}</p>
-                <p>{formatDate(new Date(hero.date).toLocaleDateString('en-GB'))}</p>
+                <div id="hero_name">
+                    <p>{hero.name}</p>
+                </div>
+                <div id="hero_info">
+                    <p>{formatDate(new Date(hero.date).toLocaleDateString('en-GB'))}, {hero.location}</p>
+                </div>
             </div>
             <div id="eventList">
                 <div class="vertical">
