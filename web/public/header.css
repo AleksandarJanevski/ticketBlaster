@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#main_header {
+  background: #000000;
+  margin: 0 auto;
+}
+header {
+  display: flex;
+  height: 4.375rem;
+  width: 75rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 0;
+  position: relative;
+  margin: 0 auto;
+}
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: small;
+}
+
+header nav ul li:nth-child(1) a {
+  color: white;
+  font-size: 1.5rem;
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: bolder;
+  letter-spacing: -1.5px;
+}
+
+#rightSide {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#userAccess {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+#userAccess button:nth-child(1) {
+  all: unset;
+  background-color: #ff48ab;
+  text-align: center;
+  width: 6.375rem;
+  height: 2.625rem;
+  border-radius: 1.438rem;
+  box-sizing: border-box;
+}
+#userAccess button:nth-child(1) a {
+  text-decoration: none;
+  color: black;
+  font: normal normal 900 16px/19px Lato;
+  letter-spacing: -0.88px;
+  font-weight: bold;
+  text-align: center;
+  font: small;
+}
+#userAccess button:nth-child(2) {
+  all: unset;
+  background-color: #000000;
+  text-align: center;
+  width: 9.75rem;
+  height: 2.625rem;
+  border: 2px solid #ff48ab;
+  border-radius: 1.438rem;
+  box-sizing: border-box;
+}
+#userAccess button:nth-child(2) a {
+  text-decoration: none;
+  color: white;
+  width: 100%;
+  font: normal normal 900 16px/19px Lato;
+  letter-spacing: -0.88px;
+  font-weight: bold;
+  text-align: center;
+}
+#search input {
+  all: unset;
+  height: 2.5rem;
+  background-color: white;
+  box-sizing: border-box;
+  height: 2.625rem;
+  padding: 5%;
+  width: 18.438rem;
+  border-radius: 23px;
+  margin-right: 2rem;
+}
+#userNav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  gap: 1.5rem;
+}
