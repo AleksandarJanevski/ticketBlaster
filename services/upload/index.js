@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../../pkg/database/index');
 const jwt = require('express-jwt');
-const upload = require('./handlers/uploadHandler')
+const upload = require('./handlers/uploadHandler');
 
 const api = express();
 
@@ -12,7 +12,8 @@ api.use(express.static('public'));
 db.init()
 
 api.post('/api/v1/upload/:destination', upload.uploadPicture, (req, res) => {
-    res.status(200).json({ status: 'successfuly uploaded' });
+    const filename = req.file.filename;
+    res.json({ filename })
 });
 
 api.listen(process.env.UPLOAD, err => {

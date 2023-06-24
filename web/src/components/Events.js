@@ -38,9 +38,10 @@ export const Events = () => {
             let lastDigit = parseInt(day.slice(1));
             let month = date.split('/')[1]
             let year = date.split('/')[2]
-            if (day.startsWith(0)) {
+            if (day.startsWith('0')) {
                 day = day.slice(1);
             }
+            console.log(lastDigit);
             const exceptions = '11 12 13'
             if (lastDigit === 1 && !exceptions.includes(day)) {
                 day = day + "st"

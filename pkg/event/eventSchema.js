@@ -40,7 +40,9 @@ const eventSchema = new mongoose.Schema({
     },
     tickets: {
         type: Number,
-        default: 5
+        default: 5,
+        max: 5000,
+        min: 0
     }
 });
 eventSchema.pre('save', async function (next) {

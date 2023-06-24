@@ -46,15 +46,14 @@ exports.getOne = async (req, res) => {
 exports.create = async (req, res) => {
     try {
         let data = req.body;
-        if (req.file) {
-            data.picture = req.file.filename
-        }
+        console.log(req.body);
+
         for (let key in data) {
             if (!data[key]) {
                 return res.status(400).send('please provide valid data for the event');
             }
         }
-        await Event.create({
+        const event = await Event.create({
             name: data.name,
             category: data.category,
             date: data.date,
@@ -62,10 +61,10 @@ exports.create = async (req, res) => {
             details: data.details,
             relatedEvents: data.relatedEvents,
             picture: data.picture,
-            ticket: data.tickets,
+            tickets: data.tickets,
             location: data.location
         });
-        res.status(201).json({ status: 'success' });
+        res.status(201).json({ status: 'success', data: { event } });
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');
