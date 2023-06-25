@@ -7,13 +7,13 @@ export const EventForm = () => {
     const [bool, setBool] = useState(false);
     const [image, setImage] = useState('');
     const [sent, setSent] = useState(false);
+    const [img, setImg] = useState('')
     const [event, setEvent] = useState({
         name: '',
         category: '',
         details: '',
         location: '',
         picture: '',
-        img: '',
         date: '',
         price: 0,
         tickets: 0,
@@ -23,10 +23,17 @@ export const EventForm = () => {
         if (eventId) {
             getEvent();
         }
+        console.log(event);
     }, []);
+
     useEffect(() => {
-        createEvent();
+        if (!eventId && sent) {
+            createEvent();
+        } else if (sent) {
+            updateEvent();
+        }
     }, [sent]);
+
     function verifyData(obj) {
         for (let key in obj) {
             if ((typeof obj[key] === 'string' && obj[key].trim() === '') || (obj[key] === null && obj[key] <= 0)) {
@@ -34,16 +41,38 @@ export const EventForm = () => {
             }
         }
     }
+    const getEvent = async () => {
+        try {
+            const response = await fetch(`/api/v1/events/${eventId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'aplication/json'
+                },
+                credentials: 'include'
+            });
+            const result = await response.json()
+            if (result.status === 'success') {
+                setEvent(result.data.event);
+                setBool(true)
+            }
+        } catch (err) {
+            return console.log(err);
+        }
+    }
     const upload = async () => {
         try {
-            const upload = await axios.post('/api/v1/upload/event', { picture: event.img }, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            })
-            console.log(upload.data.filename);
-            const pictureName = upload.data.filename
-            setEvent({ ...event, picture: pictureName });
+            if (img && img !== event.picture) {
+                console.log('triggered');
+                const upload = await axios.post('/api/v1/upload/event', { picture: img }, {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    },
+                    credentials: 'include'
+                })
+                console.log(upload.data.filename);
+                const pictureName = upload.data.filename
+                setEvent({ ...event, picture: pictureName });
+            }
             setSent(!sent)
         } catch (err) {
             return console.log(err);
@@ -56,7 +85,8 @@ export const EventForm = () => {
                 body: JSON.stringify(event),
                 headers: {
                     'content-type': 'application/json'
-                }
+                },
+                credentials: 'include'
             });
             const result = await response.json()
             console.log(result);
@@ -73,13 +103,14 @@ export const EventForm = () => {
             verifyData(event);
             const response = await fetch(`/api/v1/events/${eventId}`, {
                 method: 'PATCH',
+                body: JSON.stringify(event),
                 headers: {
-                    'Content-type': 'apilcation/json'
+                    'content-type': 'application/json'
                 },
-                credentials: "include",
-                body: event
-            })
+                credentials: 'include'
+            });
             const result = await response.json();
+            console.log(result);
             if (result.status === 'success') {
                 window.location.href = `/events/${eventId}`
             }
@@ -88,29 +119,11 @@ export const EventForm = () => {
         }
 
     }
-    const getEvent = async () => {
-        try {
-            const response = await fetch(`/api/v1/events/${eventId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'aplication/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json()
-            if (result.status === 'success') {
-                setEvent(result.data.event);
-                console.log(result.data.event);
-                setBool(true)
-            }
-        } catch (err) {
-            return console.log(err);
-        }
-    }
+
     const picture = (e) => {
         const file = e.target.files[0]
         console.log(file.name);
-        setEvent({ ...event, img: file });
+        setImg(file);
         if (file) {
             const reader = new FileReader();
 
@@ -123,7 +136,6 @@ export const EventForm = () => {
             setImage('');
         }
     };
-
     return (
         <div id="eventForm">
             <div id="eFrom1">
@@ -172,7 +184,7 @@ export const EventForm = () => {
                     {/* map */}
                 </span>
             </div>
-            {bool ? <button type="button" onClick={updateEvent}>Save</button> : <button type="button" onClick={upload} >Save B</button>}
+            <button type="button" onClick={upload}>Save</button>
         </div>
     )
 }

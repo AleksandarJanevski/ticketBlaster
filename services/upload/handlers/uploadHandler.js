@@ -9,7 +9,7 @@ const multerStorage = multer.diskStorage({
     },
     filename: (req, file, callback) => {
         const type = file.mimetype.split('/')[1]
-        callback(null, `${Date.now()}-${imageId}.${type}`);
+        callback(null, `${req.params.destination}-${Date.now()}-${imageId}.${type}`);
     }
 });
 const multerFilter = (req, file, callback) => {

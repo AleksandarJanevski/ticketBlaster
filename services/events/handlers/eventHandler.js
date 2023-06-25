@@ -1,4 +1,5 @@
 const Event = require('../../../pkg/event/eventSchema');
+const { unlink } = require('../../../pkg/fsModules/pictureDelete')
 
 exports.getAllStandUp = async (req, res) => {
     try {
@@ -92,8 +93,8 @@ exports.update = async (req, res) => {
             res.status(404).send('event not found');
         }
         let data = req.body;
-        if (req.file) {
-            data.picture = req.file.filename;
+        if (data.picture && data.picture !== event.picture) {
+            unlink(event.picture)
         }
         for (let key in data) {
             if (data[key] !== undefined && data[key] !== null) {
@@ -101,7 +102,7 @@ exports.update = async (req, res) => {
             }
         }
         await event.save({ validateBeforeSave: true });
-        res.status(200).json({ status: 'success' });
+        res.status(200).json({ status: 'success', });
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');

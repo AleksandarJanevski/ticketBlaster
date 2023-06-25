@@ -1,6 +1,8 @@
 import { GET_ID } from '../constants/idConstants'
 const initialState = {
-    id: ""
+    id: "",
+    role: "",
+    token: ""
 }
 
 export const idReducer = (state = initialState, action) => {
@@ -8,7 +10,8 @@ export const idReducer = (state = initialState, action) => {
         case GET_ID:
             return {
                 ...state,
-                id: action.payload
+                id: action.payload,
+                role: action.payload,
             }
         default: return state
     }

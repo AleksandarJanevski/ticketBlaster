@@ -67,11 +67,11 @@ export const Events = () => {
                 </div>
             </div>
             <div id="eventList">
-                <div class="vertical">
+                <div className="vertical">
                     <h2>Musical Concerts</h2>
                     <EventCard array={concertFilter} funkcija={formatDate} />
                 </div>
-                <div class="vertical">
+                <div className="vertical">
                     <h2>Stand-up Comedy</h2>
                     <EventCard array={standUpFilter} funkcija={formatDate} />
                 </div>

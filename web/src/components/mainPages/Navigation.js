@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 export const Navigation = () => {
     const [loggedIn, setLoggedIn] = useState(false);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
         getUser();
@@ -21,7 +21,8 @@ export const Navigation = () => {
             });
             const result = await response.json();
             if (result.status === 'success') {
-                dispatch(idActions(result.data));
+                const { id, role } = result.data
+                dispatch(idActions(id, role));
                 setLoggedIn(true);
             }
         } catch (err) {

@@ -3,27 +3,26 @@ const db = require('../../pkg/database/index');
 const jwt = require('express-jwt');
 const events = require('./handlers/eventHandler');
 const upload = require('../upload/handlers/uploadHandler');
+const cookieParser = require('cookie-parser');
+const auth = require('../auth/handlers/authHandler')
 
 const api = express();
-
+api.use(cookieParser());
 api.use(express.json());
 db.init()
 
+api.patch("/api/v1/events/:id", events.update)
 api.get("/api/v1/events", events.search);
 api.get("/api/v1/events/standUp", events.getAllStandUp);
 api.get("/api/v1/events/concerts", events.getAllConcerts);
 api.get("/api/v1/events/hero", events.getHero);
 api.get("/api/v1/events/:id", events.getOne);
+
+api.use(auth.protectAdmin);
+
 api.post("/api/v1/events", events.create);
-api.use(
-    jwt.expressjwt({
-        algorithms: ["HS256"],
-        secret: process.env.JWT_SECRET,
-    })
-);
 
-
-api.route("/api/v1/events/:id").patch(events.update).delete(events.delete);
+api.delete("/api/v1/events/:id", events.delete);
 
 
 

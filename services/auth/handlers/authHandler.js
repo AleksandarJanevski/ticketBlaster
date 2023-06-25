@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
         if (!user) return res.status(400).send('Invalid email or password');
         const validatePassword = bcrypt.compareSync(password, user.password);
         if (!validatePassword) return res.status(400).send('Invalid email or password');
-        const token = jwtToken({ id: user._id });
+        const token = jwtToken({ id: user._id, role: user.role });
         cookie(res, 'jwt', token);
         res.status(200).json({ status: 'success' });
     } catch (err) {
@@ -158,7 +158,11 @@ exports.cookieVerify = async (req, res) => {
         if (!user) {
             return res.status(401).send('Unauthorized access');
         }
-        res.status(200).json({ status: 'success', data: decoded.id });
+        const userData = {
+            id: decoded.id,
+            role: decoded.role
+        }
+        res.status(200).json({ status: 'success', data: userData });//add the tokens
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');
