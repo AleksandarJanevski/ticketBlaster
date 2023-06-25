@@ -124,7 +124,7 @@ exports.changePassword = async (req, res) => {
     }
 }
 
-exports.protectAdmin = async (req, res) => {
+exports.protectAdmin = async (req, res, next) => {
     try {
         let token;
         if (req.cookies && req.cookies.jwt) {
@@ -138,7 +138,7 @@ exports.protectAdmin = async (req, res) => {
         if (!user || user.role === 'user') {
             return res.status(401).send('Unauthorized access');
         }
-        res.status(200).json({ status: 'success' });
+        next();
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');

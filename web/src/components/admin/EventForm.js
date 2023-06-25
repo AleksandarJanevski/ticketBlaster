@@ -28,6 +28,7 @@ export const EventForm = () => {
 
     useEffect(() => {
         if (!eventId && sent) {
+            console.log('executed');
             createEvent();
         } else if (sent) {
             updateEvent();
@@ -90,9 +91,9 @@ export const EventForm = () => {
             });
             const result = await response.json()
             console.log(result);
-            if (result.status === 'success') {
-                window.location.href = '/eventForm';
-            }
+            // if (result.status === 'success') {
+            //     window.location.href = '/eventForm';
+            // }
 
         } catch (err) {
             console.log(err);

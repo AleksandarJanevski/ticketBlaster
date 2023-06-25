@@ -12,7 +12,9 @@ db.init()
 api.post('/api/v1/auth/login', auth.login);
 api.post('/api/v1/auth/forgotPassword', auth.forgotPassword);
 api.post('/api/v1/auth/resetPassword/:token', auth.resetPassword);
-api.get('/api/v1/auth/admin', auth.protectAdmin);
+api.get('/api/v1/auth/admin', auth.protectAdmin, (req, res) => {
+    res.status(200).json({ status: 'success' });
+});
 api.get('/api/v1/auth/verify/:token', auth.verify);
 api.get('/api/v1/auth', auth.cookieVerify);
 api.use(
