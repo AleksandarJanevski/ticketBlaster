@@ -133,7 +133,7 @@ export const EventForm = () => {
     }
     const addArray = (e) => {
         e.preventDefault()
-        const array = []
+        const array = [...event.relatedEvents]
         array.push(related)
         console.log(array);
         concerts.forEach(element => {
@@ -209,9 +209,9 @@ export const EventForm = () => {
                 <label htmlFor="">Related Events</label>
                 <span>
                     {event.category === 'Musical Concert' ?
-                        <Dropdown elements={concerts} value={related} onChange={(e) => { setRelated(e.target.value) }} />
+                        <Dropdown elements={concerts} onChange={(e) => { setRelated(e.target.value) }} />
                         :
-                        <Dropdown elements={standUp} value={related} onChange={(e) => { setRelated(e.target.value) }} />}
+                        <Dropdown elements={standUp} onChange={(e) => { setRelated(e.target.value) }} />}
                     <button onClick={addArray}>Add</button>
                 </span>
                 <span id="relatedEvents">
