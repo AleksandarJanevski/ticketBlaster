@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
 export const EventForm = () => {
-    const { eventId } = useParams()
-    const [bool, setBool] = useState(false)
-    const [image, setImage] = useState('')
-    const [uploadImg, setUploadImg] = useState('')
+    const { eventId } = useParams();
+    const [bool, setBool] = useState(false);
+    const [image, setImage] = useState('');
+    const [sent, setSent] = useState(false);
     const [event, setEvent] = useState({
         name: '',
         category: '',
@@ -24,6 +24,9 @@ export const EventForm = () => {
             getEvent();
         }
     }, []);
+    useEffect(() => {
+        createEvent();
+    }, [sent]);
     function verifyData(obj) {
         for (let key in obj) {
             if ((typeof obj[key] === 'string' && obj[key].trim() === '') || (obj[key] === null && obj[key] <= 0)) {
@@ -41,22 +44,30 @@ export const EventForm = () => {
             console.log(upload.data.filename);
             const pictureName = upload.data.filename
             setEvent({ ...event, picture: pictureName });
+            setSent(!sent)
         } catch (err) {
             return console.log(err);
         }
     }
     const createEvent = async () => {
         try {
-            const response = await axios.post('/api/v1/events', event, {
+            const response = await fetch('/api/v1/events', {
+                method: 'POST',
+                body: JSON.stringify(event),
                 headers: {
-                    'content-type': 'aplication/json'
+                    'content-type': 'application/json'
                 }
-            })
-            console.log(response);
+            });
+            const result = await response.json()
+            console.log(result);
+            if (result.status === 'success') {
+                window.location.href = '/eventForm';
+            }
+
         } catch (err) {
-            return console.log(err);
+            console.log(err);
         }
-    }
+    };
     const updateEvent = async () => {
         try {
             verifyData(event);
@@ -161,8 +172,7 @@ export const EventForm = () => {
                     {/* map */}
                 </span>
             </div>
-            {bool ? <button type="button" onClick={updateEvent}>Save</button> : <button type="button" onClick={createEvent} >Save B</button>}
-            <button type="button" onClick={upload}>Upload Photo</button>
+            {bool ? <button type="button" onClick={updateEvent}>Save</button> : <button type="button" onClick={upload} >Save B</button>}
         </div>
     )
 }

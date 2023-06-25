@@ -41,8 +41,6 @@ export const Events = () => {
             if (day.startsWith('0')) {
                 day = day.slice(1);
             }
-            console.log(lastDigit);
-            const exceptions = '11 12 13'
             if (lastDigit === 1 && day !== 11) {
                 day = day + "st"
             } else if (lastDigit === 2 && day !== 12) {
