@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
-import { idActions } from "../redux/actions/idActions";
+import { idActions } from "../../redux/actions/idActions";
 import { useDispatch } from "react-redux";
 
 export const Navigation = () => {

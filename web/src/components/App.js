@@ -1,10 +1,10 @@
 import React from "react";
-import { FetchCall } from "./fetchCall"
-import { Navigation } from "./Navigation";
+import { FetchCall } from "./authentication/fetchCall"
+import { Navigation } from "./mainPages/Navigation";
 import { Route, Routes } from 'react-router-dom';
-import { Auth } from "./Auth";
-import { Events } from './Events'
-import { EventForm } from './EventForm'
+import { Auth } from "./authentication/Auth";
+import { Events } from './mainPages/Events'
+import { EventForm } from './admin/EventForm'
 //make redux for single event
 export const App = () => {
   return (

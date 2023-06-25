@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getConcerts, getStandUp } from '../redux/actions/eventsActions';
+import { getConcerts, getStandUp } from '../../redux/actions/eventsActions';
 
 export const FetchCall = () => {
     const concerts = useSelector(state => state.eventsReducer.concerts);
