@@ -43,11 +43,11 @@ export const Events = () => {
             }
             console.log(lastDigit);
             const exceptions = '11 12 13'
-            if (lastDigit === 1 && !exceptions.includes(day)) {
+            if (lastDigit === 1 && day !== 11) {
                 day = day + "st"
-            } else if (lastDigit === 2 && !exceptions.includes(day)) {
+            } else if (lastDigit === 2 && day !== 12) {
                 day = day + "nd"
-            } else if (lastDigit === 3 && !exceptions.includes(day)) {
+            } else if (lastDigit === 3 && day !== 13) {
                 day = day + "rd"
             } else {
                 day = day + "th"

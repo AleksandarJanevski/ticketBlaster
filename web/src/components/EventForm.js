@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { response } from "express";
 
 export const EventForm = () => {
     const { eventId } = useParams()
