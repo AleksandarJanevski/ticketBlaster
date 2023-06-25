@@ -36,7 +36,7 @@ exports.getAllConcerts = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     try {
-        const event = await Event.findById(req.params.id);
+        const event = await Event.findById(req.params.id).populate('relatedEvents');
         res.status(200).json({ status: 'success', data: { event } });
     } catch (err) {
         console.log(err);

@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { Dropdown } from "./Dropdown";
+import { useSelector } from 'react-redux'
+import { EventCard } from "../mainPages/EventCard";
 
 export const EventForm = () => {
     const { eventId } = useParams();
+    const concerts = useSelector(state => state.eventsReducer.concerts);
+    const standUp = useSelector(state => state.eventsReducer.standUp);
     const [bool, setBool] = useState(false);
     const [image, setImage] = useState('');
     const [sent, setSent] = useState(false);
     const [img, setImg] = useState('')
+    const [matching, setMatching] = useState([])
+    const [related, setRelated] = useState('')
     const [event, setEvent] = useState({
         name: '',
         category: '',
@@ -34,6 +41,9 @@ export const EventForm = () => {
             updateEvent();
         }
     }, [sent]);
+    useEffect(() => {
+        console.log(event);
+    }, [event])
 
     function verifyData(obj) {
         for (let key in obj) {
@@ -54,6 +64,7 @@ export const EventForm = () => {
             const result = await response.json()
             if (result.status === 'success') {
                 setEvent(result.data.event);
+                setMatching(result.data.event.relatedEvents)
                 setBool(true)
             }
         } catch (err) {
@@ -120,7 +131,26 @@ export const EventForm = () => {
         }
 
     }
+    const addArray = (e) => {
+        e.preventDefault()
+        const array = []
+        array.push(related)
+        console.log(array);
+        concerts.forEach(element => {
+            if (array.includes(element._id)) {
+                console.log(element);
+                matching.push(element)
+            }
+        });
+        console.log(matching);
+        standUp.forEach(element => {
+            if (array.includes(element._id)) {
+                matching.push(element)
+            }
+        })
+        setEvent({ ...event, relatedEvents: array });
 
+    }
     const picture = (e) => {
         const file = e.target.files[0]
         console.log(file.name);
@@ -178,11 +208,14 @@ export const EventForm = () => {
             <div id="eForm3">
                 <label htmlFor="">Related Events</label>
                 <span>
-                    {/* DROPDOWN */}
-                    <button>Add</button>
+                    {event.category === 'Musical Concert' ?
+                        <Dropdown elements={concerts} value={related} onChange={(e) => { setRelated(e.target.value) }} />
+                        :
+                        <Dropdown elements={standUp} value={related} onChange={(e) => { setRelated(e.target.value) }} />}
+                    <button onClick={addArray}>Add</button>
                 </span>
                 <span id="relatedEvents">
-                    {/* map */}
+                    {event.relatedEvents ? <EventCard array={matching} /> : null}
                 </span>
             </div>
             <button type="button" onClick={upload}>Save</button>
