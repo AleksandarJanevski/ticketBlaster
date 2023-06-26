@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import { Dropdown } from "./Dropdown";
 import { useSelector } from 'react-redux'
 import { EventCard } from "../mainPages/EventCard";
+import { preview, verifyData, uploadFunc } from '../functions/functions';
 
 export const EventForm = () => {
     const { eventId } = useParams();
     const concerts = useSelector(state => state.eventsReducer.concerts);
     const standUp = useSelector(state => state.eventsReducer.standUp);
-    const [bool, setBool] = useState(false);
     const [image, setImage] = useState('');
     const [sent, setSent] = useState(false);
-    const [img, setImg] = useState('')
+    const [previewPic, setPreviewPic] = useState('')
     const [matching, setMatching] = useState([])
     const [related, setRelated] = useState('')
     const [event, setEvent] = useState({
@@ -30,28 +29,16 @@ export const EventForm = () => {
         if (eventId) {
             getEvent();
         }
-        console.log(event);
     }, []);
 
     useEffect(() => {
         if (!eventId && sent) {
-            console.log('executed');
             createEvent();
         } else if (sent) {
             updateEvent();
         }
     }, [sent]);
-    useEffect(() => {
-        console.log(event);
-    }, [event])
 
-    function verifyData(obj) {
-        for (let key in obj) {
-            if ((typeof obj[key] === 'string' && obj[key].trim() === '') || (obj[key] === null && obj[key] <= 0)) {
-                return alert(`Please fill out the ${key} input field`)
-            }
-        }
-    }
     const getEvent = async () => {
         try {
             const response = await fetch(`/api/v1/events/${eventId}`, {
@@ -61,34 +48,17 @@ export const EventForm = () => {
                 },
                 credentials: 'include'
             });
-            const result = await response.json()
+            const result = await response.json();
             if (result.status === 'success') {
                 setEvent(result.data.event);
-                setMatching(result.data.event.relatedEvents)
-                setBool(true)
+                setMatching(result.data.event.relatedEvents);
             }
         } catch (err) {
             return console.log(err);
         }
     }
-    const upload = async () => {
-        try {
-            if (img && img !== event.picture) {
-                console.log('triggered');
-                const upload = await axios.post('/api/v1/upload/event', { picture: img }, {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    },
-                    credentials: 'include'
-                })
-                console.log(upload.data.filename);
-                const pictureName = upload.data.filename
-                setEvent({ ...event, picture: pictureName });
-            }
-            setSent(!sent)
-        } catch (err) {
-            return console.log(err);
-        }
+    const handleUpload = async () => {
+        await uploadFunc(previewPic, event.picture, setEvent, event, setSent, sent, 'event');
     }
     const createEvent = async () => {
         try {
@@ -102,9 +72,9 @@ export const EventForm = () => {
             });
             const result = await response.json()
             console.log(result);
-            // if (result.status === 'success') {
-            //     window.location.href = '/eventForm';
-            // }
+            if (result.status === 'success') {
+                window.location.href = '/eventForm';
+            }
 
         } catch (err) {
             console.log(err);
@@ -131,6 +101,9 @@ export const EventForm = () => {
         }
 
     }
+    const picturePreview = (e) => {
+        preview(e, setPreviewPic, setImage);
+    };
     const addArray = (e) => {
         e.preventDefault()
         const array = [...event.relatedEvents]
@@ -151,22 +124,6 @@ export const EventForm = () => {
         setEvent({ ...event, relatedEvents: array });
 
     }
-    const picture = (e) => {
-        const file = e.target.files[0]
-        console.log(file.name);
-        setImg(file);
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onloadend = () => {
-                setImage(reader.result);
-            };
-
-            reader.readAsDataURL(file);
-        } else {
-            setImage('');
-        }
-    };
     return (
         <div id="eventForm">
             <div id="eFrom1">
@@ -189,9 +146,9 @@ export const EventForm = () => {
             </div>
             <div id="eForm2">
                 <span id="eventArt">
-                    <input type="file" id="fileInput" onChange={picture} accept="image/png, image/jpg, image/jpeg" />
+                    <input type="file" id="fileInput" onChange={picturePreview} accept="image/png, image/jpg, image/jpeg" />
                     {image && <img className="preview" style={{ height: '300px' }} src={image} alt="Preview" />}
-                    {bool && !image && <img className="preview" src={`/img/event/${event.picture}`} alt="Cant reach" />}
+                    {eventId && !image && <img className="preview" style={{ height: '300px' }} src={`/img/event/${event.picture}`} alt="Cant reach" />}
                 </span>
                 <span id="eventDetails">
                     <label htmlFor="">Event Details</label>
@@ -218,7 +175,7 @@ export const EventForm = () => {
                     {event.relatedEvents ? <EventCard array={matching} /> : null}
                 </span>
             </div>
-            <button type="button" onClick={upload}>Save</button>
+            <button type="button" onClick={handleUpload}>Save</button>
         </div>
     )
 }
