@@ -48,11 +48,11 @@ export const Events = () => {
             <div id="eventList">
                 <div className="vertical">
                     <h2>Musical Concerts</h2>
-                    <EventCard array={concertFilter} funkcija={formatDate} />
+                    <EventCard array={concertFilter} option={1} />
                 </div>
                 <div className="vertical">
                     <h2>Stand-up Comedy</h2>
-                    <EventCard array={standUpFilter} funkcija={formatDate} />
+                    <EventCard array={standUpFilter} option={1} />
                 </div>
             </div>
         </div>

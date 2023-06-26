@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { Dropdown } from "./Dropdown";
 import { EventCard } from "../mainPages/EventCard";
 import { preview, verifyData, uploadFunc, fetchEvents } from '../functions/functions';
+import { element } from "prop-types";
 
 export const EventForm = () => {
     const { eventId } = useParams();
@@ -25,11 +26,16 @@ export const EventForm = () => {
         relatedEvents: []
     })
     useEffect(() => {
-        if (eventId) {
-            getEvent();
-        }
         fetchConcerts();
         fetchStandUp();
+        if (eventId) {
+            getEvent();
+            let filterConcerts = concerts.filter(element => element._id !== eventId);
+            let filterStandUp = standUp.filter(element => element._id !== eventId);
+            setConcerts(filterConcerts);
+            setStandUp(filterStandUp); // fix this tomorrow
+        }
+
     }, []);
 
     useEffect(() => {
@@ -78,11 +84,9 @@ export const EventForm = () => {
                 credentials: 'include'
             });
             const result = await response.json()
-            console.log(result);
             if (result.status === 'success') {
                 window.location.href = '/eventForm';
             }
-
         } catch (err) {
             console.log(err);
         }
@@ -99,14 +103,12 @@ export const EventForm = () => {
                 credentials: 'include'
             });
             const result = await response.json();
-            console.log(result);
             if (result.status === 'success') {
                 window.location.href = `/events/${eventId}`
             }
         } catch (err) {
             return console.log(err);
         }
-
     }
     const picturePreview = (e) => {
         preview(e, setPreviewPic, setImage);
@@ -114,27 +116,32 @@ export const EventForm = () => {
     const addArray = (e) => {
         e.preventDefault()
         const array = [...event.relatedEvents]
+        let arr = [...matching]
         if (!array.includes(related)) {
             array.push(related)
         }
-        console.log(array);
-        let arr = []
         concerts.forEach(element => {
-            if (array.includes(element._id)) {
+            if (array.includes(element._id) && !arr.includes(element)) {
                 arr.push(element)
             }
         });
-        console.log(matching);
         standUp.forEach(element => {
-            if (array.includes(element._id)) {
+            if (array.includes(element._id) && !arr.includes(element)) {
                 arr.push(element);
             }
         })
-        arr.concat(matching)
         setMatching(arr);
         setEvent({ ...event, relatedEvents: array });
-
     }
+    const unlink = (elem) => {
+        let array = [...event.relatedEvents];
+        let arr = [...matching];
+        array = array.filter((element) => element !== elem);
+        arr = arr.filter((element) => element !== elem);
+        setMatching(arr);
+        setEvent({ ...event, relatedEvents: array });
+    };
+
     return (
         <div id="eventForm">
             <div id="eFrom1">
@@ -183,7 +190,7 @@ export const EventForm = () => {
                     <button onClick={addArray}>Add</button>
                 </span>
                 <span id="relatedEvents">
-                    {event.relatedEvents ? <EventCard array={matching} /> : null}
+                    {event.relatedEvents ? <EventCard option={2} array={matching} func={unlink} /> : null}
                 </span>
             </div>
             <button type="button" onClick={handleUpload}>Save</button>
