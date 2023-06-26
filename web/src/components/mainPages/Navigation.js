@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
-import { idActions } from "../../redux/actions/idActions";
+import { idActions, roleActions } from "../../redux/actions/idActions";
 import { useDispatch } from "react-redux";
 
 export const Navigation = () => {
@@ -22,7 +22,8 @@ export const Navigation = () => {
             const result = await response.json();
             if (result.status === 'success') {
                 const { id, role } = result.data
-                dispatch(idActions(id, role));
+                dispatch(idActions(id));
+                dispatch(roleActions(role));
                 setLoggedIn(true);
             }
         } catch (err) {
@@ -53,7 +54,7 @@ export const Navigation = () => {
                     </div> : <div id="userNav">
                         <ul>
                             <li><Link to="/cart"><i className="fa-solid fa-cart-shopping" style={{ color: '#ff48ab' }}></i></Link></li>
-                            <li><Link to="/userProfile"><i className="fa-solid fa-user" style={{ color: '#ff48ab' }}></i></Link></li>
+                            <li><Link to="/user"><i className="fa-solid fa-user" style={{ color: '#ff48ab' }}></i></Link></li>
                         </ul>
                     </div>}
                 </div>

@@ -64,3 +64,27 @@ export const uploadFunc = async (update, current, setObj, object, setTrigger, tr
         return console.log(err);
     }
 }
+export const fetchEvents = async (dispatch, option, event) => {
+    try {
+        const response = await fetch(`/api/v1/events/${event}`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'aplication/json'
+            },
+        });
+        const result = await response.json();
+        if (result.status === 'success') {
+            if (dispatch) {
+                dispatch(option(result.data.events))
+            } else {
+                const empty = {}
+                let arr = result.data.events
+                arr.unshift(empty)
+                option(arr);
+            }
+
+        }
+    } catch (err) {
+        return console.log(err);
+    }
+}

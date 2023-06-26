@@ -1,8 +1,7 @@
-import { GET_ID } from '../constants/idConstants'
+import { GET_ID, GET_ROLE } from '../constants/idConstants'
 const initialState = {
     id: "",
     role: "",
-    token: ""
 }
 
 export const idReducer = (state = initialState, action) => {
@@ -11,7 +10,11 @@ export const idReducer = (state = initialState, action) => {
             return {
                 ...state,
                 id: action.payload,
-                role: action.payload,
+            }
+        case GET_ROLE:
+            return {
+                ...state,
+                role: action.payload
             }
         default: return state
     }

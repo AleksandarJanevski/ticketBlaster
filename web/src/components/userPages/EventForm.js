@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import { Dropdown } from "./Dropdown";
-import { useSelector } from 'react-redux'
 import { EventCard } from "../mainPages/EventCard";
-import { preview, verifyData, uploadFunc } from '../functions/functions';
+import { preview, verifyData, uploadFunc, fetchEvents } from '../functions/functions';
 
 export const EventForm = () => {
     const { eventId } = useParams();
-    const concerts = useSelector(state => state.eventsReducer.concerts);
-    const standUp = useSelector(state => state.eventsReducer.standUp);
+    const [concerts, setConcerts] = useState([]);
+    const [standUp, setStandUp] = useState([]);
     const [image, setImage] = useState('');
     const [sent, setSent] = useState(false);
     const [previewPic, setPreviewPic] = useState('')
-    const [matching, setMatching] = useState([])
+    const [matching, setMatching] = useState([]);
     const [related, setRelated] = useState('')
     const [event, setEvent] = useState({
         name: '',
@@ -29,6 +28,8 @@ export const EventForm = () => {
         if (eventId) {
             getEvent();
         }
+        fetchConcerts();
+        fetchStandUp();
     }, []);
 
     useEffect(() => {
@@ -38,7 +39,12 @@ export const EventForm = () => {
             updateEvent();
         }
     }, [sent]);
-
+    const fetchConcerts = async () => {
+        await fetchEvents('', setConcerts, 'concerts')
+    }
+    const fetchStandUp = async () => {
+        await fetchEvents('', setStandUp, 'standUp');
+    }
     const getEvent = async () => {
         try {
             const response = await fetch(`/api/v1/events/${eventId}`, {
@@ -62,6 +68,7 @@ export const EventForm = () => {
     }
     const createEvent = async () => {
         try {
+            verifyData(event)
             const response = await fetch('/api/v1/events', {
                 method: 'POST',
                 body: JSON.stringify(event),
@@ -107,20 +114,24 @@ export const EventForm = () => {
     const addArray = (e) => {
         e.preventDefault()
         const array = [...event.relatedEvents]
-        array.push(related)
+        if (!array.includes(related)) {
+            array.push(related)
+        }
         console.log(array);
+        let arr = []
         concerts.forEach(element => {
             if (array.includes(element._id)) {
-                console.log(element);
-                matching.push(element)
+                arr.push(element)
             }
         });
         console.log(matching);
         standUp.forEach(element => {
             if (array.includes(element._id)) {
-                matching.push(element)
+                arr.push(element);
             }
         })
+        arr.concat(matching)
+        setMatching(arr);
         setEvent({ ...event, relatedEvents: array });
 
     }
