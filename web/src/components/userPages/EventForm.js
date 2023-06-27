@@ -14,6 +14,9 @@ export const EventForm = () => {
     const [previewPic, setPreviewPic] = useState('')
     const [matching, setMatching] = useState([]);
     const [related, setRelated] = useState('')
+    const currentDate = new Date().toISOString().split("T")[0];
+    const year = currentDate[3]
+    const maxDate = currentDate.replace(year, (parseInt(year) + 5))
     const [event, setEvent] = useState({
         name: '',
         category: '',
@@ -86,6 +89,7 @@ export const EventForm = () => {
         }
     }
     const handleUpload = async () => {
+        verifyData(event)
         await uploadFunc(previewPic, event.picture, setEvent, event, setSent, sent, 'event');
     }
     const createEvent = async () => {
@@ -133,19 +137,19 @@ export const EventForm = () => {
         e.preventDefault()
         const array = [...event.relatedEvents]
         let arr = [...matching]
-        if (!array.includes(related)) {
+        if (!array.includes(related) && related !== '') {
             array.push(related)
         }
         concerts.forEach(element => {
-            if (array.includes(element._id) && !arr.includes(element)) {
+            if (array.includes(element._id) && !arr.includes(element) && element !== '') {
                 arr.push(element)
             }
         });
         standUp.forEach(element => {
-            if (array.includes(element._id) && !arr.includes(element)) {
+            if (array.includes(element._id) && !arr.includes(element) && element !== '') {
                 arr.push(element);
             }
-        })
+        });
         let filterConcerts = concerts.filter(element => !arr.some(item => item === element));
         let filterStandUp = standUp.filter(element => !arr.some(item => item === element));
         setStandUp(filterStandUp);
@@ -214,7 +218,7 @@ export const EventForm = () => {
                 </span>
                 <span>
                     <label htmlFor="">Date</label>
-                    <input type="date" name="date" className="formInput" required value={event.date ? new Date(event.date).toISOString().split('T')[0] : ''} onChange={(e) => { setEvent({ ...event, date: e.target.value }) }} />
+                    <input type="date" name="date" min={currentDate} max={maxDate} className="formInput" required value={event.date ? new Date(event.date).toISOString().split('T')[0] : ''} onChange={(e) => { setEvent({ ...event, date: e.target.value }) }} />
                 </span>
             </div>
             <div id="eForm2">
