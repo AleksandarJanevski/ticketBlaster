@@ -2,10 +2,6 @@ import React from "react";
 import PropTypes from 'prop-types'
 import { formatDate } from '../functions/functions'
 export const EventCard = ({ array, option, func }) => {
-    const removeArr = (element) => {
-        func(element)
-    }
-
     return (
         <div id="card">
             {array && array.map((element, i) => {
@@ -22,7 +18,7 @@ export const EventCard = ({ array, option, func }) => {
                             </div>
                             <div id="bottom_card">
                                 <p>{element.location}</p>
-                                {option === 1 ? <button id="getTickets"><a href={`/events/${element._id}`}>Get Tickets</a></button> : <button id="removeRelated" onClick={() => removeArr(element)}>Remove</button>}
+                                {option === 1 ? <button id="getTickets"><a href={`/events/${element._id}`}>Get Tickets</a></button> : <button id="removeRelated" onClick={() => func(element)}>Remove</button>}
 
                             </div>
                         </div>

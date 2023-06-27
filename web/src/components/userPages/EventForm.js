@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { Dropdown } from "./Dropdown";
 import { EventCard } from "../mainPages/EventCard";
 import { preview, verifyData, uploadFunc, fetchEvents } from '../functions/functions';
-import { element } from "prop-types";
 
 export const EventForm = () => {
     const { eventId } = useParams();
@@ -11,6 +10,7 @@ export const EventForm = () => {
     const [standUp, setStandUp] = useState([]);
     const [image, setImage] = useState('');
     const [sent, setSent] = useState(false);
+    let [t, setT] = useState(0);
     const [previewPic, setPreviewPic] = useState('')
     const [matching, setMatching] = useState([]);
     const [related, setRelated] = useState('')
@@ -26,17 +26,17 @@ export const EventForm = () => {
         relatedEvents: []
     })
     useEffect(() => {
-        fetchConcerts();
-        fetchStandUp();
         if (eventId) {
             getEvent();
-            let filterConcerts = concerts.filter(element => element._id !== eventId);
-            let filterStandUp = standUp.filter(element => element._id !== eventId);
-            setConcerts(filterConcerts);
-            setStandUp(filterStandUp); // fix this tomorrow
         }
-
     }, []);
+    useEffect(() => {
+        if (t < 2) {
+            fetchConcerts();
+            fetchStandUp();
+            setT(t += 1)
+        }
+    }, [event]);
 
     useEffect(() => {
         if (!eventId && sent) {
@@ -46,11 +46,18 @@ export const EventForm = () => {
         }
     }, [sent]);
     const fetchConcerts = async () => {
-        await fetchEvents('', setConcerts, 'concerts')
-    }
+        await fetchEvents('', (data) => {
+            const filteredConcerts = data.filter(element => element._id !== eventId && !event.relatedEvents.some(relatedEvent => relatedEvent._id === element._id));
+            setConcerts(filteredConcerts);
+        }, 'concerts');
+    };
     const fetchStandUp = async () => {
-        await fetchEvents('', setStandUp, 'standUp');
-    }
+        await fetchEvents('', (data) => {
+            const filteredStandUp = data.filter(element => element._id !== eventId && !event.relatedEvents.some(item => item._id === element._id));
+            setStandUp(filteredStandUp);
+        }, 'standUp');
+    };
+
     const getEvent = async () => {
         try {
             const response = await fetch(`/api/v1/events/${eventId}`, {
@@ -130,6 +137,9 @@ export const EventForm = () => {
                 arr.push(element);
             }
         })
+        let filter = concerts.filter(element => !arr.some(item => item === element))
+        console.log(filter, arr);
+        setConcerts(filter)
         setMatching(arr);
         setEvent({ ...event, relatedEvents: array });
     }
@@ -195,5 +205,5 @@ export const EventForm = () => {
             </div>
             <button type="button" onClick={handleUpload}>Save</button>
         </div>
-    )
+    );
 }
