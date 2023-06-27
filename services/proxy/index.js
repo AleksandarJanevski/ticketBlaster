@@ -5,11 +5,14 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
+
 const api = express();
 api.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
 }));
+
+
 api.use(cookieParser());
 api.use(express.static('public'))
 api.use(morgan('dev'));

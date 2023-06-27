@@ -54,7 +54,7 @@ export const Navigation = () => {
                     </div> : <div id="userNav">
                         <ul>
                             <li><Link to="/cart"><i className="fa-solid fa-cart-shopping" style={{ color: '#ff48ab' }}></i></Link></li>
-                            <li><Link to="/user"><i className="fa-solid fa-user" style={{ color: '#ff48ab' }}></i></Link></li>
+                            <li><Link to="/user/details"><i className="fa-solid fa-user" style={{ color: '#ff48ab' }}></i></Link></li>
                         </ul>
                     </div>}
                 </div>

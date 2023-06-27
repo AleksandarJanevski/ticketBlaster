@@ -19,8 +19,11 @@ const multerFilter = (req, file, callback) => {
         callback(new Error('Unsupported file type'), false)
     }
 }
+
+const maxSize = 10 * 1024 * 1024;
 const upload = multer({
     storage: multerStorage,
-    fileFilter: multerFilter
+    fileFilter: multerFilter,
+    limits: { fileSize: maxSize }
 });
 exports.uploadPicture = upload.single('picture');
