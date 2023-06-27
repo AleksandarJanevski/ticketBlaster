@@ -15,7 +15,7 @@ export const Events = () => {
     useEffect(() => {
         setStandUpFilter(standUp.filter(element => element.name !== hero.name));
         setConcertFilter(concerts.filter(element => element.name !== hero.name))
-    }, [hero])
+    }, [hero]);
     const getHero = async () => {
         try {
             const response = await fetch('/api/v1/events/hero', {

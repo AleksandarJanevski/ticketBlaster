@@ -31,7 +31,7 @@ export const EventForm = () => {
         }
     }, []);
     useEffect(() => {
-        if (t < 2) {
+        if (t < 1) {
             fetchConcerts();
             fetchStandUp();
             setT(t += 1)
@@ -47,14 +47,23 @@ export const EventForm = () => {
     }, [sent]);
     const fetchConcerts = async () => {
         await fetchEvents('', (data) => {
-            const filteredConcerts = data.filter(element => element._id !== eventId && !event.relatedEvents.some(relatedEvent => relatedEvent._id === element._id));
-            setConcerts(filteredConcerts);
+            if (eventId) {
+                const filteredConcerts = data.filter(element => element._id !== eventId && !event.relatedEvents.some(relatedEvent => relatedEvent._id === element._id));
+                setConcerts(filteredConcerts);
+            } else {
+                setConcerts(data)
+            }
+
         }, 'concerts');
     };
     const fetchStandUp = async () => {
         await fetchEvents('', (data) => {
-            const filteredStandUp = data.filter(element => element._id !== eventId && !event.relatedEvents.some(item => item._id === element._id));
-            setStandUp(filteredStandUp);
+            if (eventId) {
+                const filteredStandUp = data.filter(element => element._id !== eventId && !event.relatedEvents.some(item => item._id === element._id));
+                setStandUp(filteredStandUp);
+            } else {
+                setStandUp(data)
+            }
         }, 'standUp');
     };
 
@@ -144,11 +153,46 @@ export const EventForm = () => {
         setMatching(arr);
         setEvent({ ...event, relatedEvents: array });
     }
+    useEffect(() => {
+        console.log('concerts:', concerts, "stand up:", standUp, "matching:", matching, "related:", event.relatedEvents);
+    }, [concerts, standUp, matching, event.relatedEvents])
     const unlink = (elem) => {
         let array = [...event.relatedEvents];
         let arr = [...matching];
-        array = array.filter((element) => element !== elem);
+        if (!eventId) {
+            array = array.filter((element) => {
+                if (elem._id !== element) {
+                    return element
+                }
+            });
+        } else {
+            array = array.filter((element) => {
+                if (elem._id !== element._id) {
+                    return element
+                }
+            });
+        }
+
         arr = arr.filter((element) => element !== elem);
+        let concertArr = [...concerts]
+        let standUpArr = [...standUp]
+        let bool = false
+        if (elem.category === 'Musical Concert') {
+            if (!concertArr.some((element) => element._id === elem._id)) {
+                concertArr.push(elem);
+                bool = true
+            }
+        } else {
+            if (!standUpArr.some((element) => element._id === elem._id)) {
+                standUpArr.push(elem);
+            }
+        }
+        if (bool) {
+            console.log('yes');
+            setConcerts(concertArr)
+        } else {
+            setStandUp(standUpArr)
+        }
         setMatching(arr);
         setEvent({ ...event, relatedEvents: array });
     };
