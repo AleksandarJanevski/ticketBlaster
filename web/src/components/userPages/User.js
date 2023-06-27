@@ -7,25 +7,27 @@ export const User = () => {
     useEffect(() => { }, [])
     return (
         <div id="user">
-            <div id="user_page">
-                <Outlet />
-                <div id="user_nav">
-                    {role === 'admin' ?
-                        <ul>
-                            <li><Link to='/user/events'>Events</Link></li>
-                            <li><Link to='/user/manage'>Users</Link></li>
-                            <li><Link to="/user/ticketHistory">Ticket History</Link></li>
-                            <li><Link to="/user/details">User Details</Link></li>
-                            <li><button>Log Out</button></li>
-                        </ul> :
-                        <ul>
-                            <li><Link to="/user/ticketHistory">Ticket History</Link></li>
-                            <li><Link to="/user/details">User Details</Link></li>
-                            <li><button>Log Out</button></li>
-                        </ul>
-                    }
-                </div>
-            </div>
+            {role &&
+                <div id="user_page">
+                    <Outlet />
+                    <div id="user_nav">
+                        {role === 'admin' ?
+                            <ul>
+                                <li><Link to='/user/events'>Events</Link></li>
+                                <li><Link to='/user/manage'>Users</Link></li>
+                                <li><Link to="/user/ticketHistory">Ticket History</Link></li>
+                                <li><Link to="/user/details">User Details</Link></li>
+                                <li><button>Log Out</button></li>
+                            </ul> :
+                            <ul>
+                                <li><Link to="/user/ticketHistory">Ticket History</Link></li>
+                                <li><Link to="/user/details">User Details</Link></li>
+                                <li><button>Log Out</button></li>
+                            </ul>
+                        }
+                    </div>
+                </div>}
+
         </div>
     )
 }

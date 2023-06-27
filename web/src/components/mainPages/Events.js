@@ -35,7 +35,7 @@ export const Events = () => {
 
     return (
         <div id="events">
-            <div style={{ backgroundImage: `url(/img/event/${hero.picture})` }} id="hero">
+            {Object.keys(hero).length < 0 ? <div style={{ backgroundImage: `url(/img/event/${hero.picture})` }} id="hero">
                 <div id="hero_name">
                     <p>{hero.name}</p>
                 </div>
@@ -43,16 +43,15 @@ export const Events = () => {
                     <p>{formatDate(new Date(hero.date).toLocaleDateString('en-GB'))}, {hero.location}</p>
                     <button id="getTickets"><a href={`/event/${hero._id}`}>Get Tickets</a></button>
                 </div>
-
-            </div>
+            </div> : null}
             <div id="eventList">
                 <div className="vertical">
                     <h2>Musical Concerts</h2>
-                    <EventCard array={concertFilter} option={1} />
+                    {concertFilter.length > 0 ? <EventCard array={concertFilter} option={1} /> : <h1>Loading...</h1>}
                 </div>
                 <div className="vertical">
                     <h2>Stand-up Comedy</h2>
-                    <EventCard array={standUpFilter} option={1} />
+                    {standUpFilter.length > 0 ? <EventCard array={standUpFilter} option={1} /> : <h1>Loading...</h1>}
                 </div>
             </div>
         </div>
