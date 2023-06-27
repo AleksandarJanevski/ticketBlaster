@@ -137,9 +137,10 @@ export const EventForm = () => {
                 arr.push(element);
             }
         })
-        let filter = concerts.filter(element => !arr.some(item => item === element))
-        console.log(filter, arr);
-        setConcerts(filter)
+        let filterConcerts = concerts.filter(element => !arr.some(item => item === element));
+        let filterStandUp = standUp.filter(element => !arr.some(item => item === element));
+        setStandUp(filterStandUp);
+        setConcerts(filterConcerts);
         setMatching(arr);
         setEvent({ ...event, relatedEvents: array });
     }
