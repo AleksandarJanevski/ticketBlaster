@@ -90,7 +90,7 @@ export const EventForm = () => {
     }
     const handleUpload = async () => {
         try {
-            let valid = verifyData(event)
+            let valid = verifyData(event, false);
             if (valid) {
                 await uploadFunc(previewPic, event.picture, setEvent, event, setSent, sent, 'event');
             }
@@ -101,39 +101,48 @@ export const EventForm = () => {
     }
     const createEvent = async () => {
         try {
-            const response = await fetch('/api/v1/events', {
-                method: 'POST',
-                body: JSON.stringify(event),
-                headers: {
-                    'content-type': 'application/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json()
-            if (result.status === 'success') {
-                window.location.href = '/eventForm';
+            let valid = verifyData(event, true);
+            if (valid) {
+                const response = await fetch('/api/v1/events', {
+                    method: 'POST',
+                    body: JSON.stringify(event),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                const result = await response.json()
+                if (result.status === 'success') {
+                    window.location.href = '/eventForm';
+                }
             }
+
         } catch (err) {
             return console.log(err);
         }
     };
     const updateEvent = async () => {
         try {
-            const response = await fetch(`/api/v1/events/${eventId}`, {
-                method: 'PATCH',
-                body: JSON.stringify(event),
-                headers: {
-                    'content-type': 'application/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                window.location.href = `/events/${eventId}`
+            let valid = verifyData(event, true);
+            if (valid) {
+                verifyData(event, true);
+                const response = await fetch(`/api/v1/events/${eventId}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify(event),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    window.location.href = `/events/${eventId}`
+                }
             }
         } catch (err) {
             return console.log(err);
         }
+
     }
     const picturePreview = (e) => {
         preview(e, setPreviewPic, setImage);

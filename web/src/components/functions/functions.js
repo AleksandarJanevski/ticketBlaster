@@ -1,4 +1,5 @@
 import axios from "axios";
+import { object } from "prop-types";
 export const formatDate = (date) => {
     try {
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -40,11 +41,15 @@ export const preview = (e, setUpload, setPreview) => {
         setPreview('');
     }
 }
-export function verifyData(obj) {
+export function verifyData(obj, bool) {
     for (let key in obj) {
-        if ((typeof obj[key] === 'string' && obj[key].trim() === '') || (obj[key] === null && obj[key] <= 0)) {
+        if (bool && (typeof obj[key] === 'string' && obj[key].trim() === '') || (obj[key] === null && obj[key] <= 0)) {
             alert(`Please fill out the ${key} input field`)
             return false
+        } else if ((typeof obj[key] === 'string' && obj[key].trim() === '' && key !== 'picture') || (obj[key] === null && obj[key] <= 0)) {
+            alert(`Please fill out the ${key} input field`)
+            return false
+
         }
     }
     return true
