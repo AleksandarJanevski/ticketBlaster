@@ -89,12 +89,18 @@ export const EventForm = () => {
         }
     }
     const handleUpload = async () => {
-        verifyData(event)
-        await uploadFunc(previewPic, event.picture, setEvent, event, setSent, sent, 'event');
+        try {
+            let valid = verifyData(event)
+            if (valid) {
+                await uploadFunc(previewPic, event.picture, setEvent, event, setSent, sent, 'event');
+            }
+        } catch (err) {
+            alert(err.message)
+        }
+
     }
     const createEvent = async () => {
         try {
-            verifyData(event)
             const response = await fetch('/api/v1/events', {
                 method: 'POST',
                 body: JSON.stringify(event),
@@ -108,12 +114,11 @@ export const EventForm = () => {
                 window.location.href = '/eventForm';
             }
         } catch (err) {
-            console.log(err);
+            return console.log(err);
         }
     };
     const updateEvent = async () => {
         try {
-            verifyData(event);
             const response = await fetch(`/api/v1/events/${eventId}`, {
                 method: 'PATCH',
                 body: JSON.stringify(event),
@@ -157,9 +162,6 @@ export const EventForm = () => {
         setMatching(arr);
         setEvent({ ...event, relatedEvents: array });
     }
-    useEffect(() => {
-        console.log('concerts:', concerts, "stand up:", standUp, "matching:", matching, "related:", event.relatedEvents);
-    }, [concerts, standUp, matching, event.relatedEvents])
     const unlink = (elem) => {
         let array = [...event.relatedEvents];
         let arr = [...matching];
@@ -192,7 +194,6 @@ export const EventForm = () => {
             }
         }
         if (bool) {
-            console.log('yes');
             setConcerts(concertArr)
         } else {
             setStandUp(standUpArr)

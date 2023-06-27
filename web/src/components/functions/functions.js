@@ -43,9 +43,11 @@ export const preview = (e, setUpload, setPreview) => {
 export function verifyData(obj) {
     for (let key in obj) {
         if ((typeof obj[key] === 'string' && obj[key].trim() === '') || (obj[key] === null && obj[key] <= 0)) {
-            return alert(`Please fill out the ${key} input field`)
+            alert(`Please fill out the ${key} input field`)
+            return false
         }
     }
+    return true
 }
 export const uploadFunc = async (update, current, setObj, object, setTrigger, trigger, location) => {
     try {
