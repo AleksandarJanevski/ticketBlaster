@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { formatDate } from '../functions/functions'
-export const Dropdown = ({ elements, onChange, ime, ids }) => {
+export const Dropdown = ({ elements, onChange, ime }) => {
     return (
         <div>
-            <select name={ime} id={ids} onChange={onChange}>
+            <select name={ime} id='dropdown-select' onChange={onChange}>
                 {elements.map((elem, i) => {
                     if (i === 0) {
                         return (

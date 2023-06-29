@@ -13,10 +13,10 @@ export const EventForm = () => {
     let [t, setT] = useState(0);
     const [previewPic, setPreviewPic] = useState('')
     const [matching, setMatching] = useState([]);
-    const [related, setRelated] = useState('')
+    const [related, setRelated] = useState('');
     const currentDate = new Date().toISOString().split("T")[0];
-    const year = currentDate[3]
-    const maxDate = currentDate.replace(year, (parseInt(year) + 5))
+    const year = currentDate[3];
+    const maxDate = currentDate.replace(year, (parseInt(year) + 5));
     const [event, setEvent] = useState({
         name: '',
         category: '',
@@ -27,14 +27,15 @@ export const EventForm = () => {
         price: 0,
         tickets: 0,
         relatedEvents: []
-    })
+    });
     useEffect(() => {
         if (eventId) {
             getEvent();
         }
     }, []);
+
     useEffect(() => {
-        if (t < 1) {
+        if (t < 2) {
             fetchConcerts();
             fetchStandUp();
             setT(t += 1)
@@ -48,6 +49,7 @@ export const EventForm = () => {
             updateEvent();
         }
     }, [sent]);
+
     const fetchConcerts = async () => {
         await fetchEvents('', (data) => {
             if (eventId) {
@@ -59,10 +61,13 @@ export const EventForm = () => {
 
         }, 'concerts');
     };
+
     const fetchStandUp = async () => {
         await fetchEvents('', (data) => {
             if (eventId) {
-                const filteredStandUp = data.filter(element => element._id !== eventId && !event.relatedEvents.some(item => item._id === element._id));
+                const filteredStandUp = data.filter(element => {
+                    return element._id !== eventId && !event.relatedEvents.some(item => item._id === element._id);
+                });
                 setStandUp(filteredStandUp);
             } else {
                 setStandUp(data)
@@ -88,6 +93,7 @@ export const EventForm = () => {
             return console.log(err);
         }
     }
+
     const handleUpload = async () => {
         try {
             let valid = verifyData(event, false);
@@ -99,6 +105,7 @@ export const EventForm = () => {
         }
 
     }
+
     const createEvent = async () => {
         try {
             let valid = verifyData(event, true);
@@ -116,11 +123,11 @@ export const EventForm = () => {
                     window.location.href = '/eventForm';
                 }
             }
-
         } catch (err) {
             return console.log(err);
         }
     };
+
     const updateEvent = async () => {
         try {
             let valid = verifyData(event, true);
@@ -144,9 +151,11 @@ export const EventForm = () => {
         }
 
     }
+
     const picturePreview = (e) => {
         preview(e, setPreviewPic, setImage);
     };
+
     const addArray = (e) => {
         e.preventDefault()
         const array = [...event.relatedEvents]
@@ -170,24 +179,21 @@ export const EventForm = () => {
         setConcerts(filterConcerts);
         setMatching(arr);
         setEvent({ ...event, relatedEvents: array });
+        const dropdownElement = document.getElementById('dropdown-select');
+        dropdownElement.selectedIndex = 0;
+        setRelated('')
     }
+
     const unlink = (elem) => {
         let array = [...event.relatedEvents];
         let arr = [...matching];
-        if (!eventId) {
-            array = array.filter((element) => {
-                if (elem._id !== element) {
-                    return element
-                }
-            });
-        } else {
-            array = array.filter((element) => {
-                if (elem._id !== element._id) {
-                    return element
-                }
-            });
-        }
-
+        array = array.filter((element) => {
+            if (typeof element === 'object' && elem._id !== element._id) {
+                return element
+            } else if (typeof element === 'string' && elem._id !== element) {
+                return element
+            }
+        });
         arr = arr.filter((element) => element !== elem);
         let concertArr = [...concerts]
         let standUpArr = [...standUp]
@@ -252,12 +258,18 @@ export const EventForm = () => {
             <div id="eForm3">
                 <label htmlFor="">Related Events</label>
                 <span>
-                    {event.category === 'Musical Concert' ?
-                        <Dropdown elements={concerts} onChange={(e) => { setRelated(e.target.value) }} />
-                        :
-                        <Dropdown elements={standUp} onChange={(e) => { setRelated(e.target.value) }} />}
-                    <button onClick={addArray}>Add</button>
+                    {['Musical Concert', 'Stand-up Comedy'].includes(event.category) ? (
+                        <Dropdown elements={event.category === 'Musical Concert' ? concerts : standUp} onChange={(e) => { setRelated(e.target.value) }} />
+                    ) : (
+                        <select id='dropdown-select'>
+                        </select>
+                    )}
+                    {event.category ? <button onClick={addArray}>Add</button> : <button onClick={(e) => {
+                        e.preventDefault();
+                        alert('Please select event category first')
+                    }}>Add</button>}
                 </span>
+
                 <span id="relatedEvents">
                     {event.relatedEvents ? <EventCard option={2} array={matching} func={unlink} /> : null}
                 </span>

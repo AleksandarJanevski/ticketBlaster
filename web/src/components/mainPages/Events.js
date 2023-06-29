@@ -35,15 +35,15 @@ export const Events = () => {
 
     return (
         <div id="events">
-            {Object.keys(hero).length < 0 ? <div style={{ backgroundImage: `url(/img/event/${hero.picture})` }} id="hero">
+            <div style={{ backgroundImage: `url(/img/event/${hero.picture})` }} id="hero">
                 <div id="hero_name">
                     <p>{hero.name}</p>
                 </div>
                 <div id="hero_info">
                     <p>{formatDate(new Date(hero.date).toLocaleDateString('en-GB'))}, {hero.location}</p>
-                    <button id="getTickets"><a href={`/event/${hero._id}`}>Get Tickets</a></button>
+                    <button id="getTickets"><a href={`/eventForm/${hero._id}`}>Get Tickets</a></button>
                 </div>
-            </div> : null}
+            </div>
             <div id="eventList">
                 <div className="vertical">
                     <h2>Musical Concerts</h2>
