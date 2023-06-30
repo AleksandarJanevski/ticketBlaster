@@ -45,7 +45,11 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
     try {
-        cookie(res, 'jwt', 'sessionExpired');
+        res.cookie('jwt', 'Session Expired', {
+            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 10),
+            secure: false,
+            httpOnly: true
+        });
         res.status(204).json({ status: 'signed out' });
     } catch (err) {
         console.log(err);

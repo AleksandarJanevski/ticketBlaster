@@ -18,7 +18,7 @@ export const EventCard = ({ array, option, func }) => {
                             </div>
                             <div id="bottom_card">
                                 <p>{element.location}</p>
-                                {option === 1 ? <button id="getTickets"><a href={`/eventForm/${element._id}`}>Get Tickets</a></button> : <button id="removeRelated" onClick={() => func(element)}>Remove</button>}
+                                {[1, 3].includes(option) ? <button id="getTickets">{option === 1 ? <a href={`/eventForm/${element._id}`}>Get Tickets</a> : <a href={`http://localhost:9000/api/v1/events/delete/${element._id}`}>Delete Event</a>}</button> : <button id="removeRelated" onClick={() => func(element)}>Remove</button>}
 
                             </div>
                         </div>

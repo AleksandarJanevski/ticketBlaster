@@ -11,6 +11,7 @@ exports.getAllStandUp = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+
 exports.getHero = async (req, res) => {
     try {
         const events = await Event.find();
@@ -26,6 +27,16 @@ exports.getHero = async (req, res) => {
 exports.getAllConcerts = async (req, res) => {
     try {
         const events = await Event.find({ category: 'Musical Concert' });
+        events.sort((a, b) => { return a.date - b.date });
+        res.status(200).json({ status: 'success', data: { events } });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
+exports.getAll = async (req, res) => {
+    try {
+        const events = await Event.find();
         events.sort((a, b) => { return a.date - b.date });
         res.status(200).json({ status: 'success', data: { events } });
     } catch (err) {
@@ -111,7 +122,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
         await Event.findByIdAndDelete(req.params.id);
-        res.status(204).json({ status: 'success' });
+        res.status(204).redirect('http://localhost:3000/user/events');
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');
@@ -119,17 +130,9 @@ exports.delete = async (req, res) => {
 }
 exports.search = async (req, res) => {
     try {
-        const keyword = req.query.keyword
-        // const sort = req.query.sort
+        const keyword = req.query.keyword.toLowerCase()
         const events = await Event.find()
         let searchQuery = events.filter(element => element.details.toLowerCase().includes(keyword) || element.name.toLowerCase().includes(keyword));
-        // searchQuery.sort((a, b) => {
-        //     if (sort === 'ascending') {
-        //         return a.date - b.date
-        //     } else if (sort === 'descending') {
-        //         return b.date - a.date
-        //     }
-        // });
         res.status(200).json({ status: 'success', data: { searchQuery } });
     } catch (err) {
         console.log(err);

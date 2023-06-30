@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import { Dropdown } from "./Dropdown";
 import { EventCard } from "../mainPages/EventCard";
+import { useSelector } from 'react-redux'
 import { preview, verifyData, uploadFunc, fetchEvents } from '../functions/functions';
 
 export const EventForm = () => {
+    const role = useSelector(state => state.idReducer.role.role);
     const { eventId } = useParams();
     const [concerts, setConcerts] = useState([]);
     const [standUp, setStandUp] = useState([]);
@@ -94,6 +96,10 @@ export const EventForm = () => {
         }
     }
 
+    const picturePreview = (e) => {
+        preview(e, setPreviewPic, setImage);
+    };
+
     const handleUpload = async () => {
         try {
             let valid = verifyData(event, false);
@@ -152,11 +158,9 @@ export const EventForm = () => {
 
     }
 
-    const picturePreview = (e) => {
-        preview(e, setPreviewPic, setImage);
-    };
 
-    const addArray = (e) => {
+
+    const addRelated = (e) => {
         e.preventDefault()
         const array = [...event.relatedEvents]
         let arr = [...matching]
@@ -184,7 +188,7 @@ export const EventForm = () => {
         setRelated('')
     }
 
-    const unlink = (elem) => {
+    const removeRelated = (elem) => {
         let array = [...event.relatedEvents];
         let arr = [...matching];
         array = array.filter((element) => {
@@ -258,20 +262,19 @@ export const EventForm = () => {
             <div id="eForm3">
                 <label htmlFor="">Related Events</label>
                 <span>
-                    {['Musical Concert', 'Stand-up Comedy'].includes(event.category) ? (
+                    {['Musical Concert', 'Stand-up Comedy'].includes(event.category) ?
                         <Dropdown elements={event.category === 'Musical Concert' ? concerts : standUp} onChange={(e) => { setRelated(e.target.value) }} />
-                    ) : (
-                        <select id='dropdown-select'>
-                        </select>
-                    )}
-                    {event.category ? <button onClick={addArray}>Add</button> : <button onClick={(e) => {
+                        :
+                        <select id='dropdown-select'></select>
+                    }
+                    {event.category ? <button onClick={addRelated}>Add</button> : <button onClick={(e) => {
                         e.preventDefault();
                         alert('Please select event category first')
                     }}>Add</button>}
                 </span>
 
                 <span id="relatedEvents">
-                    {event.relatedEvents ? <EventCard option={2} array={matching} func={unlink} /> : null}
+                    {event.relatedEvents ? <EventCard option={2} array={matching} func={removeRelated} /> : null}
                 </span>
             </div>
             <button type="button" onClick={handleUpload}>Save</button>

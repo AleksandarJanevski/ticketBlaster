@@ -15,6 +15,7 @@ api.post('/api/v1/auth/resetPassword/:token', auth.resetPassword);
 api.get('/api/v1/auth/admin', auth.protectAdmin, (req, res) => {
     res.status(200).json({ status: 'success' });
 });
+api.get('/api/v1/auth/logout', auth.logout);
 api.get('/api/v1/auth/verify/:token', auth.verify);
 api.get('/api/v1/auth', auth.cookieVerify);
 api.use(
@@ -25,7 +26,7 @@ api.use(
 );
 
 api.post('/api/v1/auth/changePassword', auth.changePassword);
-api.get('/api/v1/auth/logout', auth.logout);
+
 
 api.listen(process.env.AUTH, err => {
     if (err) return console.log(err);

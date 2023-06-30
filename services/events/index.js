@@ -9,17 +9,19 @@ api.use(cookieParser());
 api.use(express.json());
 db.init();
 
-api.get('/api/v1/events', events.search);
+api.get('/api/v1/events/search', events.search);
+
 api.get('/api/v1/events/standUp', events.getAllStandUp);
 api.get('/api/v1/events/concerts', events.getAllConcerts);
 api.get('/api/v1/events/hero', events.getHero);
+api.get('/api/v1/events/getAll', events.getAll);
 api.get('/api/v1/events/:id', events.getOne);
 
 api.use(auth.protectAdmin);
 
 api.post('/api/v1/events', events.create);
 api.patch('/api/v1/events/:id', events.update);
-api.delete('/api/v1/events/:id', events.delete);
+api.get('/api/v1/events/delete/:id', events.delete);
 
 
 
