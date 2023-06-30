@@ -28,6 +28,7 @@ export const Navigation = () => {
             }
         } catch (err) {
             setLoggedIn(false);
+            dispatch(roleActions('client'))
         }
     }
 

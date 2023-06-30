@@ -31,11 +31,13 @@ export const EventForm = () => {
         relatedEvents: []
     });
     useEffect(() => {
+        if (role && role !== 'admin') {
+            window.location.href = '/';
+        }
+    }, [role])
+    useEffect(() => {
         if (eventId) {
             getEvent();
-        }
-        if (!role || role !== 'admin') {
-            window.location.href = '/'
         }
     }, []);
 
@@ -160,8 +162,6 @@ export const EventForm = () => {
 
     }
 
-
-
     const addRelated = (e) => {
         e.preventDefault()
         const array = [...event.relatedEvents]
@@ -225,61 +225,63 @@ export const EventForm = () => {
 
     return (
         <div id="eventForm">
-            <div id="eFrom1">
-                <span>
-                    <label htmlFor="">Event Name</label>
-                    <input type="text" name="name" value={event.name} onChange={(e) => { setEvent({ ...event, name: e.target.value }) }} className="formInput" required />
-                </span>
-                <span>
-                    <label htmlFor="">Category</label>
-                    <select name="category" id="category" required value={event.category} onChange={(e) => { setEvent({ ...event, category: e.target.value }) }}>
-                        <option value=""></option>
-                        <option value="Musical Concert">Musical Concert</option>
-                        <option value="Stand-up Comedy">Stand-up Comedy</option>
-                    </select>
-                </span>
-                <span>
-                    <label htmlFor="">Date</label>
-                    <input type="date" name="date" min={currentDate} max={maxDate} className="formInput" required value={event.date ? new Date(event.date).toISOString().split('T')[0] : ''} onChange={(e) => { setEvent({ ...event, date: e.target.value }) }} />
-                </span>
-            </div>
-            <div id="eForm2">
-                <span id="eventArt">
-                    <input type="file" id="fileInput" onChange={picturePreview} accept="image/png, image/jpg, image/jpeg" />
-                    {image && <img className="preview" style={{ height: '300px' }} src={image} alt="Preview" />}
-                    {eventId && !image && <img className="preview" style={{ height: '300px' }} src={`/img/event/${event.picture}`} alt="Cant reach" />}
-                </span>
-                <span id="eventDetails">
-                    <label htmlFor="">Event Details</label>
-                    <input type="text" id="inputDetails" value={event.details} onChange={(e) => { setEvent({ ...event, details: e.target.value }) }} required />
+            {role === 'admin' ? <>
+                <div id="eFrom1">
+                    <span>
+                        <label htmlFor="">Event Name</label>
+                        <input type="text" name="name" value={event.name} onChange={(e) => { setEvent({ ...event, name: e.target.value }) }} className="formInput" required />
+                    </span>
+                    <span>
+                        <label htmlFor="">Category</label>
+                        <select name="category" id="category" required value={event.category} onChange={(e) => { setEvent({ ...event, category: e.target.value }) }}>
+                            <option value=""></option>
+                            <option value="Musical Concert">Musical Concert</option>
+                            <option value="Stand-up Comedy">Stand-up Comedy</option>
+                        </select>
+                    </span>
+                    <span>
+                        <label htmlFor="">Date</label>
+                        <input type="date" name="date" min={currentDate} max={maxDate} className="formInput" required value={event.date ? new Date(event.date).toISOString().split('T')[0] : ''} onChange={(e) => { setEvent({ ...event, date: e.target.value }) }} />
+                    </span>
+                </div>
+                <div id="eForm2">
+                    <span id="eventArt">
+                        <input type="file" id="fileInput" onChange={picturePreview} accept="image/png, image/jpg, image/jpeg" />
+                        {image && <img className="preview" style={{ height: '300px' }} src={image} alt="Preview" />}
+                        {eventId && !image && <img className="preview" style={{ height: '300px' }} src={`/img/event/${event.picture}`} alt="Cant reach" />}
+                    </span>
+                    <span id="eventDetails">
+                        <label htmlFor="">Event Details</label>
+                        <input type="text" id="inputDetails" value={event.details} onChange={(e) => { setEvent({ ...event, details: e.target.value }) }} required />
 
-                    <label htmlFor="">Ticket Price</label>
-                    <input type="number" required value={event.price} onChange={(e) => { setEvent({ ...event, price: e.target.value }) }} />
-                    <label htmlFor="">Ticket Amount</label>
-                    <input type="number" required value={event.tickets} onChange={(e) => { setEvent({ ...event, tickets: e.target.value }) }} name="amount" min={1} max={5000} />
-                    <label htmlFor="">Location</label>
-                    <input type="text" required value={event.location} onChange={(e) => { setEvent({ ...event, location: e.target.value }) }} />
-                </span>
-            </div>
-            <div id="eForm3">
-                <label htmlFor="">Related Events</label>
-                <span>
-                    {['Musical Concert', 'Stand-up Comedy'].includes(event.category) ?
-                        <Dropdown elements={event.category === 'Musical Concert' ? concerts : standUp} onChange={(e) => { setRelated(e.target.value) }} />
-                        :
-                        <select id='dropdown-select'></select>
-                    }
-                    {event.category ? <button onClick={addRelated}>Add</button> : <button onClick={(e) => {
-                        e.preventDefault();
-                        alert('Please select event category first')
-                    }}>Add</button>}
-                </span>
+                        <label htmlFor="">Ticket Price</label>
+                        <input type="number" required value={event.price} onChange={(e) => { setEvent({ ...event, price: e.target.value }) }} />
+                        <label htmlFor="">Ticket Amount</label>
+                        <input type="number" required value={event.tickets} onChange={(e) => { setEvent({ ...event, tickets: e.target.value }) }} name="amount" min={1} max={5000} />
+                        <label htmlFor="">Location</label>
+                        <input type="text" required value={event.location} onChange={(e) => { setEvent({ ...event, location: e.target.value }) }} />
+                    </span>
+                </div>
+                <div id="eForm3">
+                    <label htmlFor="">Related Events</label>
+                    <span>
+                        {['Musical Concert', 'Stand-up Comedy'].includes(event.category) ?
+                            <Dropdown elements={event.category === 'Musical Concert' ? concerts : standUp} onChange={(e) => { setRelated(e.target.value) }} />
+                            :
+                            <select id='dropdown-select'></select>
+                        }
+                        {event.category ? <button onClick={addRelated}>Add</button> : <button onClick={(e) => {
+                            e.preventDefault();
+                            alert('Please select event category first')
+                        }}>Add</button>}
+                    </span>
 
-                <span id="relatedEvents">
-                    {event.relatedEvents ? <EventCard option={2} array={matching} func={removeRelated} /> : null}
-                </span>
-            </div>
-            <button type="button" onClick={handleUpload}>Save</button>
+                    <span id="relatedEvents">
+                        {event.relatedEvents ? <EventCard option={2} array={matching} func={removeRelated} /> : null}
+                    </span>
+                </div>
+                <button type="button" onClick={handleUpload}>Save</button>
+            </> : null}
         </div>
     );
 }
