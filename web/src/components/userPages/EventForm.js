@@ -34,6 +34,9 @@ export const EventForm = () => {
         if (eventId) {
             getEvent();
         }
+        if (!role || role !== 'admin') {
+            window.location.href = '/'
+        }
     }, []);
 
     useEffect(() => {
@@ -111,7 +114,6 @@ export const EventForm = () => {
         }
 
     }
-
     const createEvent = async () => {
         try {
             let valid = verifyData(event, true);

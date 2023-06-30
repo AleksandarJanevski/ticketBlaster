@@ -24,7 +24,6 @@ export const ManageEvents = () => {
     return (
         <div id="manage_events">
             <div>
-                <h1>Events</h1>
                 <button><a href="/eventForm">Create Event</a></button>
             </div>
             <div>
