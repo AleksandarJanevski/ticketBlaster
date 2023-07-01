@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
 import { preview, uploadFunc, verifyData } from '../functions/functions'
+
 export const UserDetails = () => {
     const [user, setUser] = useState({
         email: '',
         fullName: '',
         picture: null
     });
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [image, setImage] = useState('')
     const [previewPic, setPreviewPic] = useState('')
     const [sent, setSent] = useState(false)
@@ -66,7 +69,31 @@ export const UserDetails = () => {
             return console.log(err);
         }
     }
-
+    const changePassword = async () => {
+        try {
+            if (!password && confirmPassword && password !== confirmPassword) {
+                return alert('Passwords do not match');
+            }
+            const body = {
+                newPassword: password,
+                confirmPassword: confirmPassword
+            }
+            const response = await fetch(`/api/v1/auth/changePassword/${id}`, {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: {
+                    'content-type': 'application/json'
+                },
+                credentials: 'include'
+            })
+            const result = await response.json();
+            if (result.status === 'success') {
+                window.location.href = '/'
+            }
+        } catch (err) {
+            return console.log(err);
+        }
+    }
     return (
         <div id="user_details">
             <div id="user_profile">
@@ -94,13 +121,13 @@ export const UserDetails = () => {
                 {change ? <div>
                     <span>
                         <label htmlFor="">Password</label>
-                        <input type="password" />
+                        <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
                     </span>
                     <span>
                         <label htmlFor="">Re-Type Password</label>
-                        <input type="password" />
+                        <input type="password" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
                     </span>
-                    <button>Submit</button>
+                    <button type="button" onClick={changePassword}>Submit</button>
                 </div> : null}
             </div>
         </div>

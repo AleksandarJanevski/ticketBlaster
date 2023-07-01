@@ -6,9 +6,27 @@ export const Auth = () => {
     const [confirm, setConfirm] = useState('');
     const [name, setName] = useState('');
     const [toggle, setToggle] = useState(false);
+    const [enter, setEnter] = useState(false)
 
-    async function login(e) {
-        e.preventDefault()
+    useEffect(() => {
+        document.addEventListener('keypress', detectEnter, true)
+    }, []);
+
+    useEffect(() => {
+        if (enter && toggle) {
+            login()
+        } else {
+            singUp();
+        }
+    }, [enter])
+
+    const detectEnter = (e) => {
+        if (e.key === 'Enter') {
+            setEnter(true)
+        }
+    }
+
+    async function login() {
         try {
             const response = await fetch('/api/v1/auth/login', {
                 method: "POST",
@@ -32,8 +50,7 @@ export const Auth = () => {
             return console.log(err);
         }
     }
-    async function singUp(e) {
-        e.preventDefault();
+    async function singUp() {
         if (password !== confirm) {
             return alert('Passwords do not match');
         }

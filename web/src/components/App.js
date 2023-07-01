@@ -10,6 +10,7 @@ import { AdminUsers } from './userPages/AdminUsers';
 import { TicketHistory } from './userPages/TicketHistory';
 import { ManageEvents } from './userPages/ManageEvents';
 import { UserDetails } from './userPages/UserDetails';
+import { PrintEvent } from "./userPages/PrintEvent";
 
 //make redux for single event
 export const App = () => {
@@ -27,7 +28,9 @@ export const App = () => {
           <Route path="/user" element={<User />}>
             <Route path={'events'} element={<ManageEvents />} />
             <Route path={'manage'} element={<AdminUsers />} />
-            <Route path={'ticketHistory'} element={<TicketHistory />} />
+            <Route path={'ticketHistory'} element={<TicketHistory />}>
+              <Route path={':event'} element={PrintEvent} />
+            </Route>
             <Route path={'details'} element={<UserDetails />} />
           </Route>
         </Routes>

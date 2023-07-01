@@ -19,7 +19,8 @@ exports.create = async (req, res) => {
 }
 exports.get = async (req, res) => {
     try {
-        const orders = await Order.find({ beholder: req.params.id });
+        console.log(req.params.id, req.cookies);
+        const orders = await Order.find({ beholder: req.params.id }).populate('event');
         res.status(200).json({ status: 'success', data: { orders } });
     } catch (err) {
         console.log(err);

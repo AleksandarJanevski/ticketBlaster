@@ -110,15 +110,18 @@ exports.resetPassword = async (req, res) => {
 }
 exports.changePassword = async (req, res) => {
     try {
-        const { oldPassword, newPassword, confirmPassword } = req.body;
-        if (!oldPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword) {
+        const { newPassword, confirmPassword } = req.body;
+        if (!newPassword || !confirmPassword || newPassword !== confirmPassword) {
             return res.status(400).send('Bad request');
         }
         const user = await User.findById(req.params.id);
-        const validate = bcrypt.compareSync(oldPassword, user.password);
-        if (!validate) {
-            return res.status(400).send('Invalid email or password');
+        if (!user) {
+            return res.status(404).send('User not found');
         }
+        // const validate = bcrypt.compareSync(oldPassword, user.password);
+        // if (!validate) {
+        //     return res.status(400).send('Invalid email or password');
+        // }
         user.password = newPassword
         await user.save();
         res.status(200).json({ status: 'success' });
@@ -166,7 +169,27 @@ exports.cookieVerify = async (req, res) => {
             id: decoded.id,
             role: decoded.role
         }
-        res.status(200).json({ status: 'success', data: userData });//add the tokens
+        res.status(200).json({ status: 'success', data: userData });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
+exports.protectRoute = async (req, res, next) => {
+    try {
+        let token;
+        if (req.cookies && req.cookies.jwt) {
+            token = req.cookies.jwt
+        }
+        if (!token) {
+            return res.status(401).send('Unauthorized access');
+        }
+        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(401).send('Unauthorized access');
+        }
+        next()
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');

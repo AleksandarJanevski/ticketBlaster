@@ -1,22 +1,19 @@
 const express = require('express');
 const db = require('../../pkg/database/index');
-const jwt = require('express-jwt');
 const basket = require('./handlers/basketHandler');
 const order = require('./handlers/orderHandler');
 const purchase = require('./handlers/purchaseHandler');
+const auth = require('../auth/handlers/authHandler')
+const cookieParser = require('cookie-parser')
 
 const api = express();
 
 api.use(express.json());
 api.use(express.urlencoded({ extended: true }));
+api.use(cookieParser())
 db.init()
 
-api.use(
-    jwt.expressjwt({
-        algorithms: ["HS256"],
-        secret: process.env.JWT_SECRET,
-    })
-);
+api.use(auth.protectRoute);
 api.get('/api/v1/ecommerce/basket/:id', basket.getBasket);
 api.post('/api/v1/ecommerce/basket', basket.addToBasket);
 api.delete('/api/v1/ecommerce/basket/:id', basket.delete);
