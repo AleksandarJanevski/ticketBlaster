@@ -5,7 +5,7 @@ const Event = require('../event/eventSchema');
 const basketSchema = new mongoose.Schema({
     amount: {
         type: Number,
-        //default?
+        max: 4
     },
     event: {
         type: mongoose.Schema.Types.ObjectId,
