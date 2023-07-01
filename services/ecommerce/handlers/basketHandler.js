@@ -2,10 +2,11 @@ const Basket = require('../../../pkg/ecommerce/basketSchema');
 
 exports.addToBasket = async (req, res) => {
     try {
-        const { event, amount, beholder } = req.body;
+        const { event, amount } = req.body;
+        const id = req.params.id
         const basketItem = await Basket.findOne({
-            ticket: ticket,
-            beholder: beholder,
+            beholder: id,
+            event: event
         });
         if (basketItem) {
             basketItem.amount += amount
@@ -13,7 +14,7 @@ exports.addToBasket = async (req, res) => {
         } else {
             await Basket.create({
                 event: event,
-                beholder: beholder,
+                beholder: id,
                 amount: amount
             });
         }
@@ -26,7 +27,8 @@ exports.addToBasket = async (req, res) => {
 
 exports.getBasket = async (req, res) => {
     try {
-        const basket = await Basket.find({ beholder: req.params.id }).populate('ticket').populate('beholder');//?
+        console.log(req.params.id);
+        const basket = await Basket.find({ beholder: req.params.id }).populate('event');
         res.status(200).json({ status: 'success', data: { basket } });
     } catch (err) {
         console.log(err);

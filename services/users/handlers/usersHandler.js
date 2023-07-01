@@ -104,6 +104,7 @@ exports.delete = async (req, res) => {
 exports.role = async (req, res) => {
     try {
         const role = req.body.role
+        console.log(role);
         if (!role || (role !== 'admin' && role !== 'user')) {
             return res.status(400).send('Bad request');
         }

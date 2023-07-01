@@ -142,7 +142,7 @@ exports.protectAdmin = async (req, res, next) => {
         }
         const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.id);
-        if (!user || user.role === 'user') {
+        if (!user || user.role !== 'admin') {
             return res.status(401).send('Unauthorized access');
         }
         next();

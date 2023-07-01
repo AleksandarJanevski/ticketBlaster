@@ -15,7 +15,7 @@ db.init()
 
 api.use(auth.protectRoute);
 api.get('/api/v1/ecommerce/basket/:id', basket.getBasket);
-api.post('/api/v1/ecommerce/basket', basket.addToBasket);
+api.post('/api/v1/ecommerce/basket/:id', basket.addToBasket);
 api.delete('/api/v1/ecommerce/basket/:id', basket.delete);
 api.get('/api/v1/ecommerce/order/:id', order.get);
 api.post('/api/v1/ecommerce/order', order.create);

@@ -18,7 +18,7 @@ export const UserDetails = () => {
     const picturePreview = (e) => {
         preview(e, setPreviewPic, setImage);
     };
-    useEffect(() => { getUser(); console.log(user); }, []);
+    useEffect(() => { getUser(); }, []);
     useEffect(() => {
         if (sent) {
             updateUser()

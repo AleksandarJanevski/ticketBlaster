@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const uuid = require('uuid');
 
-const purchaseId = uuid.v4();
-
 const orderSchema = new mongoose.Schema({
     amount: {
         type: Number,
@@ -13,8 +11,8 @@ const orderSchema = new mongoose.Schema({
         ref: 'event'
     },
     beholder: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        required: [true, 'User must have Identification']
     },
     purchaseNo: {
         type: String,

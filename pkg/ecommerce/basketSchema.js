@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Event = require('../event/eventSchema');
+
 
 const basketSchema = new mongoose.Schema({
     amount: {
@@ -7,11 +9,11 @@ const basketSchema = new mongoose.Schema({
     },
     event: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'event'
+        ref: 'Event'
     },
     beholder: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        required: [true, 'User must have Identification']
     }
 });
 
