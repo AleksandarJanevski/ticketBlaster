@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { formatDate } from '../functions/functions'
 
 export const Cart = () => {
     const [cart, setCart] = useState([])
@@ -50,13 +51,14 @@ export const Cart = () => {
             <h1>Shopping Cart</h1>
             {cart && cart.map((element, i) => {
                 const price = parseInt(element.amount) * parseInt(element.event.price);
+                let date = formatDate(new Date(element.event.date).toLocaleDateString('en-GB'))
                 return (
                     <span id="cart_events" key={i}>
                         <div id="cart_left">
                             <img src={`http://localhost:9000/img/event/${element.event.picture}`} alt="" />
                             <div id="cart_left_info">
                                 <p>{element.event.name}</p>
-                                <p>{element.event.date}</p>
+                                <p>{date}</p>
                                 <p>{element.event.location}</p>
                             </div>
                         </div>

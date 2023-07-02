@@ -130,9 +130,9 @@ exports.delete = async (req, res) => {
 }
 exports.search = async (req, res) => {
     try {
-        const keyword = req.query.keyword.toLowerCase()
+        const keyword = req.params.keyword.toLowerCase()
         const events = await Event.find()
-        let searchQuery = events.filter(element => element.details.toLowerCase().includes(keyword) || element.name.toLowerCase().includes(keyword));
+        let searchQuery = events.filter(element => element.details.toLowerCase().includes(keyword) || element.name.toLowerCase().includes(keyword) || element.location.toLowerCase().includes(keyword));
         res.status(200).json({ status: 'success', data: { searchQuery } });
     } catch (err) {
         console.log(err);

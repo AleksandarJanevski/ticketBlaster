@@ -69,7 +69,7 @@ exports.forgotPassword = async (req, res) => {
         await user.save({ validateBeforeSave: false });
         const resetUrl = `${req.protocol}://localhost:3000/resetPassword/${resetToken}`
         const message = 'Please click the link below to reset your passowrd. The link expires in 30 minutes'
-        const html = mail('verify', message, resetUrl, 'Reset Password');
+        const html = await mail('verify', message, resetUrl, 'Reset Password');
         await sendEmail({
             email: user.email,
             subject: 'Password Reset',
@@ -84,7 +84,8 @@ exports.forgotPassword = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
     try {
-        const { userToken } = req.params.token;
+        const userToken = req.params.token;
+        console.log(userToken);
         if (!userToken) return res.status(401).send('permission denied');
         const hashedToken = hashToken(userToken);
         const user = await User.findOne({
@@ -100,7 +101,7 @@ exports.resetPassword = async (req, res) => {
         user.passwordResetToken = undefined;
         user.passwordResetExpire = undefined;
         await user.save();
-        const token = jwtToken({ id: user._id });
+        const token = jwtToken({ id: user._id, role: user.role });
         cookie(res, 'jwt', token);
         res.status(200).json({ status: 'success' });
     } catch (err) {
@@ -211,7 +212,7 @@ exports.verify = async (req, res) => {
         user.verified = true
         user.verifyToken = undefined
         await user.save()
-        res.status(200).json({ status: 'success' });
+        res.status(200).redirect('http://localhost:3000/');
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');

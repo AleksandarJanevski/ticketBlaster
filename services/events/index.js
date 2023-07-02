@@ -9,7 +9,7 @@ api.use(cookieParser());
 api.use(express.json());
 db.init();
 
-api.get('/api/v1/events/search', events.search);
+api.get('/api/v1/events/search/:keyword', events.search);
 
 api.get('/api/v1/events/standUp', events.getAllStandUp);
 api.get('/api/v1/events/concerts', events.getAllConcerts);

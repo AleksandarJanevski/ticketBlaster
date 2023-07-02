@@ -38,13 +38,13 @@ export const Navigation = () => {
                 <nav id="navbar">
                     <ul>
                         <li><Link to="/">ticketblaster</Link></li>
-                        <li><Link to="/musicalConcerts">Musical Concerts</Link></li>
-                        <li><Link to="/standUpComedy">Stand-up Comedy</Link></li>
+                        <li><Link to="/category/musicalConcerts">Musical Concerts</Link></li>
+                        <li><Link to="/category/standUpComedy">Stand-up Comedy</Link></li>
                     </ul>
                 </nav>
                 <div id="rightSide">
                     <div id="search">
-                        <form action="" method="get">
+                        <form action="/search" method="get">
                             <input type="text" placeholder="Search" name="keyword" />
                         </form>
 
