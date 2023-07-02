@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const month = new Date().getMonth() + 1
 const year = (new Date().getFullYear() % 100);
-const max = year + 5
+const max = 2000 + year + 5
 const expiration = new mongoose.Schema({
     month: {
         type: Number,

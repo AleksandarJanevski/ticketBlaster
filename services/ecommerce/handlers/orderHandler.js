@@ -17,9 +17,20 @@ exports.create = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+exports.createMany = async (req, res) => {
+    try {
+        const orders = req.body;
+        console.log(orders);
+        await Order.insertMany(orders);
+        res.status(201).json({ status: 'success' });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
 exports.get = async (req, res) => {
     try {
-        console.log(req.params.id, req.cookies);
+        console.log(req.params.id);
         const orders = await Order.find({ beholder: req.params.id }).populate('event');
         res.status(200).json({ status: 'success', data: { orders } });
     } catch (err) {

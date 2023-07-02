@@ -4,11 +4,10 @@ const uuid = require('uuid');
 const orderSchema = new mongoose.Schema({
     amount: {
         type: Number,
-        //default?
     },
     event: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'event'
+        ref: 'Event'
     },
     beholder: {
         type: String,

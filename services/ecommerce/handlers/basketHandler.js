@@ -45,3 +45,13 @@ exports.delete = async (req, res) => {
         return res.status(500).send('internal server error');
     }
 }
+exports.deleteMany = async (req, res) => {
+    try {
+        const orders = req.body
+        await Basket.deleteMany({ _id: { $in: orders } })
+        res.status(204).json({ status: 'removed' });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('internal server error');
+    }
+}
