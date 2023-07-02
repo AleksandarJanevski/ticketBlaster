@@ -6,6 +6,7 @@ export const Search = () => {
     const [query, setQuery] = useState([]);
     let param = useLocation().search.split('=')[1].replace('+', ' ')
     useEffect(() => { console.log(param); getSearch() }, [param])
+    //alternative od reducerite da izvadam i da postavam vo array
     const getSearch = async () => {
         try {
             const response = await fetch(`/api/v1/events/search/${param}`, {

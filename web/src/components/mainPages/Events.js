@@ -12,10 +12,6 @@ export const Events = () => {
     useEffect(() => {
         getHero();
     }, []);
-    useEffect(() => {
-        setStandUpFilter(standUp.filter(element => element.name !== hero.name));
-        setConcertFilter(concerts.filter(element => element.name !== hero.name))
-    }, [hero]);
     const getHero = async () => {
         try {
             const response = await fetch('/api/v1/events/hero', {
@@ -27,6 +23,8 @@ export const Events = () => {
             const result = await response.json()
             if (result.status === 'success') {
                 setHero(result.data.hero);
+                setStandUpFilter(standUp.filter(element => element.name !== result.data.hero.name));
+                setConcertFilter(concerts.filter(element => element.name !== result.data.hero.name))
             }
         } catch (err) {
             return console.log(err);
