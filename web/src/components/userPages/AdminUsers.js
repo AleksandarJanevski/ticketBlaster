@@ -1,4 +1,3 @@
-import { element } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
 
@@ -6,7 +5,14 @@ export const AdminUsers = () => {
     const admin = useSelector(state => state.idReducer.role.role);
     const op = useSelector(state => state.idReducer.id.id)
     const [users, setUsers] = useState([])
-    useEffect(() => { getUsers(); }, [])
+    useEffect(() => {
+        if (admin && admin !== 'admin') {
+            window.location.href = '/'
+        }
+        if (op) {
+            getUsers();
+        }
+    }, [op])
     const getUsers = async () => {
         try {
             const response = await fetch('/api/v1/users', {
@@ -72,7 +78,7 @@ export const AdminUsers = () => {
 
     return (
         <div id="admin_users">
-            {users && admin === 'admin' ? <div>
+            {users && admin && <div>
                 {users.map((element, i) => {
                     return (
                         <span key={i} id="users_admin">
@@ -88,7 +94,7 @@ export const AdminUsers = () => {
 
                     )
                 })}
-            </div> : window.location.href = '/'}
+            </div>}
         </div>
     )
 }

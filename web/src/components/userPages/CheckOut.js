@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { formatDate, verifyData } from '../functions/functions';
 
+
 export const CheckOut = () => {
     const [cart, setCart] = useState([]);
     const id = useSelector(state => state.idReducer.id.id);
@@ -15,8 +16,8 @@ export const CheckOut = () => {
         fullName: '',
         cardNo: 0,
         expire: {
-            month: 0,
-            year: 0,
+            month: 10,
+            year: 2023,
         },
         pin: 0
     });
@@ -95,7 +96,7 @@ export const CheckOut = () => {
                 credentials: 'include'
             });
             if (response.status === 204) {
-                window.location.href = '/cart'
+                window.location.href = "/user/ticketHistory"
             }
         } catch (err) {
             console.log(err);
@@ -182,7 +183,6 @@ export const CheckOut = () => {
                     <input
                         type="number"
                         id="cardNo"
-                        value={payment.cardNo}
                         onChange={e => {
                             setPayment({ ...payment, cardNo: e.target.value });
                         }}
@@ -195,8 +195,6 @@ export const CheckOut = () => {
                         type="month"
                         id="expire"
                         min={currentDate}
-                        max={maxDate}
-                        value={`${payment.expire.year}-${payment.expire.month}`}
                         onChange={e => {
                             const [year, month] = e.target.value.split('-');
                             setPayment({
@@ -216,7 +214,6 @@ export const CheckOut = () => {
                         type="password"
                         id="pin"
                         maxLength={4}
-                        value={payment.pin}
                         onChange={e => {
                             setPayment({ ...payment, pin: parseInt(e.target.value) });
                         }}

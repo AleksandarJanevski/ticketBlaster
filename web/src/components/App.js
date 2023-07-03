@@ -13,12 +13,12 @@ import { AdminUsers } from './userPages/AdminUsers';
 import { TicketHistory } from './userPages/TicketHistory';
 import { ManageEvents } from './userPages/ManageEvents';
 import { UserDetails } from './userPages/UserDetails';
-import { PrintEvent } from "./userPages/PrintEvent";
 import { SingleEvent } from './mainPages/SingleEvent'
 import { Cart } from './userPages/Cart'
 import { Search } from './mainPages/Search'
 import { CategoryEvents } from "./mainPages/CategoryEvents";
 import { CheckOut } from "./userPages/CheckOut";
+import { Footer } from "./mainPages/Footer";
 
 export const App = () => {
   return (
@@ -27,7 +27,7 @@ export const App = () => {
       <Navigation />
       <div id="content">
         <Routes>
-          <Route path="/" element={<Events />} />
+          <Route path="*" element={<Events />} />
           <Route path="/category/:type" element={<CategoryEvents />} />
           <Route path="/event/:id" element={<SingleEvent />} />
           <Route path="/cart" element={<Cart />} />
@@ -42,14 +42,13 @@ export const App = () => {
           <Route path="/user" element={<User />}>
             <Route path={'events'} element={<ManageEvents />} />
             <Route path={'manage'} element={<AdminUsers />} />
-            <Route path={'ticketHistory'} element={<TicketHistory />}>
-              <Route path={':event'} element={<PrintEvent />} />
-            </Route>
+            <Route path={'ticketHistory'} element={<TicketHistory />} />
             <Route path={'details'} element={<UserDetails />} />
           </Route>
           <Route path="/checkout" element={<CheckOut />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 };

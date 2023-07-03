@@ -3,3 +3,4 @@ config.env
 *.jpeg
 *.jpg
 *.png
+start.bat

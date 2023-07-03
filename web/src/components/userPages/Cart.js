@@ -12,7 +12,6 @@ export const Cart = () => {
     }, [id]);
     const getCart = async () => {
         try {
-            console.log(id);
             const response = await fetch(`/api/v1/ecommerce/basket/${id}`, {
                 method: 'GET',
                 headers: {
@@ -72,7 +71,7 @@ export const Cart = () => {
             })}
             <div id="cart_bottom">
                 <button><a href="/">Back</a></button>
-                <button><a href="/checkout">Checkout</a></button>
+                {cart.length > 0 ? <button><a href="/checkout">Checkout</a></button> : null}
             </div>
         </div>
 

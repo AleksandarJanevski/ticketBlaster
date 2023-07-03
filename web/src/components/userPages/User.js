@@ -9,6 +9,11 @@ export const User = () => {
     useEffect(() => {
         siteName();
     }, [location, name]);
+    useEffect(() => {
+        if (role && role === 'client') {
+            window.location.href = '/'
+        }
+    });
     const siteName = () => {
         const loc = location.pathname.split('/')[2]
         if (loc === 'details') {
@@ -39,7 +44,7 @@ export const User = () => {
     }
     return (
         <div id="user">
-            {role ?
+            {role !== 'client' ?
                 <div id="user_page">
                     <div id="user_top" style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <h1>{name}</h1>
@@ -62,7 +67,7 @@ export const User = () => {
                     </div>
 
                     <Outlet />
-                </div> : <script>{window.location.replace('/')}</script>}
+                </div> : null}
         </div>
     )
 }
