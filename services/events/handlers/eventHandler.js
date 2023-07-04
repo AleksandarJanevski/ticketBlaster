@@ -121,7 +121,10 @@ exports.update = async (req, res) => {
 }
 exports.delete = async (req, res) => {
     try {
-        console.log(req.params.id, 'Hello');
+        const event = await Event.findById(req.params.id);
+        if (event && event.picture !== 'default.png') {
+            unlink(event.picture)
+        }
         await Event.findByIdAndDelete(req.params.id);
         res.status(204).json({ status: 'removed' })
     } catch (err) {

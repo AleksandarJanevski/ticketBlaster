@@ -1,4 +1,4 @@
-import { GET_CONCERTS, GET_STANDUP } from '../constants/eventsConst'
+import { GET_CONCERTS, GET_HERO, GET_STANDUP } from '../constants/eventsConst'
 
 export const getConcerts = (event) => {
     return {
@@ -12,3 +12,9 @@ export const getStandUp = (event) => {
         payload: event
     }
 }
+export const getHero = (event) => {
+    return {
+        type: GET_HERO,
+        payload: event
+    };
+};

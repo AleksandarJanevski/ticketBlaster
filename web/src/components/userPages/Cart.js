@@ -40,7 +40,8 @@ export const Cart = () => {
                 credentials: 'include'
             });
             if (response.status === 204) {
-                window.location.href = '/cart'
+                const filter = cart.filter(element => element._id !== event)
+                setCart(filter)
             }
         } catch (err) {
             return console.log(err);
@@ -72,7 +73,7 @@ export const Cart = () => {
             })}
             <div id="cart_bottom">
                 <button><Link to='/'>Back</Link></button>
-                {cart.length > 0 ? <button ><a href="/checkout">Checkout</a></button> : <button style={{ opacity: "0.3" }}>Checkout</button>}
+                {cart.length > 0 ? <button ><Link to={'/checkout'}>Checkout</Link></button> : <button style={{ opacity: "0.3" }}>Checkout</button>}
             </div>
         </div>
 

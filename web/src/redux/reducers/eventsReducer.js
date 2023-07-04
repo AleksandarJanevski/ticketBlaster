@@ -1,7 +1,8 @@
-import { GET_CONCERTS, GET_STANDUP } from '../constants/eventsConst'
+import { GET_CONCERTS, GET_STANDUP, GET_HERO } from '../constants/eventsConst'
 const initialState = {
     concerts: [],
-    standUp: []
+    standUp: [],
+    hero: {}
 }
 export const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -15,6 +16,11 @@ export const eventsReducer = (state = initialState, action) => {
                 ...state,
                 standUp: action.payload
             }
+        case GET_HERO:
+            return {
+                ...state,
+                hero: action.payload
+            };
         default: return state
     }
 }

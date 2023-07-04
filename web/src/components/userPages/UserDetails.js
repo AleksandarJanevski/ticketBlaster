@@ -100,40 +100,43 @@ export const UserDetails = () => {
     }
     return (
         <div id="user_details">
-            <div id="user_profile">
+            {user.picture && <>
+                <div id="user_profile">
 
-                {image ? <img className="previewProfile" style={{ height: '150px', width: '150px', objectFit: 'cover', borderRadius: '50%' }} src={image} alt="Preview" /> :
-                    <img className="previewProfile" style={{ height: '150px', width: '150px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${user.picture}`} alt="Cant reach" />}
-                <input type="file" onChange={picturePreview} id="fileInput" accept="image/png, image/jpg, image/jpeg" />
-                <button onClick={handleUpload}>Submit</button>
-            </div>
-            <div>
-                <span>
-                    <label htmlFor="">Full Name</label>
-                    <input type="text" value={user.fullName} onChange={(e) => { setUser({ ...user, fullName: e.target.value }) }} required id="user_info" />
-                </span>
-                <span>
-                    <label htmlFor="">Email</label>
-                    <input type="text" onChange={(e) => { setUser({ ...user, fullName: e.target.value }) }} value={user.email} required id="user_info" />
-                </span>
-            </div>
-            <div id="user_pass">
-                <div>
-                    <h1>Password</h1>
-                    <button onClick={() => { setChange(!change) }}>Change Password</button>
+                    {image ? <img className="previewProfile" style={{ height: '150px', width: '150px', objectFit: 'cover', borderRadius: '50%' }} src={image} alt="Preview" /> :
+                        <img className="previewProfile" style={{ height: '150px', width: '150px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${user.picture}`} alt="Cant reach" />}
+                    <input type="file" onChange={picturePreview} id="fileInput" accept="image/png, image/jpg, image/jpeg" />
+                    <button onClick={handleUpload}>Submit</button>
                 </div>
-                {change ? <div>
+                <div>
                     <span>
-                        <label htmlFor="">Password</label>
-                        <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                        <label htmlFor="">Full Name</label>
+                        <input type="text" value={user.fullName} onChange={(e) => { setUser({ ...user, fullName: e.target.value }) }} required id="user_info" />
                     </span>
                     <span>
-                        <label htmlFor="">Re-Type Password</label>
-                        <input type="password" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
+                        <label htmlFor="">Email</label>
+                        <input type="text" onChange={(e) => { setUser({ ...user, fullName: e.target.value }) }} value={user.email} required id="user_info" />
                     </span>
-                    <button type="button" onClick={changePassword}>Submit</button>
-                </div> : null}
-            </div>
+                </div>
+                <div id="user_pass">
+                    <div>
+                        <h1>Password</h1>
+                        <button onClick={() => { setChange(!change) }}>Change Password</button>
+                    </div>
+                    {change ? <div>
+                        <span>
+                            <label htmlFor="">Password</label>
+                            <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                        </span>
+                        <span>
+                            <label htmlFor="">Re-Type Password</label>
+                            <input type="password" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
+                        </span>
+                        <button type="button" onClick={changePassword}>Submit</button>
+                    </div> : null}
+                </div>
+            </>}
+
         </div>
     )
 }

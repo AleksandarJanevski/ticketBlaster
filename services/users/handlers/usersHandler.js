@@ -94,6 +94,10 @@ exports.update = async (req, res) => {
 }
 exports.delete = async (req, res) => {
     try {
+        const user = await User.findById(req.params.id)
+        if (user && user.picture !== 'default.png') {
+            unlink(user.picture)
+        }
         await User.findByIdAndDelete(req.params.id)
         res.status(204).json({ status: 'success' })
     } catch (err) {

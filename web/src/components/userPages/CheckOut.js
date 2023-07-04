@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { formatDate, verifyData } from '../functions/functions';
 import { PrintEvent } from "./PrintEvent";
-
+import { Link } from 'react-router-dom'
 
 export const CheckOut = () => {
     const [cart, setCart] = useState([]);
@@ -240,7 +240,7 @@ export const CheckOut = () => {
                 </div>
                 <div id="checkout_bottom">
                     <button>
-                        <a href="/cart">Back</a>
+                        <Link to='/cart'>Back</Link>
                     </button>
                     <button onClick={cardVerify}>Pay Now</button>
                 </div>

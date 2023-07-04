@@ -99,7 +99,7 @@ export const EventForm = () => {
         } catch (err) {
             return console.log(err);
         }
-    }
+    }//this can be done with redux
 
     const picturePreview = (e) => {
         preview(e, setPreviewPic, setImage);
