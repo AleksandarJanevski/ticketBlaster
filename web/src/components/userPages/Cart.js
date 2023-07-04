@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { formatDate } from '../functions/functions'
+import { Link } from 'react-router-dom'
 
 export const Cart = () => {
     const [cart, setCart] = useState([])
@@ -70,7 +71,7 @@ export const Cart = () => {
                 );
             })}
             <div id="cart_bottom">
-                <button><a href="/">Back</a></button>
+                <button><Link to='/'>Back</Link></button>
                 {cart.length > 0 ? <button ><a href="/checkout">Checkout</a></button> : <button style={{ opacity: "0.3" }}>Checkout</button>}
             </div>
         </div>

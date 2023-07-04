@@ -5,34 +5,56 @@ import { EventCard } from "./EventCard";
 import { useSelector } from 'react-redux'
 
 export const SingleEvent = () => {
-    const [event, setEvent] = useState({})
-    const [amount, setAmount] = useState(1)
-    const role = useSelector(state => state.idReducer.role.role)
-    const user = useSelector(state => state.idReducer.id.id)
-    const { id } = useParams()
+    const [event, setEvent] = useState({});
+    const [amount, setAmount] = useState(1);
+    const concerts = useSelector(state => state.eventsReducer.concerts);
+    const standUp = useSelector(state => state.eventsReducer.standUp);
+    const role = useSelector(state => state.idReducer.role.role);
+    const user = useSelector(state => state.idReducer.id.id);
+    const [toggle, setToggle] = useState(false)
+    const { id } = useParams();
     useEffect(() => {
-        if (id) {
-            getEvent()
+        if (id && event._id !== id) {
+            getEvent();
         }
-    }, [id]);
-    const getEvent = async () => {
-        try {
-            const response = await fetch(`/api/v1/events/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'aplication/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                setEvent(result.data.event)
-                console.log(result.data.event);
-            }
-        } catch (err) {
-            return console.log(err);
+    }, [concerts, standUp, id]);
+    useEffect(() => {
+        if (toggle) {
+            getRelated()
+            setToggle(!toggle)
         }
+    }, [toggle])
+    const getEvent = () => {
+        let events = [...concerts].concat([...standUp]);
+        let filter = events.filter(element => element._id === id);
+        setEvent(filter[0]);
+        setToggle(!toggle)
     }
+    const getRelated = () => {
+        let events = [...concerts].concat([...standUp]);
+        let obj = { ...event }
+        const filterRelated = events.filter(element => obj.relatedEvents.some(item => item === element._id));
+        setEvent({ ...event, relatedEvents: filterRelated });
+    }
+
+    // const getEvent = async () => {
+    //     try {
+    //         const response = await fetch(`/api/v1/events/${id}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-type': 'aplication/json'
+    //             },
+    //             credentials: 'include'
+    //         });
+    //         const result = await response.json();
+    //         if (result.status === 'success') {
+    //             setEvent(result.data.event)
+    //             console.log(result.data.event);
+    //         }
+    //     } catch (err) {
+    //         return console.log(err);
+    //     }
+    // }
     const maxTickets = () => {
         if (event.tickets < 4) {
             return event.tickets
