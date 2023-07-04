@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types'
 import { formatDate } from '../functions/functions'
+import { Link } from "react-router-dom";
 export const EventCard = ({ array, option, func }) => {
     return (
         <div id="card">
@@ -18,7 +19,7 @@ export const EventCard = ({ array, option, func }) => {
                             </div>
                             <div id="bottom_card">
                                 <p>{element.location}</p>
-                                {[1, 3].includes(option) ? <button id="getTickets">{option === 1 ? <a href={`/event/${element._id}`}>Get Tickets</a> : <a href={`http://localhost:9000/api/v1/events/delete/${element._id}`}>Delete Event</a>}</button> : <button id="removeRelated" onClick={() => func(element)}>Remove</button>}
+                                {[1, 3].includes(option) ? <button id="getTickets">{option === 1 ? <Link to={`/event/${element._id}`}>Get Tickets</Link> : <a href={`http://localhost:9000/api/v1/events/delete/${element._id}`}>Delete Event</a>}</button> : <button id="removeRelated" onClick={() => func(element)}>Remove</button>}
 
                             </div>
                         </div>

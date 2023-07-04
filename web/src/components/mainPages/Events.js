@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { EventCard } from "./EventCard";
 import { formatDate } from "../functions/functions";
+import { Link } from "react-router-dom";
 
 export const Events = () => {
     const [hero, setHero] = useState({});
@@ -41,23 +42,19 @@ export const Events = () => {
                 </div>
                 <div id="hero_info">
                     <p>{formatDate(new Date(hero.date).toLocaleDateString('en-GB'))}, {hero.location}</p>
-                    <button id="getTickets"><a href={`/event/${hero._id}`}>Get Tickets</a></button>
+                    <button id="getTickets"><Link to={`/event/${hero._id}`}>Get Tickets</Link></button>
                 </div>
             </div>}
             <div id="eventList">
                 <div className="vertical">
                     <h2>Musical Concerts</h2>
                     {concertFilter && <EventCard array={concertFilter} option={1} />}
-                    <a href="/category/musicalConcerts">
-                        <div>See All Musical Concerts</div>
-                    </a>
+                    <Link to="/category/musicalConcerts"><div>See All Musical Concerts</div></Link>
                 </div>
                 <div className="vertical">
                     <h2>Stand-up Comedy</h2>
                     {standUpFilter && <EventCard array={standUpFilter} option={1} />}
-                    <a href="/category/standUpComedy">
-                        <div>See All Stand-up Comedy Shows</div>
-                    </a>
+                    <Link to="/category/standUpComedy"><div>See All Stand-up Comedy Shows</div></Link>
                 </div>
             </div>
         </div>

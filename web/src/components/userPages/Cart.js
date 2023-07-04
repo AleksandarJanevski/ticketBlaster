@@ -71,7 +71,7 @@ export const Cart = () => {
             })}
             <div id="cart_bottom">
                 <button><a href="/">Back</a></button>
-                {cart.length > 0 ? <button><a href="/checkout">Checkout</a></button> : null}
+                {cart.length > 0 ? <button ><a href="/checkout">Checkout</a></button> : <button style={{ opacity: "0.3" }}>Checkout</button>}
             </div>
         </div>
 

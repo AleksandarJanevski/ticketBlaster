@@ -1,26 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { formatDate } from '../functions/functions'
+import { useSelector } from "react-redux";
+
 
 export const Search = () => {
     const [query, setQuery] = useState([]);
-    let param = useLocation().search.split('=')[1].replace('+', ' ')
-    useEffect(() => { console.log(param); getSearch() }, [param])
+    const concerts = useSelector(state => state.eventsReducer.concerts);
+    const standUp = useSelector(state => state.eventsReducer.standUp);
+    let param = useLocation().search.replaceAll('+', ' ').replace('?keyword=', '');
+
+    useEffect(() => {
+        if (param) {
+            find();
+        }
+    }, [param, concerts, standUp])
     //alternative od reducerite da izvadam i da postavam vo array
-    const getSearch = async () => {
+    // const getSearch = async () => {
+    //     try {
+    //         const response = await fetch(`/api/v1/events/search/${param}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-type': 'aplication/json'
+    //             },
+    //             credentials: 'include'
+    //         });
+    //         const result = await response.json();
+    //         if (result.status === 'success') {
+    //             setQuery(result.data.searchQuery)
+    //             console.log(result.data.searchQuery);
+    //         }
+    //     } catch (err) {
+    //         return console.log(err);
+    //     }
+    // }
+    const find = () => {
         try {
-            const response = await fetch(`/api/v1/events/search/${param}`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'aplication/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                setQuery(result.data.searchQuery)
-                console.log(result.data.searchQuery);
-            }
+            let keyword = param.toLowerCase();
+            let events = [...concerts].concat([...standUp])
+            let search = events.filter(element => element.details.toLowerCase().includes(keyword) || element.name.toLowerCase().includes(keyword) || element.location.toLowerCase().includes(keyword));
+            setQuery(search);
         } catch (err) {
             return console.log(err);
         }

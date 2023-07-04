@@ -10,6 +10,7 @@ api.use(cookieParser())
 db.init();
 
 api.post('/api/v1/users', user.create);
+api.use(auth.protectAdmin);
 api.get('/api/v1/users', user.getAll);
 api.post('/api/v1/users/role/:id', auth.protectAdmin, user.role);
 api.route('/api/v1/users/:id').get(user.getOne).patch(user.update).delete(user.delete)

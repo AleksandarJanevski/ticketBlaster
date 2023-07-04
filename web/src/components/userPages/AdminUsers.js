@@ -67,9 +67,9 @@ export const AdminUsers = () => {
                 },
                 credentials: 'include'
             });
-            const result = await response.json();
-            if (result.status === 204) {
-                window.location.href = '/';
+
+            if (response.status === 204) {
+                window.location.href = '/user/manage';
             }
         } catch (err) {
             return console.log(err);

@@ -10,7 +10,7 @@ export const User = () => {
         siteName();
     }, [location, name]);
     useEffect(() => {
-        if (role && role === 'client') {
+        if (!role) {
             window.location.href = '/'
         }
     });
@@ -38,6 +38,7 @@ export const User = () => {
             if (response.status === 204) {
                 window.location.href = '/'
             }
+            sessionStorage.setItem('signed', 'false')
         } catch (err) {
             return console.log(err);
         }

@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import { idActions, roleActions } from "../../redux/actions/idActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Navigation = () => {
+    const id = useSelector(state => state.idReducer.id.id)
     const [loggedIn, setLoggedIn] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        getUser();
+        if (!id) {
+            getUser();
+        } else {
+            setLoggedIn(true)
+        }
     }, []);
     const getUser = async () => {
         try {

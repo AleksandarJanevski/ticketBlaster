@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux'
 export const SingleEvent = () => {
     const [event, setEvent] = useState({})
     const [amount, setAmount] = useState(1)
+    const role = useSelector(state => state.idReducer.role.role)
     const user = useSelector(state => state.idReducer.id.id)
-    const id = useParams()
+    const { id } = useParams()
     useEffect(() => {
         if (id) {
             getEvent()
@@ -16,7 +17,7 @@ export const SingleEvent = () => {
     }, [id]);
     const getEvent = async () => {
         try {
-            const response = await fetch(`/api/v1/events/${id.id}`, {
+            const response = await fetch(`/api/v1/events/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'aplication/json'
@@ -43,6 +44,9 @@ export const SingleEvent = () => {
     }
     const addToCart = async () => {
         try {
+            if (!role) {
+                return alert('Please log in or create an account to continue this action');
+            }
             if (event.tickets < amount) {
                 return alert('No ticekts available');
             }
@@ -50,7 +54,7 @@ export const SingleEvent = () => {
                 method: 'POST',
                 body: JSON.stringify({
                     amount: amount,
-                    event: id.id
+                    event: id
                 }),
                 headers: {
                     'content-type': 'application/json'
