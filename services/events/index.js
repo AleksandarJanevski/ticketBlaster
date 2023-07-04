@@ -20,7 +20,7 @@ api.use(auth.protectAdmin);
 
 api.post('/api/v1/events', events.create);
 api.patch('/api/v1/events/:id', events.update);
-api.get('/api/v1/events/delete/:id', events.delete);
+api.delete('/api/v1/events/delete/:id', events.delete);
 
 
 

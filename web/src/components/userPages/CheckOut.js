@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { formatDate, verifyData } from '../functions/functions';
+import { PrintEvent } from "./PrintEvent";
 
 
 export const CheckOut = () => {
     const [cart, setCart] = useState([]);
     const id = useSelector(state => state.idReducer.id.id);
     const [total, setTotal] = useState(0);
+    const [gratitude, setGratitude] = useState(false)
     const currentDate = new Date().toISOString().split("T")[0].slice(0, 7);
     const year = currentDate[3];
     const maxDate = currentDate.replace(year, (parseInt(year) + 5));
     const [toggle, setToggle] = useState(false);
+    const [toggleB, setToggleB] = useState(false);
     const [transaction, setTransaction] = useState(false);
     const [payment, setPayment] = useState({
         fullName: '',
@@ -21,6 +24,19 @@ export const CheckOut = () => {
         },
         pin: 0
     });
+    const [print, setPrint] = useState({
+        name: '',
+        date: '',
+        location: '',
+        image: ''
+    });
+    useEffect(() => {
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                setToggleB(false)
+            }
+        }, true)
+    }, [])
     useEffect(() => {
         if (id) {
             getCart();
@@ -96,7 +112,7 @@ export const CheckOut = () => {
                 credentials: 'include'
             });
             if (response.status === 204) {
-                window.location.href = "/user/ticketHistory"
+                setGratitude(true)
             }
         } catch (err) {
             console.log(err);
@@ -129,18 +145,117 @@ export const CheckOut = () => {
 
     return (
         <div id="checkout">
-            <div id="checkout_left">
-                <h1>Checkout</h1>
-                {cart &&
-                    cart.map((element, i) => {
+            {!gratitude ? <>
+                <div id="checkout_left">
+                    <h1>Checkout</h1>
+                    {cart &&
+                        cart.map((element, i) => {
+                            const price = parseInt(element.amount) * parseInt(element.event.price);
+                            let date = formatDate(
+                                new Date(element.event.date).toLocaleDateString('en-GB')
+                            );
+                            return (
+                                <span key={i}>
+                                    <div id="checkout_card">
+                                        <div id="checkout_card_left">
+                                            <img
+                                                src={`http://localhost:9000/img/event/${element.event.picture}`}
+                                                alt=""
+                                            />
+                                            <aside>
+                                                <p>{element.event.name}</p>
+                                                <p>{date}</p>
+                                                <p>{element.event.location}</p>
+                                            </aside>
+                                        </div>
+                                        <div id="checkout_card_right">
+                                            <p>${price}.00 USD</p>
+                                            <p>
+                                                {element.amount} x ${element.event.price}.00 USD
+                                            </p>
+                                        </div>
+                                    </div>
+                                </span>
+                            );
+                        })}
+                    <div id="checkout_total">
+                        <p>Total:</p>
+                        <p>${total}.00 USD</p>
+                    </div>
+                </div>
+                <div id="checkout_right">
+                    <span>
+                        <label htmlFor="">Full Name</label>
+                        <input
+                            type="text"
+                            value={payment.fullName}
+                            onChange={e => {
+                                setPayment({ ...payment, fullName: e.target.value });
+                            }}
+                            required
+                        />
+                    </span>
+                    <span>
+                        <label htmlFor="cardNo">Card No.</label>
+                        <input
+                            type="number"
+                            id="cardNo"
+                            onChange={e => {
+                                setPayment({ ...payment, cardNo: e.target.value });
+                            }}
+                            required
+                        />
+                    </span>
+                    <span>
+                        <label htmlFor="expire">Expires</label>
+                        <input
+                            type="month"
+                            id="expire"
+                            min={currentDate}
+                            onChange={e => {
+                                const [year, month] = e.target.value.split('-');
+                                setPayment({
+                                    ...payment,
+                                    expire: {
+                                        year: parseInt(year),
+                                        month: parseInt(month)
+                                    }
+                                });
+                            }}
+                            required
+                        />
+                    </span>
+                    <span>
+                        <label htmlFor="pin">PIN</label>
+                        <input
+                            type="password"
+                            id="pin"
+                            maxLength={4}
+                            onChange={e => {
+                                setPayment({ ...payment, pin: parseInt(e.target.value) });
+                            }}
+                            required
+                        />
+                    </span>
+                </div>
+                <div id="checkout_bottom">
+                    <button>
+                        <a href="/cart">Back</a>
+                    </button>
+                    <button onClick={cardVerify}>Pay Now</button>
+                </div>
+            </> : <div id='gratitude'>
+                <h1>Thank you for your purchase</h1>
+                <span>
+                    {cart.map((element, i) => {
                         const price = parseInt(element.amount) * parseInt(element.event.price);
                         let date = formatDate(
                             new Date(element.event.date).toLocaleDateString('en-GB')
                         );
                         return (
                             <span key={i}>
-                                <div id="checkout_card">
-                                    <div id="checkout_card_left">
+                                <div id="gratitude_card">
+                                    <div id="gratitude_left">
                                         <img
                                             src={`http://localhost:9000/img/event/${element.event.picture}`}
                                             alt=""
@@ -151,82 +266,31 @@ export const CheckOut = () => {
                                             <p>{element.event.location}</p>
                                         </aside>
                                     </div>
-                                    <div id="checkout_card_right">
-                                        <p>${price}.00 USD</p>
-                                        <p>
-                                            {element.amount} x ${element.event.price}.00 USD
-                                        </p>
+                                    <div id="gratitude_right">
+                                        <span>
+                                            <p>${price}.00 USD</p>
+                                            <p>
+                                                {element.amount} x ${element.event.price}.00 USD
+                                            </p>
+                                        </span>
+                                        <button type="button" onClick={() => {
+                                            const obj = {
+                                                name: element.event.name,
+                                                location: element.event.location,
+                                                date: date,
+                                                image: `/img/event/${element.event.picture}`
+                                            }
+                                            setPrint(obj);
+                                            setToggleB(true)
+                                        }}>Print</button>
                                     </div>
                                 </div>
                             </span>
                         );
                     })}
-                <div id="checkout_total">
-                    <p>Total:</p>
-                    <p>${total}.00 USD</p>
-                </div>
-            </div>
-            <div id="checkout_right">
-                <span>
-                    <label htmlFor="">Full Name</label>
-                    <input
-                        type="text"
-                        value={payment.fullName}
-                        onChange={e => {
-                            setPayment({ ...payment, fullName: e.target.value });
-                        }}
-                        required
-                    />
                 </span>
-                <span>
-                    <label htmlFor="cardNo">Card No.</label>
-                    <input
-                        type="number"
-                        id="cardNo"
-                        onChange={e => {
-                            setPayment({ ...payment, cardNo: e.target.value });
-                        }}
-                        required
-                    />
-                </span>
-                <span>
-                    <label htmlFor="expire">Expires</label>
-                    <input
-                        type="month"
-                        id="expire"
-                        min={currentDate}
-                        onChange={e => {
-                            const [year, month] = e.target.value.split('-');
-                            setPayment({
-                                ...payment,
-                                expire: {
-                                    year: parseInt(year),
-                                    month: parseInt(month)
-                                }
-                            });
-                        }}
-                        required
-                    />
-                </span>
-                <span>
-                    <label htmlFor="pin">PIN</label>
-                    <input
-                        type="password"
-                        id="pin"
-                        maxLength={4}
-                        onChange={e => {
-                            setPayment({ ...payment, pin: parseInt(e.target.value) });
-                        }}
-                        required
-                    />
-                </span>
-            </div>
-            <div id="checkout_bottom">
-                <button>
-                    <a href="/cart">Back</a>
-                </button>
-                <button onClick={cardVerify}>Pay Now</button>
-            </div>
+            </div>}
+            {toggleB ? <PrintEvent name={print.name} image={print.image} location={print.location} date={print.date} /> : null}
         </div>
     );
 };

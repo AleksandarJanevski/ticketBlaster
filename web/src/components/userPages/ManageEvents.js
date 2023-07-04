@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { formatDate } from '../functions/functions';
 import { useSelector } from 'react-redux'
 import { Link } from "react-router-dom";
+import { DeletePopUp } from "./DeletePopUp";
 
 export const ManageEvents = () => {
     const [events, setEvents] = useState([]);
+    const [toggle, setToggle] = useState(false)
+    const [eventId, setEventId] = useState('')
     const role = useSelector(state => state.idReducer.role.role);
     useEffect(() => {
         if (role && role === 'admin') {
@@ -23,6 +26,25 @@ export const ManageEvents = () => {
             if (result.status === 'success') {
                 console.log(result.data.events);
                 setEvents(result.data.events)
+            }
+        } catch (err) {
+            return console.log(err);
+        }
+    }
+    const removeEvent = async () => {
+        try {
+            const response = await fetch(`/api/v1/events/delete/${eventId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                credentials: 'include'
+            });
+            console.log(response);
+            if (response.status === 204) {
+                const filter = events.filter(element => element._id !== eventId)
+                setEvents(filter)
+                setToggle(false)
             }
         } catch (err) {
             return console.log(err);
@@ -49,7 +71,10 @@ export const ManageEvents = () => {
                                         </div>
                                         <div id="bottom_card">
                                             <p>{element.location}</p>
-                                            <button id="getTickets"><a href={`http://localhost:9000/api/v1/events/delete/${element._id}`}>Delete Event</a></button>
+                                            <button onClick={() => {
+                                                setToggle(true);
+                                                setEventId(element._id)
+                                            }}>Delete Event</button>
                                         </div>
                                     </div>
                                 </div>
@@ -58,6 +83,7 @@ export const ManageEvents = () => {
 
                     </div>}
                 </div>
+                {toggle ? <DeletePopUp id={eventId} toggl={() => setToggle(false)} func={removeEvent} /> : null}
             </> : null}
 
         </div>

@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { AdminDelete } from "./AdminDelete";
+import { AdminRole } from "./AdminRole";
 
 export const AdminUsers = () => {
     const admin = useSelector(state => state.idReducer.role.role);
     const op = useSelector(state => state.idReducer.id.id)
+    const [toggle, setToggle] = useState(false)
+    const [toggleB, setToggleB] = useState(false)
+    const [userId, setUserId] = useState('')
+    const [userRole, setUserRole] = useState('')
     const [users, setUsers] = useState([])
     useEffect(() => {
         if (admin && admin !== 'admin') {
@@ -52,15 +58,16 @@ export const AdminUsers = () => {
             });
             const result = await response.json();
             if (result.status === 'success') {
-                window.location.href = 'details';
+                setToggleB(false)
+                getUsers();
             }
         } catch (err) {
             return console.log(err);
         }
     };
-    const deleteUser = async (user) => {
+    const deleteUser = async () => {
         try {
-            const response = await fetch(`/api/v1/users/${user}`, {
+            const response = await fetch(`/api/v1/users/${userId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json'
@@ -69,7 +76,9 @@ export const AdminUsers = () => {
             });
 
             if (response.status === 204) {
-                window.location.href = '/user/manage';
+                const filter = users.filter(element => element._id !== userId)
+                setUsers(filter)
+                setToggle(false)
             }
         } catch (err) {
             return console.log(err);
@@ -85,8 +94,8 @@ export const AdminUsers = () => {
                             <img className="previewProfile" style={{ height: '80px', width: '80px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${element.picture}`} alt="Cant reach" />
                             <p>{element.email}</p>
                             <p>{element.fullName}</p>
-                            <button type="button" onClick={() => { updateRole(element._id, element.role) }}>{element.role === 'admin' ? 'Make User' : 'Make Admin'}</button>
-                            <button type="button" onClick={() => { deleteUser(element._id) }}>Delete User</button>
+                            <button type="button" onClick={() => { setUserId(element._id); setUserRole(element.role); setToggleB(true) }}>{element.role === 'admin' ? 'Make User' : 'Make Admin'}</button>
+                            <button type="button" onClick={() => { setUserId(element._id); setToggle(true) }}>Delete User</button>
                             <span id="devide user">
                                 <hr style={{ opacity: "30%" }} />
                             </span>
@@ -95,6 +104,8 @@ export const AdminUsers = () => {
                     )
                 })}
             </div>}
+            {toggle ? <AdminDelete id={userId} toggl={() => { setToggle(false) }} func={deleteUser} /> : null}
+            {toggleB ? <AdminRole func={updateRole} id={userId} role={userRole} toggl={() => { setToggleB(false) }} /> : null}
         </div>
     )
 }

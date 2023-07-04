@@ -121,8 +121,9 @@ exports.update = async (req, res) => {
 }
 exports.delete = async (req, res) => {
     try {
+        console.log(req.params.id, 'Hello');
         await Event.findByIdAndDelete(req.params.id);
-        res.status(204).redirect('http://localhost:3000/user/events');
+        res.status(204).json({ status: 'removed' })
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');

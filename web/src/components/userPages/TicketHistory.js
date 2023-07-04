@@ -17,7 +17,7 @@ export const TicketHistory = () => {
         date: '',
         location: '',
         image: ''
-    })
+    });
     useEffect(() => {
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
