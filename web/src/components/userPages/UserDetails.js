@@ -9,7 +9,8 @@ export const UserDetails = () => {
     const [user, setUser] = useState({
         email: userRedux.email,
         fullName: userRedux.fullName,
-        picture: userRedux.picture
+        picture: userRedux.picture,
+        role: userRedux.role
     });
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -26,8 +27,9 @@ export const UserDetails = () => {
             updateUser();
         }
     }, [sent]);
-    const handleUpload = async () => {
+    const handleUpload = async (e) => {
         try {
+            e.preventDefault()
             let valid = verifyData(user, false);
             if (valid) {
                 await uploadFunc(previewPic, user.picture, setUser, user, setSent, sent, 'profile');
@@ -48,7 +50,8 @@ export const UserDetails = () => {
             })
             const result = await response.json();
             if (result.status === 'success') {
-                dispatch(getUser(user))
+                dispatch(getUser(user));
+                document.getElementById('fileInput').value = ''
             }
         } catch (err) {
             return console.log(err);
