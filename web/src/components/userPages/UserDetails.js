@@ -1,50 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { preview, uploadFunc, verifyData } from '../functions/functions'
+import { getUser } from "../../redux/actions/userActions";
 
 export const UserDetails = () => {
+    const dispatch = useDispatch()
+    const userRedux = useSelector(state => state.userReducer.user)
     const [user, setUser] = useState({
-        email: '',
-        fullName: '',
-        picture: null
+        email: userRedux.email,
+        fullName: userRedux.fullName,
+        picture: userRedux.picture
     });
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [image, setImage] = useState('')
-    const [previewPic, setPreviewPic] = useState('')
-    const [sent, setSent] = useState(false)
-    const id = useSelector(state => state.idReducer.id.id)
-    const [change, setChange] = useState(false)
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [image, setImage] = useState('');
+    const [previewPic, setPreviewPic] = useState('');
+    const [sent, setSent] = useState(false);
+    const id = useSelector(state => state.idReducer.id.id);
+    const [change, setChange] = useState(false);
     const picturePreview = (e) => {
         preview(e, setPreviewPic, setImage);
     };
     useEffect(() => {
-        if (id) {
-            getUser()
-        }
-    }, [id]);
-    useEffect(() => {
         if (sent) {
-            updateUser()
+            updateUser();
         }
     }, [sent]);
-    const getUser = async () => {
-        try {
-            const response = await fetch(`/api/v1/users/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'aplication/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                setUser(result.data.user)
-            }
-        } catch (err) {
-            return console.log(err);
-        }
-    }
     const handleUpload = async () => {
         try {
             let valid = verifyData(user, false);
@@ -67,7 +48,7 @@ export const UserDetails = () => {
             })
             const result = await response.json();
             if (result.status === 'success') {
-                window.location.href = '/user/details'
+                dispatch(getUser(user))
             }
         } catch (err) {
             return console.log(err);
@@ -92,7 +73,9 @@ export const UserDetails = () => {
             })
             const result = await response.json();
             if (result.status === 'success') {
-                window.location.href = '/'
+                setPassword('');
+                setConfirmPassword('');
+                setChange(false);
             }
         } catch (err) {
             return console.log(err);
@@ -102,11 +85,10 @@ export const UserDetails = () => {
         <div id="user_details">
             {user.picture && <>
                 <div id="user_profile">
-
                     {image ? <img className="previewProfile" style={{ height: '150px', width: '150px', objectFit: 'cover', borderRadius: '50%' }} src={image} alt="Preview" /> :
                         <img className="previewProfile" style={{ height: '150px', width: '150px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${user.picture}`} alt="Cant reach" />}
                     <input type="file" onChange={picturePreview} id="fileInput" accept="image/png, image/jpg, image/jpeg" />
-                    <button onClick={handleUpload}>Submit</button>
+                    <button type="button" onClick={handleUpload}>Submit</button>
                 </div>
                 <div>
                     <span>
@@ -121,7 +103,7 @@ export const UserDetails = () => {
                 <div id="user_pass">
                     <div>
                         <h1>Password</h1>
-                        <button onClick={() => { setChange(!change) }}>Change Password</button>
+                        <button type="button" onClick={() => { setChange(!change) }}>Change Password</button>
                     </div>
                     {change ? <div>
                         <span>

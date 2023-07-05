@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from 'react-router-dom'
 import { EventCard } from "./EventCard";
 import { useSelector } from "react-redux";
@@ -7,7 +7,6 @@ export const CategoryEvents = () => {
     const { type } = useParams()
     const concerts = useSelector(state => state.eventsReducer.concerts);
     const standUp = useSelector(state => state.eventsReducer.standUp);
-    useEffect(() => { console.log(type); }, [type])
     return (
         <div id="category_events">
             <h1>{type === 'musicalConcerts' ? 'Musical Concerts' : "Stand-up Comedy"}</h1>

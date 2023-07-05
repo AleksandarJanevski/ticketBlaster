@@ -20,7 +20,7 @@ api.post('/api/v1/ecommerce/basket/:id', basket.addToBasket);
 api.delete('/api/v1/ecommerce/basket/:id', basket.delete);
 api.delete('/api/v1/ecommerce/deleteMany', basket.deleteMany)
 api.get('/api/v1/ecommerce/order/:id', order.get);
-api.post('/api/v1/ecommerce/order', order.create);
+// api.post('/api/v1/ecommerce/order', order.create);
 api.post('/api/v1/ecommerce/payment', purchase.validate);
 
 api.listen(process.env.ECOM, err => {

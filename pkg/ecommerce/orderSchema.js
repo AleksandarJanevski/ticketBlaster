@@ -18,6 +18,10 @@ const orderSchema = new mongoose.Schema({
         default: function () {
             return uuid.v4();
         }
+    },
+    eventDate: {
+        type: Date,
+        required: true
     }
 });
 

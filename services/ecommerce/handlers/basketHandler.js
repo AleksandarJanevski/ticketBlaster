@@ -9,7 +9,7 @@ exports.addToBasket = async (req, res) => {
             event: event
         });
         if (basketItem) {
-            basketItem.amount += amount
+            basketItem.amount += parseInt(amount)
             await basketItem.save();
         } else {
             await Basket.create({

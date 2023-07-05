@@ -26,7 +26,7 @@ exports.create = async (req, res) => {
             password: password,
             verifyToken: hashedToken
         });
-        const verifyUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/verify/${verifyToken}`
+        const verifyUrl = `${req.protocol}://localhost:9000/api/v1/auth/verify/${verifyToken}`
         const message = 'Please Verify your account at the link below'//its registration confirmation not verification
         const html = await mail('verify', message, verifyUrl, 'Verify Email');
         try {
@@ -63,7 +63,7 @@ exports.getAll = async (req, res) => {
 }
 exports.getOne = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('fullName email picture')
+        const user = await User.findById(req.params.id).select('fullName email picture role')
         res.status(200).json({ status: 'success', data: { user } })
     } catch (err) {
         console.log(err);

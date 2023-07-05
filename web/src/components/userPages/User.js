@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 
 export const User = () => {
-    const role = useSelector(state => state.idReducer.role.role);
+    const role = useSelector(state => state.userReducer.user.role);
     const location = useLocation();
     const [name, setName] = useState('')
     useEffect(() => {

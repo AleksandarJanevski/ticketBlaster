@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { formatDate, verifyData } from '../functions/functions';
 import { PrintEvent } from "./PrintEvent";
 import { Link } from 'react-router-dom'
+import { getBasket } from "../../redux/actions/userActions";
 
 export const CheckOut = () => {
-    const [cart, setCart] = useState([]);
-    const id = useSelector(state => state.idReducer.id.id);
+    const dispatch = useDispatch()
+    const cart = useSelector(state => state.userReducer.basket)
     const [total, setTotal] = useState(0);
     const [gratitude, setGratitude] = useState(false)
     const currentDate = new Date().toISOString().split("T")[0].slice(0, 7);
     const year = currentDate[3];
-    const maxDate = currentDate.replace(year, (parseInt(year) + 5));
     const [toggle, setToggle] = useState(false);
     const [toggleB, setToggleB] = useState(false);
     const [transaction, setTransaction] = useState(false);
+    const [purchase, setPurchase] = useState([])
     const [payment, setPayment] = useState({
         fullName: '',
         cardNo: 0,
@@ -38,17 +39,21 @@ export const CheckOut = () => {
         }, true)
     }, [])
     useEffect(() => {
-        if (id) {
-            getCart();
-        }
-    }, [id]);
-
+        setTotal(
+            cart.reduce((accumulator, element) => {
+                return accumulator + element.amount * element.event.price;
+            }, 0))
+    }, [cart])
     useEffect(() => {
         if (toggle) {
             removeMany();
         }
     }, [toggle]);
-
+    useEffect(() => {
+        if (gratitude) {
+            dispatch(getBasket([]))
+        }
+    }, [gratitude])
     useEffect(() => {
         if (transaction) {
             orderMany();
@@ -75,28 +80,28 @@ export const CheckOut = () => {
         }
     };
 
-    const getCart = async () => {
-        try {
-            const response = await fetch(`/api/v1/ecommerce/basket/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                setCart(result.data.basket);
-                setTotal(
-                    result.data.basket.reduce((accumulator, element) => {
-                        return accumulator + element.amount * element.event.price;
-                    }, 0)
-                );
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    // const getCart = async () => {
+    //     try {
+    //         const response = await fetch(`/api/v1/ecommerce/basket/${id}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-type': 'application/json'
+    //             },
+    //             credentials: 'include'
+    //         });
+    //         const result = await response.json();
+    //         if (result.status === 'success') {
+    //             setCart(result.data.basket);
+    //             setTotal(
+    //                 result.data.basket.reduce((accumulator, element) => {
+    //                     return accumulator + element.amount * element.event.price;
+    //                 }, 0)
+    //             );
+    //         }
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
     const removeMany = async () => {
         try {
@@ -112,6 +117,7 @@ export const CheckOut = () => {
                 credentials: 'include'
             });
             if (response.status === 204) {
+                setPurchase([...cart]);
                 setGratitude(true)
             }
         } catch (err) {
@@ -124,7 +130,8 @@ export const CheckOut = () => {
             let arr = cart.map(element => ({
                 amount: element.amount,
                 beholder: element.beholder,
-                event: element.event._id
+                event: element.event._id,
+                eventDate: element.event.date
             }));
             const response = await fetch('/api/v1/ecommerce/orderMany', {
                 method: 'POST',
@@ -247,7 +254,7 @@ export const CheckOut = () => {
             </> : <div id='gratitude'>
                 <h1>Thank you for your purchase</h1>
                 <span>
-                    {cart.map((element, i) => {
+                    {purchase.map((element, i) => {
                         const price = parseInt(element.amount) * parseInt(element.event.price);
                         let date = formatDate(
                             new Date(element.event.date).toLocaleDateString('en-GB')

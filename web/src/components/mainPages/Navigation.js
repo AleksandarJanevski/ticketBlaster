@@ -1,42 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
-import { idActions, roleActions } from "../../redux/actions/idActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export const Navigation = () => {
     const id = useSelector(state => state.idReducer.id.id)
     const [loggedIn, setLoggedIn] = useState(false);
-    const dispatch = useDispatch();
-
     useEffect(() => {
         if (!id) {
-            getUser();
-        } else {
             setLoggedIn(true)
         }
-    }, []);
-    const getUser = async () => {
-        try {
-            const response = await fetch('/api/v1/auth', {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'aplication/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                const { id, role } = result.data
-                dispatch(idActions(id));
-                dispatch(roleActions(role));
-                setLoggedIn(true);
-            }
-        } catch (err) {
-            setLoggedIn(false);
-            dispatch(roleActions('client'))
-        }
-    }
-
+    }, [id]);
     return (
         <div id="main_header">
             <header>

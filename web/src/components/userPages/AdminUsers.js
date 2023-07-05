@@ -4,7 +4,7 @@ import { AdminDelete } from "./AdminDelete";
 import { AdminRole } from "./AdminRole";
 
 export const AdminUsers = () => {
-    const admin = useSelector(state => state.idReducer.role.role);
+    const admin = useSelector(state => state.userReducer.user.role)
     const op = useSelector(state => state.idReducer.id.id)
     const [toggle, setToggle] = useState(false)
     const [toggleB, setToggleB] = useState(false)
@@ -29,7 +29,6 @@ export const AdminUsers = () => {
                 credentials: 'include'
             });
             const result = await response.json();
-            console.log(result);
             if (result.status === 'success') {
                 const filter = result.data.users.filter(users => users._id !== op)
                 setUsers(filter)

@@ -1,35 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { formatDate } from '../functions/functions'
 import { Link } from 'react-router-dom'
+import { getBasket } from "../../redux/actions/userActions";
 
 export const Cart = () => {
-    const [cart, setCart] = useState([])
-    const id = useSelector(state => state.idReducer.id.id)
-    useEffect(() => {
-        if (id) {
-            getCart()
-        }
-    }, [id]);
-    const getCart = async () => {
-        try {
-            const response = await fetch(`/api/v1/ecommerce/basket/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                setCart(result.data.basket);
-                console.log(result.data.basket);
-            }
-        } catch (err) {
-            console.log(err);
-            return console.log(err);
-        }
-    };
+    const dispatch = useDispatch();
+    const cart = useSelector(state => state.userReducer.basket)
+
     const cartRemove = async (event) => {
         try {
             const response = await fetch(`/api/v1/ecommerce/basket/${event}`, {
@@ -41,7 +19,7 @@ export const Cart = () => {
             });
             if (response.status === 204) {
                 const filter = cart.filter(element => element._id !== event)
-                setCart(filter)
+                dispatch(getBasket(filter))
             }
         } catch (err) {
             return console.log(err);

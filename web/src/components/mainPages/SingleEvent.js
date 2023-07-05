@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom'
 import { formatDate } from '../functions/functions'
 import { EventCard } from "./EventCard";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getBasket } from "../../redux/actions/userActions";
 
 export const SingleEvent = () => {
+    const dispatch = useDispatch();
     const [event, setEvent] = useState({});
     const [amount, setAmount] = useState(1);
     const concerts = useSelector(state => state.eventsReducer.concerts);
     const standUp = useSelector(state => state.eventsReducer.standUp);
-    const role = useSelector(state => state.idReducer.role.role);
+    const role = useSelector(state => state.userReducer.user.role);
     const user = useSelector(state => state.idReducer.id.id);
-    const [toggle, setToggle] = useState(false)
+    const [toggle, setToggle] = useState(false);
     const { id } = useParams();
     useEffect(() => {
         if (id && event._id !== id) {
@@ -20,15 +22,15 @@ export const SingleEvent = () => {
     }, [concerts, standUp, id]);
     useEffect(() => {
         if (toggle) {
-            getRelated()
-            setToggle(!toggle)
+            getRelated();
+            setToggle(!toggle);
         }
     }, [toggle])
     const getEvent = () => {
         let events = [...concerts].concat([...standUp]);
         let filter = events.filter(element => element._id === id);
         setEvent(filter[0]);
-        setToggle(!toggle)
+        setToggle(!toggle);
     }
     const getRelated = () => {
         let events = [...concerts].concat([...standUp]);
@@ -37,31 +39,13 @@ export const SingleEvent = () => {
         setEvent({ ...event, relatedEvents: filterRelated });
     }
 
-    // const getEvent = async () => {
-    //     try {
-    //         const response = await fetch(`/api/v1/events/${id}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-type': 'aplication/json'
-    //             },
-    //             credentials: 'include'
-    //         });
-    //         const result = await response.json();
-    //         if (result.status === 'success') {
-    //             setEvent(result.data.event)
-    //             console.log(result.data.event);
-    //         }
-    //     } catch (err) {
-    //         return console.log(err);
-    //     }
-    // }
     const maxTickets = () => {
         if (event.tickets < 4) {
-            return event.tickets
+            return event.tickets;
         } else if (event.tickets === 0) {
-            return 0
+            return 0;
         } else {
-            return 4
+            return 4;
         }
     }
     const addToCart = async () => {
@@ -82,8 +66,12 @@ export const SingleEvent = () => {
                     'content-type': 'application/json'
                 }
             })
-            const result = await response.json()
+            const result = await response.json();
             if (result.status === 'success') {
+                dispatch(getBasket({
+                    amount: amount,
+                    event: id
+                }))
                 window.location.href = '/cart'
             }
         } catch (err) {

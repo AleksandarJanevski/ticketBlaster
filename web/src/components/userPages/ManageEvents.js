@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { formatDate } from '../functions/functions';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getConcerts, getStandUp } from '../../redux/actions/eventsActions';
 import { Link } from "react-router-dom";
 import { DeletePopUp } from "./DeletePopUp";
 
@@ -8,29 +9,17 @@ export const ManageEvents = () => {
     const [events, setEvents] = useState([]);
     const [toggle, setToggle] = useState(false)
     const [eventId, setEventId] = useState('')
-    const role = useSelector(state => state.idReducer.role.role);
+    const dispatch = useDispatch()
+    const concerts = useSelector(state => state.eventsReducer.concerts);
+    const standUp = useSelector(state => state.eventsReducer.standUp)
+    const role = useSelector(state => state.userReducer.user.role);
     useEffect(() => {
         if (role && role === 'admin') {
-            fetchEvents();
+            const arr = [...concerts].concat([...standUp]);
+            arr.sort((a, b) => { return a.date - b.date })
+            setEvents(arr)
         }
-    }, [role]);
-    const fetchEvents = async () => {
-        try {
-            const response = await fetch(`/api/v1/events/getAll`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'aplication/json'
-                },
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                console.log(result.data.events);
-                setEvents(result.data.events)
-            }
-        } catch (err) {
-            return console.log(err);
-        }
-    }
+    }, [role, concerts, standUp]);
     const removeEvent = async () => {
         try {
             const response = await fetch(`/api/v1/events/delete/${eventId}`, {
@@ -40,9 +29,19 @@ export const ManageEvents = () => {
                 },
                 credentials: 'include'
             });
-            console.log(response);
             if (response.status === 204) {
                 const filter = events.filter(element => element._id !== eventId)
+                const updateEvents = events.filter(element => element._id === eventId);
+                console.log(updateEvents);
+                if (updateEvents.category === 'Musical Concert') {
+                    let arr = [...concerts]
+                    arr = arr.filter(element => element !== updateEvents[0])
+                    dispatch(getConcerts(arr));
+                } else {
+                    let arr = [...standUp]
+                    arr = arr.filter(element => element !== updateEvents[0])
+                    dispatch(getStandUp(arr));
+                }
                 setEvents(filter)
                 setToggle(false)
             }

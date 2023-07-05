@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const formatDate = (date) => {
+export const formatDate = (date, bool) => {
     try {
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let day = date.split('/')[0]
@@ -20,7 +20,12 @@ export const formatDate = (date) => {
             day = day + "th"
         }
         month = months[month - 1]
-        return (`${month} ${day}, ${year}`)
+        if (!bool) {
+            return (`${month} ${day}, ${year}`)
+        } else {
+            return (`${month} ${day} ${year}`)
+        }
+
     } catch (err) {
         console.log(err);
     }
@@ -90,6 +95,45 @@ export const fetchEvents = async (dispatch, option, event) => {
                 option(arr);
             }
 
+        }
+    } catch (err) {
+        return console.log(err);
+    }
+}
+export const redux = async (url, func, action, option) => {
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'aplication/json'
+            },
+            credentials: 'include'
+        });
+        const result = await response.json();
+        if (result.status === 'success') {
+            switch (option) {
+                case 1:
+                    func(action(result.data.basket));
+                    break;
+                case 2:
+                    func(action(result.data.user));
+                    break;
+                case 3:
+                    let arr = result.data.orders;
+                    arr.sort((a, b) => {
+                        return new Date(b.eventDate) - new Date(a.eventDate);
+                    });
+                    func(action(arr));
+                    break;
+                case 4:
+                    func(action(result.data.hero));
+                    break;
+                case 5:
+                    func(action(result.data.id));
+                    break;
+                default:
+                    break;
+            }
         }
     } catch (err) {
         return console.log(err);
