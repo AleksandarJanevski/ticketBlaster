@@ -2,7 +2,7 @@ const express = require('express');
 const db = require('../../pkg/database/index');
 const api = express();
 const auth = require('./handlers/authHandler');
-const cookieParser = require('cookie-parser');//nepotrebno?
+const cookieParser = require('cookie-parser');
 
 api.use(express.json());
 api.use(cookieParser());
@@ -14,12 +14,7 @@ api.get('/api/v1/auth/logout', auth.protectRoute, auth.logout);
 api.post('/api/v1/auth/forgotPassword', auth.forgotPassword);
 api.post('/api/v1/auth/resetPassword/:token', auth.resetPassword);
 api.get('/api/v1/auth/verify/:token', auth.verify);
-//protected
 api.post('/api/v1/auth/changePassword/:id', auth.protectRoute, auth.changePassword);
-// api.get('/api/v1/auth/admin', auth.protectAdmin, (req, res) => {
-//     res.status(200).json({ status: 'success' });
-// });
-
 api.listen(process.env.AUTH, err => {
     if (err) return console.log(err);
     console.log(`Auth Service started on ` + process.env.AUTH);

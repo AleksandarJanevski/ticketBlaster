@@ -11,7 +11,8 @@ const orderSchema = new mongoose.Schema({
     },
     beholder: {
         type: String,
-        required: [true, 'User must have Identification']
+        required: [true, 'User must have Identification'],
+        ref: 'User'
     },
     purchaseNo: {
         type: String,

@@ -6,7 +6,7 @@ export const Navigation = () => {
     const id = useSelector(state => state.idReducer.id.id)
     const [loggedIn, setLoggedIn] = useState(false);
     useEffect(() => {
-        if (!id) {
+        if (id) {
             setLoggedIn(true)
         }
     }, [id]);

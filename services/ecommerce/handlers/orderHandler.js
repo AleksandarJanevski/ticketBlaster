@@ -1,24 +1,7 @@
 const Order = require('../../../pkg/ecommerce/orderSchema');
 const { mail } = require('../../../pkg/fsModules/fileReader');
 const { sendEmail } = require('../../../pkg/mailer/nodemailer');
-const User = require('../../../pkg/user/userSchema');
-// exports.create = async (req, res) => {
-//     try {
-//         const { amount, event, beholder } = req.body
-//         if (!amount || !event || !beholder) {
-//             return res.status(400).send('Purchase error');
-//         }
-//         await Order.create({
-//             event: event,
-//             amount: amount,
-//             beholder: beholder
-//         })
-//         res.status(201).json({ status: 'success' });
-//     } catch (err) {
-//         console.log(err);
-//         return res.status(500).send('internal server error');
-//     }
-// }
+
 exports.createMany = async (req, res) => {
     try {
         const orders = req.body;
@@ -27,13 +10,12 @@ exports.createMany = async (req, res) => {
                 return res.status(400).send('Purchase error');
             }
         })
-        const tickets = await Order.insertMany(orders);
-        const user = await User.findById(orders[0].beholder);
-        const message = `Thank you for purchasing at ticket blaster, here is you purchase code: ${tickets.map(element => { return (element.purchaseNo, ' ') })}`
+        const tickets = await Order.insertMany(orders).then(elements => Order.populate(elements, { path: 'beholder' }));
+        const message = `Thank you for purchasing at ticket blaster, here is you purchase code: ${tickets.map(element => element.purchaseNo).join(', ')}`
         const html = await mail('ticket', message,);
         try {
             await sendEmail({
-                email: user.email,
+                email: tickets[0].beholder.email,
                 subject: 'Purchase Confirm',
                 html: html
             })

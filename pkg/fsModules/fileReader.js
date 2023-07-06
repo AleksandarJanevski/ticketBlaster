@@ -1,11 +1,20 @@
 const fs = require('fs');
-const { promisify } = require('util');
 
-const read = promisify(fs.readFile);
+const read = async (template) => {
+    return new Promise((success, fail) => {
+        fs.readFile(`${__dirname}/../../public/html/${template}.html`, 'utf-8', (err, data) => {
+            if (err) {
+                return fail(err);
+            }
+            return success(data)
+        });
+
+    })
+}
 
 const readMail = async (template) => {
     try {
-        const mail = await read(`${__dirname}/../../public/html/${template}.html`, 'utf-8');
+        const mail = await read(template);
         return mail
     } catch (err) {
         return console.log(err);

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { preview, verifyData, uploadFunc, fetchEvents } from '../functions/functions';
 
 export const EventForm = () => {
-    const role = useSelector(state => state.idReducer.role.role);
+    const role = useSelector(state => state.userReducer.user.role);
     const { eventId } = useParams();
     const [concerts, setConcerts] = useState([]);
     const [standUp, setStandUp] = useState([]);

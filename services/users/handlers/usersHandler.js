@@ -73,6 +73,7 @@ exports.getOne = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
+        console.log('hello');
         if (!user) {
             return res.status(404).send('User not found');
         }

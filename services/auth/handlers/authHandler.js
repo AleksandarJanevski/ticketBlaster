@@ -2,7 +2,6 @@ const User = require('../../../pkg/user/userSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../../../pkg/mailer/nodemailer');
-const { promisify } = require('util');
 const { mail } = require('../../../pkg/fsModules/fileReader');
 const crypto = require('crypto');
 
@@ -119,10 +118,6 @@ exports.changePassword = async (req, res) => {
         if (!user) {
             return res.status(404).send('User not found');
         }
-        // const validate = bcrypt.compareSync(oldPassword, user.password);
-        // if (!validate) {
-        //     return res.status(400).send('Invalid email or password');
-        // }
         user.password = newPassword
         await user.save();
         res.status(200).json({ status: 'success' });
@@ -141,9 +136,8 @@ exports.protectAdmin = async (req, res, next) => {
         if (!token) {
             return res.status(401).send('Unauthorized access');
         }
-        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.id);
-        if (!user || user.role !== 'admin') {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (decoded.role !== 'admin') {
             return res.status(401).send('Unauthorized access');
         }
         next();
@@ -161,14 +155,9 @@ exports.cookieVerify = async (req, res) => {
         if (!token) {
             return res.status(401).send('Unauthorized access');
         }
-        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.id);
-        if (!user) {
-            return res.status(401).send('Unauthorized access');
-        }
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userData = {
             id: decoded.id,
-            role: decoded.role
         }
         res.status(200).json({ status: 'success', data: userData });
     } catch (err) {
@@ -185,12 +174,11 @@ exports.protectRoute = async (req, res, next) => {
         if (!token) {
             return res.status(401).send('Unauthorized access');
         }
-        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.id);
-        if (!user) {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded) {
             return res.status(401).send('Unauthorized access');
         }
-        next()
+        next();
     } catch (err) {
         console.log(err);
         return res.status(500).send('internal server error');

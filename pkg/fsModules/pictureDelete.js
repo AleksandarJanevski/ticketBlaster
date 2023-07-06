@@ -1,7 +1,16 @@
 const fs = require('fs');
-const { promisify } = require('util');
 
-const remove = promisify(fs.unlink);
+const remove = async (picture, path) => {
+    return new Promise((success, fail) => {
+        fs.unlink(`${__dirname}/../../public/img/${path}/${picture}`, err => {
+            if (err) {
+                return fail(err);
+            }
+            return success();
+        })
+    })
+
+}
 
 exports.unlink = async (picture) => {
     try {
@@ -11,7 +20,7 @@ exports.unlink = async (picture) => {
         } else {
             path = 'profile'
         }
-        await remove(`${__dirname}/../../public/img/${path}/${picture}`)
+        await remove(picture, path)
     } catch (err) {
         return console.log(err);
     }

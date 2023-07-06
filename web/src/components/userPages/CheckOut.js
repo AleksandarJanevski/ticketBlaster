@@ -12,6 +12,7 @@ export const CheckOut = () => {
     const [gratitude, setGratitude] = useState(false)
     const currentDate = new Date().toISOString().split("T")[0].slice(0, 7);
     const year = currentDate[3];
+    const maxDate = currentDate.replace(year, (parseInt(year) + 5));
     const [toggle, setToggle] = useState(false);
     const [toggleB, setToggleB] = useState(false);
     const [transaction, setTransaction] = useState(false);
@@ -62,7 +63,10 @@ export const CheckOut = () => {
 
     const cardVerify = async () => {
         try {
-            verifyData(payment);
+            if (payment.cardNo < 1000000000000000 || payment.cardNo > 9007199254740991) {
+                return alert('Please add a valid credit card number');
+            }
+            verifyData(payment, true);
             const response = await fetch('/api/v1/ecommerce/payment', {
                 method: 'POST',
                 body: JSON.stringify(payment),
@@ -79,29 +83,6 @@ export const CheckOut = () => {
             console.log(err);
         }
     };
-
-    // const getCart = async () => {
-    //     try {
-    //         const response = await fetch(`/api/v1/ecommerce/basket/${id}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-type': 'application/json'
-    //             },
-    //             credentials: 'include'
-    //         });
-    //         const result = await response.json();
-    //         if (result.status === 'success') {
-    //             setCart(result.data.basket);
-    //             setTotal(
-    //                 result.data.basket.reduce((accumulator, element) => {
-    //                     return accumulator + element.amount * element.event.price;
-    //                 }, 0)
-    //             );
-    //         }
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
 
     const removeMany = async () => {
         try {
@@ -219,6 +200,7 @@ export const CheckOut = () => {
                             type="month"
                             id="expire"
                             min={currentDate}
+                            max={maxDate}
                             onChange={e => {
                                 const [year, month] = e.target.value.split('-');
                                 setPayment({

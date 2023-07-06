@@ -31,8 +31,7 @@ export const formatDate = (date, bool) => {
     }
 }
 export const preview = (e, setUpload, setPreview) => {
-    const file = e.target.files[0]
-    console.log(file.name);
+    const file = e.target.files[0];
     setUpload(file);
     if (file) {
         const reader = new FileReader();

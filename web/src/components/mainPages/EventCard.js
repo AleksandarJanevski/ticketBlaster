@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { formatDate } from '../functions/functions'
 import { Link } from "react-router-dom";
 export const EventCard = ({ array, option, func }) => {
+    //make switch casses and ids for button
     return (
         <div id="card">
             {array && array.map((element, i) => {

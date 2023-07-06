@@ -27,7 +27,6 @@ exports.addToBasket = async (req, res) => {
 
 exports.getBasket = async (req, res) => {
     try {
-        console.log(req.params.id);
         const basket = await Basket.find({ beholder: req.params.id }).populate('event');
         res.status(200).json({ status: 'success', data: { basket } });
     } catch (err) {
