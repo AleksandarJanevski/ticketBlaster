@@ -33,6 +33,12 @@ export const CheckOut = () => {
         image: ''
     });
     useEffect(() => {
+        if (cart.length === 0) {
+            window.location.href = '/'
+            console.log('object');
+        }
+    }, [])
+    useEffect(() => {
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 setToggleB(false)

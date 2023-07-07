@@ -148,14 +148,7 @@ exports.protectAdmin = async (req, res, next) => {
 }
 exports.cookieVerify = async (req, res) => {
     try {
-        let token;
-        if (req.cookies && req.cookies.jwt) {
-            token = req.cookies.jwt
-        }
-        if (!token) {
-            return res.status(401).send('Unauthorized access');
-        }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const { decoded } = req
         const userData = {
             id: decoded.id,
         }
@@ -178,6 +171,7 @@ exports.protectRoute = async (req, res, next) => {
         if (!decoded) {
             return res.status(401).send('Unauthorized access');
         }
+        req.decoded = decoded;
         next();
     } catch (err) {
         console.log(err);

@@ -13,7 +13,7 @@ export const User = () => {
         if (!role) {
             window.location.href = '/'
         }
-    });
+    }, []);
     const siteName = () => {
         const loc = location.pathname.split('/')[2]
         if (loc === 'details') {

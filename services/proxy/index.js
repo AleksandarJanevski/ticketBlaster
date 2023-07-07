@@ -12,9 +12,8 @@ api.use(cors({
     credentials: true
 }));
 
-
 api.use(cookieParser());
-api.use(express.static('public'))
+api.use(express.static('public'));
 api.use(morgan('dev'));
 
 const authProxy = proxy(`http://localhost:${process.env.AUTH}`, {

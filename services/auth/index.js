@@ -8,13 +8,15 @@ api.use(express.json());
 api.use(cookieParser());
 db.init()
 
-api.get('/api/v1/auth', auth.cookieVerify);
 api.post('/api/v1/auth/login', auth.login);
-api.get('/api/v1/auth/logout', auth.protectRoute, auth.logout);
 api.post('/api/v1/auth/forgotPassword', auth.forgotPassword);
 api.post('/api/v1/auth/resetPassword/:token', auth.resetPassword);
 api.get('/api/v1/auth/verify/:token', auth.verify);
-api.post('/api/v1/auth/changePassword/:id', auth.protectRoute, auth.changePassword);
+api.use(auth.protectRoute);
+api.get('/api/v1/auth', auth.cookieVerify);
+api.get('/api/v1/auth/logout', auth.logout);
+api.post('/api/v1/auth/changePassword/:id', auth.changePassword);
+
 api.listen(process.env.AUTH, err => {
     if (err) return console.log(err);
     console.log(`Auth Service started on ` + process.env.AUTH);
