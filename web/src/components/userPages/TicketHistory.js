@@ -24,8 +24,9 @@ export const TicketHistory = () => {
             {tickets && tickets.map((element, i) => {
                 if (element.event) {
                     let date = formatDate(new Date(element.event.date).toLocaleDateString('en-GB'))
+                    let now = new Date(element.event.date) < Date.now();
                     return (
-                        <div key={i} id="event_card" >
+                        <div key={i} id={!now ? 'event_card' : 'event_card_passed'}>
                             <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.event.picture})` }}></div>
                             <div id="event_info">
                                 <p>{element.event.name}</p>
@@ -35,7 +36,7 @@ export const TicketHistory = () => {
                                 </div>
                                 <div id="bottom_card">
                                     <p>{element.event.location}</p>
-                                    <button type="button" onClick={() => {
+                                    {!now ? <button type="button" onClick={() => {
                                         const obj = {
                                             name: element.event.name,
                                             location: element.event.location,
@@ -44,7 +45,7 @@ export const TicketHistory = () => {
                                         }
                                         setPrint(obj);
                                         setToggle(true)
-                                    }}>Print</button>
+                                    }}>Print</button> : <button type="button">Print</button>}
                                 </div>
                             </div>
                         </div>

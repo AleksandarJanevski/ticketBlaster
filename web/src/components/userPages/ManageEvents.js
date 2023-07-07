@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { formatDate } from '../functions/functions';
 import { useSelector, useDispatch } from 'react-redux'
 import { getConcerts, getStandUp } from '../../redux/actions/eventsActions';
 import { Link } from "react-router-dom";
 import { DeletePopUp } from "./DeletePopUp";
+import { EventCard } from "../mainPages/EventCard";
 
 export const ManageEvents = () => {
     const [events, setEvents] = useState([]);
@@ -56,31 +56,7 @@ export const ManageEvents = () => {
                     <button><Link to='/eventForm'>Create Event</Link></button>
                 </div>
                 <div>
-                    {events && <div>
-                        {events && events.map((element, i) => {
-                            let date = formatDate(new Date(element.date).toLocaleDateString('en-GB'))
-                            return (
-                                <div key={i} id="event_card" >
-                                    <a href={`/eventForm/${element._id}`}> <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}></div></a>
-                                    <div id="event_info">
-                                        <p>{element.name}</p>
-                                        <p>{date}</p>
-                                        <div id="details">
-                                            <p>{element.details}</p>
-                                        </div>
-                                        <div id="bottom_card">
-                                            <p>{element.location}</p>
-                                            <button onClick={() => {
-                                                setToggle(true);
-                                                setEventId(element._id)
-                                            }}>Delete Event</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })}
-
-                    </div>}
+                    {events && <EventCard array={events} option={2} setOne={setToggle} setTwo={setEventId} func={removeEvent} />}
                 </div>
                 {toggle ? <DeletePopUp id={eventId} toggl={() => setToggle(false)} func={removeEvent} /> : null}
             </> : null}
