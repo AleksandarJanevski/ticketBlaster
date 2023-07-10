@@ -48,6 +48,9 @@ eventSchema.pre('save', async function (next) {
     if (this.date < today && this.date !== today) {
         return next(new Error('Date cannot be less than today'));
     }
+    if (this.tickets < 0) {
+        return next(new Error('Tickets are sold out'));
+    }
     this.date.setHours(this.date.getHours() + 2);
     next();
 })

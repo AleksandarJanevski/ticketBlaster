@@ -111,6 +111,24 @@ export const CheckOut = () => {
             console.log(err);
         }
     };
+    const removeTikcets = async () => {
+        try {
+            const response = await fetch('', {//updateAll
+                method: 'PATCH',
+                body: JSON.stringify(arr),
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                credentials: 'include'
+            });
+            const result = await response.json();
+            if (result.status === 'success') {
+
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const orderMany = async () => {
         try {

@@ -58,7 +58,7 @@ export const EventForm = () => {
     }, [sent]);
 
     const fetchConcerts = async () => {
-        await fetchEvents('', (data) => {
+        await fetchEvents('concerts', (data) => {
             if (eventId) {
                 const filteredConcerts = data.filter(element => element._id !== eventId && !event.relatedEvents.some(relatedEvent => relatedEvent._id === element._id));
                 setConcerts(filteredConcerts);
@@ -66,11 +66,11 @@ export const EventForm = () => {
                 setConcerts(data)
             }
 
-        }, 'concerts');
+        });
     };
 
     const fetchStandUp = async () => {
-        await fetchEvents('', (data) => {
+        await fetchEvents('standUp', (data) => {
             if (eventId) {
                 const filteredStandUp = data.filter(element => {
                     return element._id !== eventId && !event.relatedEvents.some(item => item._id === element._id);
@@ -79,7 +79,7 @@ export const EventForm = () => {
             } else {
                 setStandUp(data)
             }
-        }, 'standUp');
+        });
     };
 
     const getEvent = async () => {
@@ -99,7 +99,7 @@ export const EventForm = () => {
         } catch (err) {
             return console.log(err);
         }
-    }//this can be done with redux
+    }
 
     const picturePreview = (e) => {
         preview(e, setPreviewPic, setImage);

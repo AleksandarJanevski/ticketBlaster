@@ -14,26 +14,8 @@ export const Search = () => {
         if (param) {
             find();
         }
-    }, [param, concerts, standUp])
-    //alternative od reducerite da izvadam i da postavam vo array
-    // const getSearch = async () => {
-    //     try {
-    //         const response = await fetch(`/api/v1/events/search/${param}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-type': 'aplication/json'
-    //             },
-    //             credentials: 'include'
-    //         });
-    //         const result = await response.json();
-    //         if (result.status === 'success') {
-    //             setQuery(result.data.searchQuery)
-    //             console.log(result.data.searchQuery);
-    //         }
-    //     } catch (err) {
-    //         return console.log(err);
-    //     }
-    // }
+    }, [param, concerts, standUp]);
+
     const find = () => {
         try {
             let keyword = param.toLowerCase();

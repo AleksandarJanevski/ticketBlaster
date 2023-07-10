@@ -1,6 +1,7 @@
 const Order = require('../../../pkg/ecommerce/orderSchema');
 const { mail } = require('../../../pkg/fsModules/fileReader');
 const { sendEmail } = require('../../../pkg/mailer/nodemailer');
+const Event = require('../../../pkg/event/eventSchema');
 
 exports.createMany = async (req, res) => {
     try {
@@ -10,6 +11,14 @@ exports.createMany = async (req, res) => {
                 return res.status(400).send('Purchase error');
             }
         })
+        let events = await Event.find();
+        orders.forEach(order => {
+            const event = events.find(event => event._id.toString() === order.event);
+            if (event) {
+                event.tickets -= order.amount;
+            }
+        });
+        await Promise.all(events.map(event => event.save()));
         const tickets = await Order.insertMany(orders).then(elements => Order.populate(elements, { path: 'beholder' }));
         const message = `Thank you for purchasing at ticket blaster, here is you purchase code: ${tickets.map(element => element.purchaseNo).join(', ')}`
         const html = await mail('ticket', message,);

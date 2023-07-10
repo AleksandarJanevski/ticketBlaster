@@ -3,21 +3,24 @@ import axios from "axios";
 export const formatDate = (date, bool) => {
     try {
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let day = date.split('/')[0]
-        let lastDigit = parseInt(day.slice(1));
-        let month = date.split('/')[1]
-        let year = date.split('/')[2]
+        let day = date.split('/')[0];
+        let month = date.split('/')[1];
+        let year = date.split('/')[2];
+
         if (day.startsWith('0')) {
             day = day.slice(1);
         }
-        if (lastDigit === 1 && day !== 11) {
-            day = day + "st"
-        } else if (lastDigit === 2 && day !== 12) {
-            day = day + "nd"
-        } else if (lastDigit === 3 && day !== 13) {
-            day = day + "rd"
+
+        if (day === '11' || day === '12' || day === '13') {
+            day = day + "th";
+        } else if (day.endsWith('1')) {
+            day = day + "st";
+        } else if (day.endsWith('2')) {
+            day = day + "nd";
+        } else if (day.endsWith('3')) {
+            day = day + "rd";
         } else {
-            day = day + "th"
+            day = day + "th";
         }
         month = months[month - 1]
         if (!bool) {
@@ -75,7 +78,7 @@ export const uploadFunc = async (update, current, setObj, object, setTrigger, tr
         return console.log(err);
     }
 }
-export const fetchEvents = async (dispatch, option, event) => {
+export const fetchEvents = async (event, option) => {
     try {
         const response = await fetch(`/api/v1/events/${event}`, {
             method: 'GET',
@@ -85,21 +88,16 @@ export const fetchEvents = async (dispatch, option, event) => {
         });
         const result = await response.json();
         if (result.status === 'success') {
-            if (dispatch) {
-                dispatch(option(result.data.events))
-            } else {
-                const empty = {}
-                let arr = result.data.events
-                arr.unshift(empty)
-                option(arr);
-            }
-
+            const empty = {}
+            let arr = result.data.events
+            arr.unshift(empty)
+            option(arr);
         }
     } catch (err) {
         return console.log(err);
     }
 }
-export const redux = async (url, func, action, option) => {
+export const redux = async (url, func, action, option, action2, action3) => {
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -125,7 +123,14 @@ export const redux = async (url, func, action, option) => {
                     func(action(arr));
                     break;
                 case 4:
-                    func(action(result.data.hero));
+                    let array = result.data.events;
+                    const hero = array.slice(0, 1);
+                    console.log(hero);
+                    const comedy = array.filter(element => element.category === 'Stand-up Comedy');
+                    const concerts = array.filter(element => element.category === 'Musical Concert');
+                    func(action(hero[0]));
+                    func(action2(comedy));
+                    func(action3(concerts));
                     break;
                 case 5:
                     func(action(result.data.id));

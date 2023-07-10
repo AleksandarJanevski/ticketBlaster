@@ -1,10 +1,11 @@
 const express = require('express');
 const proxy = require('express-http-proxy');
-const db = require('../../pkg/database/index')
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const dotenv = require('dotenv');
 
+dotenv.config({ path: `${__dirname}/../../pkg/config/config.env` });
 
 const api = express();
 api.use(cors({

@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from 'prop-types'
 import { formatDate } from '../functions/functions'
 import { Link } from "react-router-dom";
-export const EventCard = ({ array, option, func, setOne, setTwo }) => {
+export const EventCard = ({ array, option, load, func, setOne, setTwo }) => {
     const buttonType = (option, element) => {
         switch (option) {
             case 1:
-                return (<button id="getTickets"><Link to={`/event/${element._id}`}>Get Tickets</Link> </button>);
+                if (element.tickets === 0) {
+                    return (<button id="getTickets" style={{ color: 'white' }}>Sold Out</button>)
+                } else {
+                    return (<button id="getTickets"><Link to={`/event/${element._id}`}>Get Tickets</Link> </button>);
+                }
             case 2:
                 return (<button onClick={() => {
                     setOne(true);
@@ -22,6 +26,7 @@ export const EventCard = ({ array, option, func, setOne, setTwo }) => {
         <div id="card">
             {array && array.map((element, i) => {
                 let date = formatDate(new Date(element.date).toLocaleDateString('en-GB'))
+                if (i >= load) return null
                 return (
                     <div key={i} id='event_card' >
                         {option === 2 ? <a href={`/eventForm/${element._id}`}> <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}></div></a> : <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}>

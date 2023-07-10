@@ -3,7 +3,8 @@ const { unlink } = require('../../../pkg/fsModules/pictureDelete')
 
 exports.getAllStandUp = async (req, res) => {
     try {
-        const events = await Event.find({ category: 'Stand-up Comedy' });
+        let events = await Event.find({ category: 'Stand-up Comedy' });
+        events = events.filter(element => new Date(element.date) >= new Date().setHours(0, 0, 0, 0));
         events.sort((a, b) => { return a.date - b.date });
         res.status(200).json({ status: 'success', data: { events } });
     } catch (err) {
@@ -14,7 +15,8 @@ exports.getAllStandUp = async (req, res) => {
 
 exports.getHero = async (req, res) => {
     try {
-        const events = await Event.find();
+        let events = await Event.find();
+        events = events.filter(element => new Date(element.date) >= new Date().setHours(0, 0, 0, 0));
         events.sort((a, b) => { return a.date - b.date });
         const hero = events[0]
         res.status(200).json({ status: 'success', data: { hero } });
@@ -26,7 +28,8 @@ exports.getHero = async (req, res) => {
 
 exports.getAllConcerts = async (req, res) => {
     try {
-        const events = await Event.find({ category: 'Musical Concert' });
+        let events = await Event.find({ category: 'Musical Concert' });
+        events = events.filter(element => new Date(element.date) >= new Date().setHours(0, 0, 0, 0));
         events.sort((a, b) => { return a.date - b.date });
         res.status(200).json({ status: 'success', data: { events } });
     } catch (err) {
@@ -36,7 +39,8 @@ exports.getAllConcerts = async (req, res) => {
 }
 exports.getAll = async (req, res) => {
     try {
-        const events = await Event.find();
+        let events = await Event.find();
+        events = events.filter(element => new Date(element.date) >= new Date().setHours(0, 0, 0, 0));
         events.sort((a, b) => { return a.date - b.date });
         res.status(200).json({ status: 'success', data: { events } });
     } catch (err) {

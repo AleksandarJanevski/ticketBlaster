@@ -29,12 +29,12 @@ export const Events = () => {
             <div id="eventList">
                 <div className="vertical">
                     <h2>Musical Concerts</h2>
-                    {concertFilter && <EventCard array={concertFilter} option={1} />}
+                    {concertFilter && <EventCard array={concertFilter} option={1} load={5} />}
                     <Link to="/category/musicalConcerts"><div>See All Musical Concerts</div></Link>
                 </div>
                 <div className="vertical">
                     <h2>Stand-up Comedy</h2>
-                    {standUpFilter && <EventCard array={standUpFilter} option={1} />}
+                    {standUpFilter && <EventCard array={standUpFilter} option={1} load={5} />}
                     <Link to="/category/standUpComedy"><div>See All Stand-up Comedy Shows</div></Link>
                 </div>
             </div>

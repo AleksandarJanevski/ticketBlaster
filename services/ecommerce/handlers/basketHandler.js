@@ -27,7 +27,9 @@ exports.addToBasket = async (req, res) => {
 
 exports.getBasket = async (req, res) => {
     try {
-        const basket = await Basket.find({ beholder: req.params.id }).populate('event');
+        let basket = await Basket.find({ beholder: req.params.id }).populate('event');
+        basket = basket.filter(element => new Date(element.event.date) >= new Date().setHours(0, 0, 0, 0) && element.event.tickets > 0)
+        await Promise.all(basket.map(cart => cart.save()));
         res.status(200).json({ status: 'success', data: { basket } });
     } catch (err) {
         console.log(err);
