@@ -30,7 +30,6 @@ exports.getAllConcerts = async (req, res) => {
     try {
         let events = await Event.find({ category: 'Musical Concert' });
         events = events.filter(element => new Date(element.date) >= new Date().setHours(0, 0, 0, 0));
-        events.sort((a, b) => { return a.date - b.date });
         res.status(200).json({ status: 'success', data: { events } });
     } catch (err) {
         console.log(err);

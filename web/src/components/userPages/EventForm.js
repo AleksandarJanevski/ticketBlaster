@@ -10,11 +10,11 @@ export const EventForm = () => {
     const { eventId } = useParams();
     const [concerts, setConcerts] = useState([]);
     const [standUp, setStandUp] = useState([]);
+    const [matching, setMatching] = useState([]);
     const [image, setImage] = useState('');
     const [sent, setSent] = useState(false);
     let [t, setT] = useState(0);
     const [previewPic, setPreviewPic] = useState('')
-    const [matching, setMatching] = useState([]);
     const [related, setRelated] = useState('');
     const currentDate = new Date().toISOString().split("T")[0];
     const year = currentDate[3];
@@ -116,51 +116,6 @@ export const EventForm = () => {
         }
 
     }
-    const createEvent = async () => {
-        try {
-            let valid = verifyData(event, true);
-            if (valid) {
-                const response = await fetch('/api/v1/events', {
-                    method: 'POST',
-                    body: JSON.stringify(event),
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
-                const result = await response.json()
-                if (result.status === 'success') {
-                    window.location.href = '/eventForm';
-                }
-            }
-        } catch (err) {
-            return console.log(err);
-        }
-    };
-
-    const updateEvent = async () => {
-        try {
-            let valid = verifyData(event, true);
-            if (valid) {
-                verifyData(event, true);
-                const response = await fetch(`/api/v1/events/${eventId}`, {
-                    method: 'PATCH',
-                    body: JSON.stringify(event),
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
-                const result = await response.json();
-                if (result.status === 'success') {
-                    window.location.href = `/events/${eventId}`
-                }
-            }
-        } catch (err) {
-            return console.log(err);
-        }
-
-    }
 
     const addRelated = (e) => {
         e.preventDefault()
@@ -223,6 +178,52 @@ export const EventForm = () => {
         setEvent({ ...event, relatedEvents: array });
     };
 
+    const createEvent = async () => {
+        try {
+            let valid = verifyData(event, true);
+            if (valid) {
+                const response = await fetch('/api/v1/events', {
+                    method: 'POST',
+                    body: JSON.stringify(event),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                const result = await response.json()
+                if (result.status === 'success') {
+                    window.location.href = '/eventForm';
+                }
+            }
+        } catch (err) {
+            return console.log(err);
+        }
+    };
+
+    const updateEvent = async () => {
+        try {
+            let valid = verifyData(event, true);
+            if (valid) {
+                verifyData(event, true);
+                const response = await fetch(`/api/v1/events/${eventId}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify(event),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    window.location.href = `/events/${eventId}`
+                }
+            }
+        } catch (err) {
+            return console.log(err);
+        }
+
+    }
+
     return (
         <div id="eventForm">
             {role === 'admin' ? <>
@@ -277,7 +278,7 @@ export const EventForm = () => {
                     </span>
 
                     <span id="relatedEvents">
-                        {event.relatedEvents ? <EventCard option={2} array={matching} func={removeRelated} /> : null}
+                        {event.relatedEvents ? <EventCard option={3} array={matching} func={removeRelated} /> : null}
                     </span>
                 </div>
                 <button type="button" onClick={handleUpload}>Save</button>

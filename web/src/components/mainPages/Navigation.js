@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux";
+import logo from './logo.png'
 
 export const Navigation = () => {
     const id = useSelector(state => state.idReducer.id.id)
@@ -15,7 +16,7 @@ export const Navigation = () => {
             <header>
                 <nav id="navbar">
                     <ul>
-                        <li><Link to="/">ticketblaster</Link></li>
+                        <li><Link to="/"><img src={logo} alt="" /></Link></li>
                         <li><Link to="/category/musicalConcerts">Musical Concerts</Link></li>
                         <li><Link to="/category/standUpComedy">Stand-up Comedy</Link></li>
                     </ul>

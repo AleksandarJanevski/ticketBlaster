@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { formatDate } from '../functions/functions'
 import { useSelector } from "react-redux";
-
+import { Link } from "react-router-dom";
 
 export const Search = () => {
     const [query, setQuery] = useState([]);
@@ -43,7 +43,7 @@ export const Search = () => {
                                 </div>
                                 <div id="bottom_card">
                                     <p>{element.location}</p>
-                                    <button id="getTickets"><a href={`http://localhost:9000/api/v1/events/delete/${element._id}`}>Get Tickets</a></button>
+                                    <button id="getTickets"><Link to={`/event/${element._id}`}>Get Tickets</Link></button>
                                 </div>
                             </div>
                         </div>

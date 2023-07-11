@@ -124,6 +124,7 @@ export const redux = async (url, func, action, option, action2, action3) => {
                     break;
                 case 4:
                     let array = result.data.events;
+                    array.sort((a, b) => { return a.date - b.date });
                     const hero = array.slice(0, 1);
                     console.log(hero);
                     const comedy = array.filter(element => element.category === 'Stand-up Comedy');

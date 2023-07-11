@@ -1,4 +1,12 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 14px;
+}
 #content {
-  max-width: 75rem;
-  margin: 3.125rem auto;
+  max-width: 85.72rem;
+  margin: 0 auto;
 }
