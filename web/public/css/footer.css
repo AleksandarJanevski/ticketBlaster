@@ -1,0 +1,39 @@
+footer {
+  background: #000000;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: 10%;
+  clear: both;
+}
+#footerNav {
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
+  margin: 0 auto;
+}
+#footerNav ul {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+#footerNav ul li a {
+  color: #d3d3d3;
+  font-family: "Lato";
+  text-decoration: none;
+  letter-spacing: -0.77px;
+  line-height: 17px;
+}
+#footerNav ul li a:focus {
+  color: #ff48ab;
+}
+#copyright {
+  align-self: center;
+  color: #d3d3d3;
+  text-align: right;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 17px;
+  letter-spacing: -0.77px;
+}

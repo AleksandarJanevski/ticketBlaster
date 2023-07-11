@@ -1,0 +1,93 @@
+#event_card {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 48px;
+}
+#event_picture {
+  width: 18.5rem;
+  height: 10.93rem;
+  border-radius: 20px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#event_info {
+  width: 296px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: space-between;
+}
+#event_name_location p:nth-child(1) {
+  font-size: 24px;
+  text-align: left;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#event_name_location p:nth-child(2) {
+  color: #ff48ab;
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+}
+#details {
+  width: inherit;
+  height: 56px;
+}
+#details p {
+  color: #393939;
+  font-size: 14px;
+  letter-spacing: -0.77px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#bottom_card {
+  height: 33px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#bottom_card p {
+  font-weight: bold;
+  letter-spacing: -0.77px;
+  color: #393939;
+}
+#bottom_card button {
+  offset: all;
+  width: 128px;
+  height: 33px;
+  padding: 8px 28px;
+  color: white;
+  background-color: black;
+  border: none;
+  border-radius: 20px;
+}
+#getTickets a {
+  display: inline-block;
+  width: 72px;
+  height: 17px;
+  text-decoration: none;
+  letter-spacing: -0.77px;
+  color: #ffffff;
+}
+
+#event_card_passed {
+  display: flex;
+  gap: 1rem;
+  border: dotted red 2px;
+  margin-bottom: 3rem;
+  opacity: 50%;
+}
+#event_card_passed #event_picture {
+  width: 16.188rem;
+  height: 9.563rem;
+  border-radius: 1.25rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

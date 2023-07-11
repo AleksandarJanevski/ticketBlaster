@@ -3,10 +3,14 @@
   margin: 0;
   box-sizing: border-box;
 }
-html {
+html,
+body {
   font-size: 14px;
+  height: 100%;
+  font-family: "Lato";
 }
 #content {
   max-width: 85.72rem;
   margin: 0 auto;
+  margin-top: 50px;
 }

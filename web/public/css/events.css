@@ -1,0 +1,31 @@
+#events {
+  display: flex;
+  flex-direction: column;
+}
+#eventList {
+  display: flex;
+  justify-content: space-between;
+}
+#eventList h2 {
+  color: #000000;
+  text-align: left;
+  letter-spacing: -1.81px;
+  font-weight: bold;
+  font-size: 33px;
+  margin-bottom: 29px;
+}
+.showMore {
+  text-align: center;
+  text-decoration: none;
+  color: #000000;
+}
+.showMore div {
+  margin-top: 91px;
+  border: 1px solid black;
+  padding: 10px;
+  width: 573px;
+  letter-spacing: -1.04px;
+  font-weight: 900;
+  font-size: 19px;
+  border-radius: 20px;
+}

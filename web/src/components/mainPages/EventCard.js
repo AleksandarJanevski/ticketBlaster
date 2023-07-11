@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from 'prop-types'
 import { formatDate } from '../functions/functions'
 import { Link } from "react-router-dom";
@@ -33,8 +33,10 @@ export const EventCard = ({ array, option, load, func, setOne, setTwo }) => {
                         </div>}
 
                         <div id="event_info">
-                            <p>{element.name}</p>
-                            <p>{date}</p>
+                            <div id="event_name_location">
+                                <p>{element.name}</p>
+                                <p>{date}</p>
+                            </div>
                             <div id="details">
                                 <p>{element.details}</p>
                             </div>

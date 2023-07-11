@@ -1,0 +1,49 @@
+#hero {
+  height: 33.14rem;
+  width: 85.72rem;
+  border-radius: 30px;
+  background-size: cover;
+  color: #ffffff;
+  box-sizing: border-box;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-bottom: 50px;
+}
+#hero_info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+#hero_info p {
+  opacity: 0.7;
+  letter-spacing: -1.54px;
+
+  font-size: 28px;
+  height: 34px;
+  align-self: center;
+}
+#hero_name {
+  font-size: 40px;
+  letter-spacing: -2.2px;
+  height: 47px;
+  text-align: left;
+}
+#hero_button {
+  all: unset;
+  background-color: #ffffff;
+  width: 168px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 20px;
+}
+#hero_button a {
+  text-decoration: none;
+  color: black;
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: -1.04px;
+}
