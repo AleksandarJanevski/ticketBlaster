@@ -31,7 +31,7 @@ export const EventForm = () => {
         relatedEvents: []
     });
     useEffect(() => {
-        if (role && role !== 'admin') {
+        if (role !== 'admin') {
             window.location.href = '/';
         }
     }, [role])

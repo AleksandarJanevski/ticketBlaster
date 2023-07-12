@@ -3,8 +3,10 @@ footer {
   height: 75px;
   display: flex;
   align-items: center;
-  position: relative;
-  margin-top: 10%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
   clear: both;
 }
 #footerNav {

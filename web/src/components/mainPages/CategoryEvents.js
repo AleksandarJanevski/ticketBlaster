@@ -7,7 +7,7 @@ export const CategoryEvents = () => {
     const { type } = useParams()
     const concerts = useSelector(state => state.eventsReducer.concerts);
     const standUp = useSelector(state => state.eventsReducer.standUp);
-    const [load, setLoad] = useState(6)
+    const [load, setLoad] = useState(3)
     const [num, setNum] = useState(0)
     useEffect(() => {
         if (type === 'musicalConcerts') {
@@ -15,15 +15,16 @@ export const CategoryEvents = () => {
         } else {
             setNum(standUp.length);
         }
-        setLoad(6)
+        setLoad(3)
     }, [type])
     return (
         <div id="category_events">
             <h1>{type === 'musicalConcerts' ? 'Musical Concerts' : "Stand-up Comedy"}</h1>
             <div id="category_list">
-                <EventCard array={type === 'musicalConcerts' ? concerts : standUp} option={1} load={load} />
+                <EventCard array={type === 'musicalConcerts' ? concerts.filter((e, i) => i % 2 === 0) : standUp.filter((e, i) => i % 2 === 0)} option={1} load={load} />
+                <EventCard array={type === 'musicalConcerts' ? concerts.filter((e, i) => i % 2 !== 0) : standUp.filter((e, i) => i % 2 !== 0)} option={1} load={load} />
             </div>
-            {load < num ? <button onClick={() => { setLoad(load + 6) }}>Load More {type === 'musicalConcerts' ? 'Musical Concerts' : 'Stand-up Comedy Shows'} </button> : null}
+            {load < num ? <button id="categoryLoad" onClick={() => { setLoad(load + 6); }}>Load More {type === 'musicalConcerts' ? 'Musical Concerts' : 'Stand-up Comedy Shows'} </button> : null}
         </div>
     )
 }

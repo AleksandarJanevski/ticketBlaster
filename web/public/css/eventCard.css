@@ -1,6 +1,7 @@
 #event_card {
   display: flex;
   gap: 18px;
+  max-width: 573px;
   margin-bottom: 48px;
 }
 #event_picture {

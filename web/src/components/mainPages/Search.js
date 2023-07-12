@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { formatDate } from '../functions/functions'
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { EventCard } from "./EventCard";
 
 export const Search = () => {
     const [query, setQuery] = useState([]);
@@ -29,7 +30,12 @@ export const Search = () => {
     return (
         <div id="search_results">
             <h1>Search Results for : {param}</h1>
-            {query && <div>
+            {query && <EventCard array={query} option={1} />}
+        </div>
+
+    )
+}
+{/* <div>
                 {query.map((element, i) => {
                     let date = formatDate(new Date(element.date).toLocaleDateString('en-GB'))
                     return (
@@ -50,8 +56,4 @@ export const Search = () => {
                     )
                 })}
 
-            </div>}
-        </div>
-
-    )
-}
+            </div> */}

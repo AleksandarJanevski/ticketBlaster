@@ -3,11 +3,17 @@
   margin: 0;
   box-sizing: border-box;
 }
-html,
-body {
+html {
   font-size: 14px;
   height: 100%;
   font-family: "Lato";
+  box-sizing: border-box;
+}
+body {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 10rem;
+  box-sizing: inherit;
 }
 #content {
   max-width: 85.72rem;
