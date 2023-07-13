@@ -1,0 +1,85 @@
+#login {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  width: 357px;
+}
+#login h1 {
+  font-size: 44px;
+  font-weight: bold;
+  letter-spacing: -2.42px;
+  text-align: left;
+}
+#login div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#login span {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+#login label {
+  color: #393939;
+  letter-spacing: -0.99px;
+  font-size: 18px;
+  font-weight: bold;
+}
+#login a {
+  color: #393939;
+  letter-spacing: -0.99px;
+  font-size: 18px;
+}
+#login span:nth-child(3) {
+  margin-top: 17px;
+  flex-direction: row;
+  gap: 104px;
+  align-items: center;
+}
+#authBtn {
+  all: unset;
+  width: 128px;
+  height: 42px;
+  background-color: #ff48ab;
+  color: white;
+  border-radius: 20px;
+  text-align: center;
+  letter-spacing: -0.88px;
+  font-weight: bold;
+  font-family: "Lato";
+  font-size: 16px;
+  cursor: pointer;
+}
+#login input {
+  all: unset;
+  box-sizing: border-box;
+  padding: 20px 18px;
+  width: 357px;
+  height: 42px;
+  border: 1px solid black;
+  border-radius: 21px;
+  font-size: 18px;
+}
+#login span:nth-child(3) {
+  margin-bottom: 25px;
+}
+#authBtn2 {
+  all: unset;
+  box-sizing: border-box;
+  width: 357px;
+  height: 42px;
+  background-color: white;
+  color: black;
+  border: 2px solid #ef46ab;
+  border-radius: 20px;
+  text-align: center;
+  letter-spacing: -0.88px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: "Lato";
+}
+#login a:nth-child(4) {
+  text-decoration: none;
+}

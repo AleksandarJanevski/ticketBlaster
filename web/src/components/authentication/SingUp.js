@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
     const [name, setName] = useState('');
-    const [enter, setEnter] = useState(false)
+    const [enter, setEnter] = useState(false);
 
     useEffect(() => {
-        document.addEventListener('keypress', detectEnter, true)
+        document.addEventListener('keypress', detectEnter, true);
     }, []);
 
     useEffect(() => {
@@ -19,7 +20,7 @@ export const SignUp = () => {
 
     const detectEnter = (e) => {
         if (e.key === 'Enter') {
-            setEnter(true)
+            setEnter(true);
         }
     }
     async function singUp() {
@@ -38,28 +39,31 @@ export const SignUp = () => {
                     password: password
                 }),
                 credentials: 'include'
-            })
-            const result = await response.json()
+            });
+            const result = await response.json();
             if (result.status === 'success') {
-                window.location.href = "http://localhost:3000/"
+                window.location.href = "http://localhost:3000/";
             }
         } catch (err) {
+            setEnter(false);
             return console.log(err);
         }
     }
     return (
         <div id="signUp">
-            <label htmlFor="">Full Name</label>
-            <input type="text" className="inputField" required value={name} onChange={(e) => { setName(e.target.value) }} />
-            <label htmlFor="">Email</label>
-            <input type="text" className="inputField" required value={email} onChange={(e) => { setEmail(e.target.value) }} />
-            <label htmlFor="">Password</label>
-            <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
-            <label htmlFor="">Re-type Password</label>
-            <input type="password" className="inputField" required value={confirm} onChange={(e) => { setConfirm(e.target.value) }} />
-            <button type="button" onClick={singUp}>Create Account</button>
-            <button type="button"><a href="/login">Already have an account?</a></button>
+            <h1>Sign Up</h1>
+            <div>
+                <span><label htmlFor="">Full Name</label>
+                    <input type="text" className="inputField" required value={name} onChange={(e) => { setName(e.target.value) }} /></span>
+                <span><label htmlFor="">Email</label>
+                    <input type="text" className="inputField" required value={email} onChange={(e) => { setEmail(e.target.value) }} /></span>
+                <span><label htmlFor="">Password</label>
+                    <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} /></span>
+                <span><label htmlFor="">Re-type Password</label>
+                    <input type="password" className="inputField" required value={confirm} onChange={(e) => { setConfirm(e.target.value) }} /></span>
+                <button id="authBtn" type="button" onClick={singUp}>Create Account</button>
+                <Link to={"/login"}><button id="authBtn2" type="button">Already have an account?</button></Link>
+            </div>
         </div>
-
     )
 }

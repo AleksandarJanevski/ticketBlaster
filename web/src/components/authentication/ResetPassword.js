@@ -1,19 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const ResetPassword = () => {
-    const { token } = useParams()
-    const [password, setPassword] = useState('')
-    const [toggle, setToggle] = useState(false)
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const { token } = useParams();
+    const [password, setPassword] = useState('');
+    const [toggle, setToggle] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [enter, setEnter] = useState(false)
+
     useEffect(() => {
-        if (token) {
-            resetPassword()
+        document.addEventListener('keypress', detectEnter, true);
+    }, []);
+    useEffect(() => {
+        if (enter) {
+            setToggle(!toggle);
         }
-    }, [toggle])
+    }, [enter]);
+    const detectEnter = (e) => {
+        if (e.key === 'Enter') {
+            setEnter(true);
+        }
+    }
+    useEffect(() => {
+        if (token && toggle) {
+            resetPassword();
+        }
+    }, [toggle]);
     const resetPassword = async () => {
         try {
-            if (!password && confirmPassword && password !== confirmPassword) {
+            if (!password && confirmPassword && password !== confirmPassword || password.trim() === '') {
                 return alert('Passwords do not match');
             }
             const body = {
@@ -33,6 +49,8 @@ export const ResetPassword = () => {
                 window.location.href = '/'
             }
         } catch (err) {
+            setToggle(false);
+            alert('Unauthorized');
             return console.log(err);
         }
     }
@@ -48,7 +66,8 @@ export const ResetPassword = () => {
                     <label htmlFor="">Re-Type Password</label>
                     <input type="password" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
                 </span>
-                <button type="button" onClick={() => { setToggle(!toggle) }}>Submit</button>
+                <button id="authBtn" type="button" onClick={() => { setToggle(!toggle) }}>Reset Password</button>
+                <Link to={"/login"}><button id="authBtn2" type="button">Back to login</button></Link>
             </div>
         </div>
     )

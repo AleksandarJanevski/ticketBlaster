@@ -26,8 +26,7 @@ const cookie = (res, name, token) => {
 
 exports.login = async (req, res) => {
     try {
-        const { email, password } = req.body
-        console.log(email, password);
+        const { email, password } = req.body;
         if (!email || !password) return res.status(400).send('Invalid email or password');
         const user = await User.findOne({ email });
         if (!user) return res.status(400).send('Invalid email or password');

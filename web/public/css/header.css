@@ -37,6 +37,7 @@ header {
 }
 #search input {
   all: unset;
+  font-family: "Lato";
   background-color: white;
   height: 42px;
   width: 295px;
@@ -61,6 +62,7 @@ header {
 }
 #loginButton {
   all: unset;
+  font-family: "Lato";
   background-color: #ff48ab;
   width: 102px;
   height: 42px;
@@ -80,6 +82,7 @@ header {
 }
 #signUpButton {
   all: unset;
+  font-family: "Lato";
   border: 1px solid #ee47a0;
   box-sizing: border-box;
   padding: 11px 0;

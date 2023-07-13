@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [enter, setEnter] = useState(false)
+    const [fail, setFail] = useState(false)
 
     useEffect(() => {
         document.addEventListener('keypress', detectEnter, true)
     }, []);
-
     useEffect(() => {
         if (enter) {
             login()
         }
-    }, [enter])
-
+    }, [enter]);
     const detectEnter = (e) => {
         if (e.key === 'Enter') {
             setEnter(true)
@@ -40,21 +40,31 @@ export const Login = () => {
             }
         } catch (err) {
             setEnter(false)
-            alert('Incorrect login information');
+            setFail(true)
             return console.log(err);
         }
     }
     return (
         <div id="login">
-            <label htmlFor="">Email</label>
-            <input type="text" className="inputField" required value={email} onChange={(e) => { setEmail(e.target.value) }} />
-            <label htmlFor="">Password</label>
-            <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
-            <span>
-                <a href="/forgotPassword">Forgot Password?</a>
-                <button type="button" onClick={login}>Log In</button>
-            </span>
-            <button type="button"><a href="/signUp">Don't have an account?</a></button>
+            <h1>Log In</h1>
+            <div>
+                <span>
+                    <label htmlFor="">Email</label>
+                    <input type="text" className="inputField" required value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                </span>
+                <span>
+                    <label htmlFor="">Password</label>
+                    <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                </span>
+                <span>
+                    <Link to='/forgotPassword'>Forgot Password?</Link>
+                    <button id="authBtn" type="button" onClick={login}>Log In</button>
+                </span>
+                <Link to={"/signUp"}><button id="authBtn2" type="button">Dont have an account?</button></Link>
+                {fail ? <div style={{ color: 'red' }}>
+                    Invalid email or password!
+                </div> : null}
+            </div>
         </div>
     )
 }

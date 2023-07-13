@@ -1,0 +1,54 @@
+#signUp {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  width: 357px;
+}
+#signUp h1 {
+  font-size: 44px;
+  font-weight: bold;
+  letter-spacing: -2.42px;
+  text-align: left;
+}
+#signUp div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#signUp span {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+#signUp label {
+  color: #393939;
+  letter-spacing: -0.99px;
+  font-size: 18px;
+  font-weight: bold;
+}
+#signUp a {
+  color: #393939;
+  letter-spacing: -0.99px;
+  font-size: 18px;
+  text-decoration: none;
+}
+#signUp input {
+  all: unset;
+  box-sizing: border-box;
+  padding: 20px 18px;
+  width: 357px;
+  height: 42px;
+  border: 1px solid black;
+  border-radius: 21px;
+  font-size: 18px;
+}
+#signUp #authBtn {
+  margin-top: 8px;
+  width: 357px;
+  margin-bottom: 25px;
+}
+#signUp button:nth-child(1) {
+  color: black;
+  text-decoration: none;
+}
