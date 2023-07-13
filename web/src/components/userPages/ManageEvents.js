@@ -18,6 +18,8 @@ export const ManageEvents = () => {
             const arr = [...concerts].concat([...standUp]);
             arr.sort((a, b) => { return a.date - b.date })
             setEvents(arr)
+        } else {
+            window.location.href = '/'
         }
     }, [role, concerts, standUp]);
     const removeEvent = async () => {

@@ -80,28 +80,35 @@ export const SingleEvent = () => {
     }
     return (
         <div id="single_event">
-            <span id="single_event_top">
-                <p>{event.name}</p>
-                <p>{formatDate(new Date(event.date).toLocaleDateString('en-GB'))}</p>
-                <p>{event.location}</p>
-            </span>
-            <div id="single_event_mid" >
-                <img src={`http://localhost:9000/img/event/${event.picture}`} alt="" />
-                <div id="single_event_right">
-                    <p>About</p>
-                    <p>{event.details}</p>
-                    <span>
-                        Tickets <p>${event.price} USD</p>
-                    </span>
-                    <span>
-                        <input type="number" value={amount} max={maxTickets()} min={1} onChange={(e) => { setAmount(e.target.value) }} />
-                        <button type="button" onClick={addToCart}>Add to cart</button>
-                    </span>
+            {event && <>
+                <div id="single_event_top">
+                    <p>{event.name}</p>
+                    <p>{formatDate(new Date(event.date).toLocaleDateString('en-GB'))}</p>
+                    <p>{event.location}</p>
                 </div>
-            </div>
-            <div id="single_event_bottom" >
-                {event.relatedEvents && <EventCard array={event.relatedEvents} option={1} />}
-            </div>
+                <div id="single_event_mid" >
+                    <img src={`http://localhost:9000/img/event/${event.picture}`} alt="" />
+                    <div id="single_event_right">
+                        <p id="about">About</p>
+                        <p>{event.details}</p>
+                        <span id="price">
+                            Tickets <p>${event.price} USD</p>
+                        </span>
+                        <span id="ticket_number">
+                            <input type="number" value={amount} max={maxTickets()} min={1} onChange={(e) => { setAmount(e.target.value) }} />
+                            <button type="button" onClick={addToCart}>Add to cart</button>
+                        </span>
+                    </div>
+                </div>
+                <div id="single_event_bottom" >
+                    <h1>Related Acts</h1>
+                    <span id="relatedActs">
+                        {event.relatedEvents && <EventCard id={'event_card'} array={event.relatedEvents.slice(0, 1)} option={1} load={1} />}
+                        {event.relatedEvents && <EventCard id={'event_card'} array={event.relatedEvents.slice(1, 2)} option={1} load={1} />}
+                    </span>
+
+                </div>
+            </>}
         </div>
 
     )

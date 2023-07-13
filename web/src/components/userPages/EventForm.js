@@ -14,7 +14,7 @@ export const EventForm = () => {
     const [image, setImage] = useState('');
     const [sent, setSent] = useState(false);
     let [t, setT] = useState(0);
-    const [previewPic, setPreviewPic] = useState('')
+    const [previewPic, setPreviewPic] = useState('');
     const [related, setRelated] = useState('');
     const currentDate = new Date().toISOString().split("T")[0];
     const year = currentDate[3];
@@ -31,10 +31,11 @@ export const EventForm = () => {
         relatedEvents: []
     });
     useEffect(() => {
-        if (role !== 'admin') {
-            window.location.href = '/';
+        if (role && role !== 'admin') {
+            window.location.href = '/'
         }
-    }, [role])
+    }, [role]);
+
     useEffect(() => {
         if (eventId) {
             getEvent();

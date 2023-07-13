@@ -18,16 +18,16 @@ export const FetchCall = () => {
         if (concerts.length < 1 && standUp.length < 1 && hero) {
             fetchEvents();
         }
-    }, [])
+    }, []);
     useEffect(() => {
         if (id) {
-            fetchCart()
-            fetchUser()
-            fetchTickets()
+            fetchCart();
+            fetchUser();
+            fetchTickets();
         }
     }, [id]);
     const getId = async () => {
-        await redux('/api/v1/auth', dispatch, idActions, 5)
+        await redux('/api/v1/auth', dispatch, idActions, 5);
     };
     const fetchCart = async () => {
         await redux(`/api/v1/ecommerce/basket/${id}`, dispatch, getBasket, 1);
@@ -36,9 +36,9 @@ export const FetchCall = () => {
         await redux(`/api/v1/users/${id}`, dispatch, getUser, 2);
     };
     const fetchTickets = async () => {
-        await redux(`/api/v1/ecommerce/order/${id}`, dispatch, getTickets, 3)
+        await redux(`/api/v1/ecommerce/order/${id}`, dispatch, getTickets, 3);
     };
     const fetchEvents = async () => {
-        await redux('/api/v1/events/getAll', dispatch, getHero, 4, getStandUp, getConcerts)
+        await redux('/api/v1/events/getAll', dispatch, getHero, 4, getStandUp, getConcerts);
     };
 }

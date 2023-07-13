@@ -1,0 +1,103 @@
+#single_event {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+#single_event_top {
+  display: flex;
+  gap: 13px;
+  align-items: flex-end;
+}
+#single_event_top p {
+  color: #393939;
+  font-size: 22px;
+  letter-spacing: -1.21px;
+}
+#single_event_top p:nth-child(1) {
+  font-size: 44px;
+  font-weight: bold;
+  color: black;
+  margin-right: 5px;
+}
+#single_event_mid {
+  display: flex;
+  gap: 31px;
+  margin-bottom: 23px;
+}
+#single_event_mid img {
+  width: 576px;
+  height: 340px;
+  border-radius: 20px;
+}
+#single_event_right {
+  width: 593px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+#single_event_right #about {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+  margin-bottom: 3px;
+}
+#single_event_right p:nth-child(2) {
+  height: 139px;
+  margin-bottom: 15px;
+  color: #393939;
+  letter-spacing: -0.77px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#single_event_right #price {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  height: 29px;
+  font-size: 24px;
+  font-weight: bold;
+}
+#price p {
+  color: #ff48ab;
+}
+#ticket_number {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+}
+#ticket_number input {
+  all: unset;
+  border: 1px solid black;
+  width: 83px;
+  height: 33px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  padding-left: 2.5%;
+  color: #393939;
+  font-weight: bold;
+  letter-spacing: -0.77px;
+}
+#ticket_number button {
+  all: unset;
+  color: #ffffff;
+  background-color: black;
+  width: 128px;
+  height: 33px;
+  border-radius: 20px;
+  text-align: center;
+  letter-spacing: -0.77px;
+  cursor: pointer;
+}
+#single_event_bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+#relatedActs {
+  width: 1200px;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 54px;
+}

@@ -37,10 +37,10 @@ export const Login = () => {
             console.log(result);
             if (result.status === 'success') {
                 window.location.href = "http://localhost:3000/"
-            } else {
-                alert('Incorrect login information');
             }
         } catch (err) {
+            setEnter(false)
+            alert('Incorrect login information');
             return console.log(err);
         }
     }

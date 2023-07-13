@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types'
 import { formatDate } from '../functions/functions'
 import { Link } from "react-router-dom";
-export const EventCard = ({ array, option, load, func, setOne, setTwo }) => {
+export const EventCard = ({ array, option, load, func, setOne, setTwo, id }) => {
     const buttonType = (option, element) => {
         switch (option) {
             case 1:
@@ -28,10 +28,9 @@ export const EventCard = ({ array, option, load, func, setOne, setTwo }) => {
                 let date = formatDate(new Date(element.date).toLocaleDateString('en-GB'))
                 if (i >= load) return null
                 return (
-                    <div key={i} id='event_card' >
+                    <div key={i} id={id} >
                         {option === 2 ? <a href={`/eventForm/${element._id}`}> <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}></div></a> : <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}>
                         </div>}
-
                         <div id="event_info">
                             <div id="event_name_location">
                                 <p>{element.name}</p>

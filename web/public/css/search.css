@@ -1,0 +1,25 @@
+#search_card {
+  display: flex;
+  gap: 18px;
+  max-width: 100%;
+  margin-bottom: 48px;
+}
+#search_card #event_name_location {
+  width: 66rem;
+  overflow: visible;
+}
+#search_card #details {
+  width: 66rem;
+}
+#search_card #bottom_card {
+  width: 66rem;
+}
+#search_results {
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+}
+#search_results h1 {
+  font-size: 44px;
+  letter-spacing: -2.42px;
+}

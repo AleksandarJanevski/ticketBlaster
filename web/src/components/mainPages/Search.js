@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { formatDate } from '../functions/functions'
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { EventCard } from "./EventCard";
 
 export const Search = () => {
@@ -30,30 +28,8 @@ export const Search = () => {
     return (
         <div id="search_results">
             <h1>Search Results for : {param}</h1>
-            {query && <EventCard array={query} option={1} />}
+            {query && <EventCard id={'search_card'} array={query} option={1} />}
         </div>
 
     )
 }
-{/* <div>
-                {query.map((element, i) => {
-                    let date = formatDate(new Date(element.date).toLocaleDateString('en-GB'))
-                    return (
-                        <div key={i} id="event_card" >
-                            <a href={`/eventForm/${element._id}`}> <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}></div></a>
-                            <div id="event_info">
-                                <p>{element.name}</p>
-                                <p>{date}</p>
-                                <div id="details">
-                                    <p>{element.details}</p>
-                                </div>
-                                <div id="bottom_card">
-                                    <p>{element.location}</p>
-                                    <button id="getTickets"><Link to={`/event/${element._id}`}>Get Tickets</Link></button>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
-
-            </div> */}
