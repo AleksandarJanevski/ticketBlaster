@@ -60,9 +60,19 @@ header {
   flex-direction: row;
   gap: 10px;
 }
+#userAccess a {
+  text-decoration: none;
+  font-family: "Lato";
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.88px;
+  color: #000;
+}
+#userAccess a:nth-child(2) {
+  color: #ffffff;
+}
 #loginButton {
   all: unset;
-  font-family: "Lato";
   background-color: #ff48ab;
   width: 102px;
   height: 42px;
@@ -71,18 +81,8 @@ header {
   padding: 11px 0;
   text-align: center;
 }
-#loginButton a {
-  text-decoration: none;
-  color: #000000;
-  font-family: "Lato";
-  font-size: 16px;
-  font-weight: 900;
-  line-height: 19px;
-  letter-spacing: -0.88px;
-}
 #signUpButton {
   all: unset;
-  font-family: "Lato";
   border: 1px solid #ee47a0;
   box-sizing: border-box;
   padding: 11px 0;
@@ -90,14 +90,4 @@ header {
   height: 42px;
   text-align: center;
   border-radius: 20px;
-}
-#signUpButton a {
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 900;
-  font-size: 16px;
-  font-family: "Lato";
-  line-height: 19px;
-  font-family: "Lato";
-  letter-spacing: -0.88px;
 }

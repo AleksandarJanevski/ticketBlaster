@@ -49,11 +49,11 @@ export const Login = () => {
             <h1>Log In</h1>
             <div>
                 <span>
-                    <label htmlFor="">Email</label>
+                    <label className="inputLabel" htmlFor="">Email</label>
                     <input type="text" className="inputField" required value={email} onChange={(e) => { setEmail(e.target.value) }} />
                 </span>
                 <span>
-                    <label htmlFor="">Password</label>
+                    <label className="inputLabel" htmlFor="">Password</label>
                     <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
                 </span>
                 <span>

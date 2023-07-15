@@ -1,0 +1,39 @@
+#user {
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+}
+#user h1 {
+  font-size: 44px;
+  font-weight: bold;
+  letter-spacing: -2.42px;
+  color: #000000;
+}
+#user_top {
+  display: flex;
+  align-items: flex-end;
+}
+#user_nav ul {
+  display: flex;
+  list-style: none;
+  gap: 21px;
+}
+#user_nav a {
+  text-decoration: none;
+  letter-spacing: -0.99px;
+  color: #393939;
+  font-weight: bold;
+  font-size: 18px;
+}
+#user_nav a:focus {
+  color: #ff48ab;
+}
+#user_nav button {
+  all: unset;
+  font-family: "Lato";
+  letter-spacing: -0.99px;
+  color: #393939;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+}

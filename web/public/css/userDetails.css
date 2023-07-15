@@ -1,0 +1,57 @@
+#user_details {
+  max-width: 521px;
+  display: flex;
+  flex-direction: column;
+}
+#user_prof_top {
+  display: flex;
+  gap: 39px;
+}
+#user_inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#user_details span {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.previewProfile {
+  height: 96px;
+  width: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+#user_profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+#fileInput {
+  position: relative;
+  width: 128px;
+  height: 42px;
+  border: 1px solid black;
+  border-radius: 20px;
+  color: #ff48ab;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px 0;
+  letter-spacing: -0.88px;
+  font-size: 16px;
+}
+#fileInput input[type="file"] {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+input::file-selector-button {
+  width: 128px;
+  height: 42px;
+  cursor: pointer !important;
+  border-radius: 20px;
+}

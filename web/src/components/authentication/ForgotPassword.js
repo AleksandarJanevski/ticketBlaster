@@ -49,8 +49,8 @@ export const ForgotPassword = () => {
             <h1>Forgot Password</h1>
             {toggle ? <div id="forgot_info">
                 <span>
-                    <label htmlFor="">Email</label>
-                    <input type="text" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                    <label className="inputLabel" htmlFor="">Email</label>
+                    <input className="inputField" type="text" value={email} onChange={(e) => { setEmail(e.target.value) }} />
                 </span>
                 <button id="authBtn" type="button" onClick={sendReset}>Send password reset email</button>
                 <Link to={"/login"}><button id="authBtn2" type="button">Back to login</button></Link>

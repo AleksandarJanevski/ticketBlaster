@@ -9,11 +9,11 @@ export const User = () => {
     useEffect(() => {
         siteName();
     }, [location, name]);
-    useEffect(() => {
-        if (!role) {
-            window.location.href = '/'
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!role) {
+    //         window.location.href = '/'
+    //     }
+    // }, [role]);
     const siteName = () => {
         const loc = location.pathname.split('/')[2]
         if (loc === 'details') {
@@ -44,9 +44,9 @@ export const User = () => {
         }
     }
     return (
-        <div id="user">
-            {role !== 'client' ?
-                <div id="user_page">
+        <div>
+            {role &&
+                <div id="user">
                     <div id="user_top" style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <h1>{name}</h1>
                         <div id="user_nav">
@@ -68,7 +68,7 @@ export const User = () => {
                     </div>
 
                     <Outlet />
-                </div> : null}
+                </div>}
         </div>
     )
 }

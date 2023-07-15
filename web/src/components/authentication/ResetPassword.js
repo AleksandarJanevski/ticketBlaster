@@ -59,12 +59,12 @@ export const ResetPassword = () => {
             <h1>Reset Password</h1>
             <div id="reset_info">
                 <span>
-                    <label htmlFor="">Password</label>
-                    <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                    <label className="inputLabel" htmlFor="">Password</label>
+                    <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
                 </span>
                 <span>
-                    <label htmlFor="">Re-Type Password</label>
-                    <input type="password" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
+                    <label className="inputLabel" htmlFor="">Re-Type Password</label>
+                    <input type="password" className="inputField" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
                 </span>
                 <button id="authBtn" type="button" onClick={() => { setToggle(!toggle) }}>Reset Password</button>
                 <Link to={"/login"}><button id="authBtn2" type="button">Back to login</button></Link>

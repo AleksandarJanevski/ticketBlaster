@@ -87,21 +87,27 @@ export const UserDetails = () => {
     return (
         <div id="user_details">
             {user.picture && <>
-                <div id="user_profile">
-                    {image ? <img className="previewProfile" style={{ height: '150px', width: '150px', objectFit: 'cover', borderRadius: '50%' }} src={image} alt="Preview" /> :
-                        <img className="previewProfile" style={{ height: '150px', width: '150px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${user.picture}`} alt="Cant reach" />}
-                    <input type="file" onChange={picturePreview} id="fileInput" accept="image/png, image/jpg, image/jpeg" />
-                    <button type="button" onClick={handleUpload}>Submit</button>
-                </div>
-                <div>
-                    <span>
-                        <label htmlFor="">Full Name</label>
-                        <input type="text" value={user.fullName} onChange={(e) => { setUser({ ...user, fullName: e.target.value }) }} required id="user_info" />
-                    </span>
-                    <span>
-                        <label htmlFor="">Email</label>
-                        <input type="text" onChange={(e) => { setUser({ ...user, fullName: e.target.value }) }} value={user.email} required id="user_info" />
-                    </span>
+                <div id="user_prof_top">
+                    <div id="user_profile">
+                        {image ? <img className="previewProfile" src={image} alt="Preview" /> :
+                            <img className="previewProfile" src={`/img/profile/${user.picture}`} alt="Cant reach" />}
+                        <label htmlFor="" id="fileInput">
+                            <input type="file" onChange={picturePreview} accept="image/png, image/jpg, image/jpeg" />
+                            Upload Avatar
+                        </label>
+
+                        <button type="button" onClick={handleUpload}>Submit</button>
+                    </div>
+                    <div id="user_inputs">
+                        <span>
+                            <label className="inputLabel" htmlFor="">Full Name</label>
+                            <input type="text" className="inputField" value={user.fullName} onChange={(e) => { setUser({ ...user, fullName: e.target.value }) }} required id="user_info" />
+                        </span>
+                        <span>
+                            <label className="inputLabel" htmlFor="">Email</label>
+                            <input type="text" className="inputField" onChange={(e) => { setUser({ ...user, fullName: e.target.value }) }} value={user.email} required id="user_info" />
+                        </span>
+                    </div>
                 </div>
                 <div id="user_pass">
                     <div>
@@ -110,12 +116,12 @@ export const UserDetails = () => {
                     </div>
                     {change ? <div>
                         <span>
-                            <label htmlFor="">Password</label>
-                            <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                            <label className="inputLabel" htmlFor="">Password</label>
+                            <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
                         </span>
                         <span>
-                            <label htmlFor="">Re-Type Password</label>
-                            <input type="password" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
+                            <label className="inputLabel" htmlFor="">Re-Type Password</label>
+                            <input type="password" className="inputField" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
                         </span>
                         <button type="button" onClick={changePassword}>Submit</button>
                     </div> : null}

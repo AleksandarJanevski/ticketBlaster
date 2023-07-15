@@ -21,19 +21,19 @@
   gap: 12px;
   text-align: left;
 }
-#signUp label {
+/* #signUp label {
   color: #393939;
   letter-spacing: -0.99px;
   font-size: 18px;
   font-weight: bold;
-}
+} */
 #signUp a {
   color: #393939;
   letter-spacing: -0.99px;
   font-size: 18px;
   text-decoration: none;
 }
-#signUp input {
+/* #signUp input {
   all: unset;
   box-sizing: border-box;
   padding: 20px 18px;
@@ -42,7 +42,7 @@
   border: 1px solid black;
   border-radius: 21px;
   font-size: 18px;
-}
+} */
 #signUp #authBtn {
   margin-top: 8px;
   width: 357px;

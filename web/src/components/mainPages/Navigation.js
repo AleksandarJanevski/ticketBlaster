@@ -29,8 +29,8 @@ export const Navigation = () => {
 
                     </div>
                     {!loggedIn ? <div id="userAccess">
-                        <button id="loginButton" type="button"><Link to="/login">Log in</Link></button>
-                        <button id="signUpButton" type="button"><Link to="/signUp">Create Account</Link></button>
+                        <Link to="/login"><button id="loginButton" type="button">Log in</button></Link>
+                        <Link to="/signUp"><button id="signUpButton" type="button">Create Account</button></Link>
                     </div> : <div id="userNav">
                         <ul>
                             <li><Link to="/cart"><i className="fa-solid fa-cart-shopping" style={{ color: '#ff48ab' }}></i></Link></li>

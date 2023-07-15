@@ -53,13 +53,13 @@ export const SignUp = () => {
         <div id="signUp">
             <h1>Sign Up</h1>
             <div>
-                <span><label htmlFor="">Full Name</label>
+                <span><label className="inputLabel" htmlFor="">Full Name</label>
                     <input type="text" className="inputField" required value={name} onChange={(e) => { setName(e.target.value) }} /></span>
-                <span><label htmlFor="">Email</label>
+                <span><label className="inputLabel" htmlFor="">Email</label>
                     <input type="text" className="inputField" required value={email} onChange={(e) => { setEmail(e.target.value) }} /></span>
-                <span><label htmlFor="">Password</label>
+                <span><label className="inputLabel" htmlFor="">Password</label>
                     <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} /></span>
-                <span><label htmlFor="">Re-type Password</label>
+                <span><label className="inputLabel" htmlFor="">Re-type Password</label>
                     <input type="password" className="inputField" required value={confirm} onChange={(e) => { setConfirm(e.target.value) }} /></span>
                 <button id="authBtn" type="button" onClick={singUp}>Create Account</button>
                 <Link to={"/login"}><button id="authBtn2" type="button">Already have an account?</button></Link>
