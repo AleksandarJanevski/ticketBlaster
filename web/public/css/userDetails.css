@@ -2,6 +2,7 @@
   max-width: 521px;
   display: flex;
   flex-direction: column;
+  gap: 79px;
 }
 #user_prof_top {
   display: flex;
@@ -49,9 +50,62 @@
   top: 0;
   opacity: 0;
 }
-input::file-selector-button {
+#user_details input::file-selector-button {
   width: 128px;
   height: 42px;
   cursor: pointer !important;
   border-radius: 20px;
+}
+.userSubmit {
+  all: unset;
+  width: 128px;
+  height: 42px;
+  background-color: black;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: "Lato";
+  font-size: 16px;
+  text-align: center;
+}
+#user_pass #user_pass_top {
+  display: flex;
+  gap: 198px;
+  align-items: center;
+}
+#user_pass div:nth-child(1) button {
+  all: unset;
+  font-family: "Lato";
+  height: 42px;
+  width: 229px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  color: white;
+  background-color: #ff48ab;
+  letter-spacing: -0.88px;
+  cursor: pointer;
+}
+#user_pass div:nth-child(1) p {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+}
+#changePassword {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+#changePassword div {
+  display: flex;
+  gap: 25px;
+}
+#changePassword div .inputField {
+  width: 248px;
+}
+#user_pass {
+  display: flex;
+  flex-direction: column;
+  gap: 29px;
 }

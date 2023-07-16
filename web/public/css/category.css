@@ -4,6 +4,9 @@
   gap: 54px;
 }
 #category_events h1 {
+  font-size: 44px;
+  letter-spacing: -2.42px;
+  font-weight: bold;
   margin-bottom: 38px;
 }
 #categoryLoad {

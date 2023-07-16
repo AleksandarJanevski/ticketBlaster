@@ -3,6 +3,7 @@
   gap: 18px;
   max-width: 573px;
   margin-bottom: 48px;
+  max-height: 153px;
 }
 #event_picture {
   width: 18.5rem;
@@ -76,19 +77,4 @@
   text-decoration: none;
   letter-spacing: -0.77px;
   color: #ffffff;
-}
-
-#event_card_passed {
-  display: flex;
-  gap: 1rem;
-  border: dotted red 2px;
-  margin-bottom: 3rem;
-  opacity: 50%;
-}
-#event_card_passed #event_picture {
-  width: 16.188rem;
-  height: 9.563rem;
-  border-radius: 1.25rem;
-  background-size: cover;
-  background-repeat: no-repeat;
 }

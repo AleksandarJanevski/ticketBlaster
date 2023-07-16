@@ -53,6 +53,7 @@ export const UserDetails = () => {
                 dispatch(getUser(user));
                 document.getElementById('fileInput').value = ''
             }
+            setSent(false);
         } catch (err) {
             return console.log(err);
         }
@@ -96,7 +97,7 @@ export const UserDetails = () => {
                             Upload Avatar
                         </label>
 
-                        <button type="button" onClick={handleUpload}>Submit</button>
+                        <button className="userSubmit" type="button" onClick={handleUpload}>Submit</button>
                     </div>
                     <div id="user_inputs">
                         <span>
@@ -110,20 +111,22 @@ export const UserDetails = () => {
                     </div>
                 </div>
                 <div id="user_pass">
-                    <div>
-                        <h1>Password</h1>
+                    <div id="user_pass_top">
+                        <p>Password</p>
                         <button type="button" onClick={() => { setChange(!change) }}>Change Password</button>
                     </div>
-                    {change ? <div>
-                        <span>
-                            <label className="inputLabel" htmlFor="">Password</label>
-                            <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
-                        </span>
-                        <span>
-                            <label className="inputLabel" htmlFor="">Re-Type Password</label>
-                            <input type="password" className="inputField" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
-                        </span>
-                        <button type="button" onClick={changePassword}>Submit</button>
+                    {change ? <div id="changePassword">
+                        <div >
+                            <span>
+                                <label className="inputLabel" htmlFor="">Password</label>
+                                <input type="password" className="inputField" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                            </span>
+                            <span>
+                                <label className="inputLabel" htmlFor="">Re-Type Password</label>
+                                <input type="password" className="inputField" required value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
+                            </span>
+                        </div>
+                        <button className="userSubmit" type="button" onClick={changePassword}>Submit</button>
                     </div> : null}
                 </div>
             </>}

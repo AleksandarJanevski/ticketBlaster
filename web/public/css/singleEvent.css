@@ -28,6 +28,7 @@
   width: 576px;
   height: 340px;
   border-radius: 20px;
+  object-fit: cover;
 }
 #single_event_right {
   width: 593px;

@@ -39,7 +39,7 @@ export const ForgotPassword = () => {
                 setToggle(false)
             }
         } catch (err) {
-            alert('Incorrect email');
+            alert('User does not exist');
             setEnter(false)
             return console.log(err);
         }

@@ -218,6 +218,7 @@ export const EventForm = () => {
                 if (result.status === 'success') {
                     window.location.href = `/events/${eventId}`
                 }
+                setSent(false);
             }
         } catch (err) {
             return console.log(err);

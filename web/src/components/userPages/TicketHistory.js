@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux'
-import { formatDate } from '../functions/functions'
 import { PrintEvent } from "./PrintEvent";
+import { TicketCard } from "./TicketCard";
 
 export const TicketHistory = () => {
     const tickets = useSelector(state => state.userReducer.tickets);
@@ -19,39 +19,19 @@ export const TicketHistory = () => {
             }
         }, true);
     }, []);
+    useEffect(() => {
+        console.log(tickets);
+    }, [tickets])
     return (
         <div id="ticket_history">
-            {tickets && tickets.map((element, i) => {
-                if (element.event) {
-                    let date = formatDate(new Date(element.event.date).toLocaleDateString('en-GB'))
-                    let now = new Date(element.event.date) < Date.now();
-                    return (
-                        <div key={i} id={!now ? 'event_card' : 'event_card_passed'}>
-                            <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.event.picture})` }}></div>
-                            <div id="event_info">
-                                <p>{element.event.name}</p>
-                                <p>{date}</p>
-                                <div id="details">
-                                    <p>{element.event.details}</p>
-                                </div>
-                                <div id="bottom_card">
-                                    <p>{element.event.location}</p>
-                                    {!now ? <button type="button" onClick={() => {
-                                        const obj = {
-                                            name: element.event.name,
-                                            location: element.event.location,
-                                            date: date,
-                                            image: `/img/event/${element.event.picture}`
-                                        }
-                                        setPrint(obj);
-                                        setToggle(true)
-                                    }}>Print</button> : <button type="button">Print</button>}
-                                </div>
-                            </div>
-                        </div>
-                    )
-                }
-            })}
+            <div id="ticket_list">
+                <div>
+                    <TicketCard array={tickets.filter((element, i) => i % 2 === 0)} setPrint={setPrint} setToggle={setToggle} />
+                </div>
+                <div>
+                    <TicketCard array={tickets.filter((element, i) => i % 2 !== 0)} setPrint={setPrint} setToggle={setToggle} />
+                </div>
+            </div>
             {toggle ? <PrintEvent name={print.name} image={print.image} location={print.location} date={print.date} /> : null}
         </div>
     )

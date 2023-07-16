@@ -10,11 +10,13 @@ api.use(cookieParser())
 db.init();
 
 api.post('/api/v1/users', user.create);
-api.get('/api/v1/users/:id', user.getOne)
+api.use(auth.protectRoute);
+api.get('/api/v1/users/:id', user.getOne);
+api.patch('/api/v1/users/:id', user.update)
 api.use(auth.protectAdmin);
 api.get('/api/v1/users', user.getAll);
-api.post('/api/v1/users/role/:id', auth.protectAdmin, user.role);
-api.route('/api/v1/users/:id').patch(user.update).delete(user.delete)
+api.post('/api/v1/users/role/:id', user.role);
+api.delete('/api/v1/users/:id', user.delete);
 
 
 api.listen(process.env.USERS, err => {

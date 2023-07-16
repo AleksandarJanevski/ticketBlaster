@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { formatDate, verifyData } from '../functions/functions';
 import { PrintEvent } from "./PrintEvent";
 import { Link } from 'react-router-dom'
-import { getBasket } from "../../redux/actions/userActions";
+import { getBasket, getTickets } from "../../redux/actions/userActions";
 
 export const CheckOut = () => {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.userReducer.basket)
+    const tickets = useSelector(state => state.userReducer.tickets)
     const [total, setTotal] = useState(0);
     const [gratitude, setGratitude] = useState(false)
     const currentDate = new Date().toISOString().split("T")[0].slice(0, 7);
@@ -106,30 +107,16 @@ export const CheckOut = () => {
             if (response.status === 204) {
                 setPurchase([...cart]);
                 setGratitude(true)
+                let arr2 = [...tickets].concat(cart)
+                arr2.sort((a, b) => {
+                    return new Date(b.eventDate) - new Date(a.eventDate);
+                });
+                dispatch(getTickets(arr2));
             }
         } catch (err) {
             console.log(err);
         }
     };
-    const removeTikcets = async () => {
-        try {
-            const response = await fetch('', {//updateAll
-                method: 'PATCH',
-                body: JSON.stringify(arr),
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                credentials: 'include'
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
     const orderMany = async () => {
         try {
             let arr = cart.map(element => ({

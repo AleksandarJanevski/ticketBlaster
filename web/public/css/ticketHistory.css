@@ -1,0 +1,27 @@
+#ticket_history {
+  position: relative;
+}
+#ticket_list {
+  display: flex;
+  flex-direction: row;
+  gap: 54px;
+}
+#ticket_name {
+  font-size: 24px;
+  text-align: left;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ticket_date {
+  color: #ff48ab;
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+}
+#bottom_card button {
+  cursor: pointer;
+}

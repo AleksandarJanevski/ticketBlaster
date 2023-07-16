@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { verifyData } from "../functions/functions";
 
 export const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -24,6 +25,14 @@ export const SignUp = () => {
         }
     }
     async function singUp() {
+        const obj = {
+            email: email,
+            password: password,
+            confirm_password: confirm,
+            name: name,
+        }
+        const verified = verifyData(obj, true);
+        if (!verified) return
         if (password !== confirm) {
             return alert('Passwords do not match');
         }

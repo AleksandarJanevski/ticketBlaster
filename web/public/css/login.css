@@ -54,6 +54,7 @@
 }
 .inputField {
   all: unset;
+  font-family: "Lato";
   box-sizing: border-box;
   padding: 20px 18px;
   width: 357px;

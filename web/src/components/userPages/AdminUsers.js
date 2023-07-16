@@ -93,8 +93,8 @@ export const AdminUsers = () => {
                             <img className="previewProfile" style={{ height: '80px', width: '80px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${element.picture}`} alt="Cant reach" />
                             <p>{element.email}</p>
                             <p>{element.fullName}</p>
-                            <button type="button" onClick={() => { setUserId(element._id); setUserRole(element.role); setToggleB(true) }}>{element.role === 'admin' ? 'Make User' : 'Make Admin'}</button>
-                            <button type="button" onClick={() => { setUserId(element._id); setToggle(true) }}>Delete User</button>
+                            <button type="button" onClick={() => { setUserId(element._id); setUserRole(element.role); setToggleB(true); setToggle(false) }}>{element.role === 'admin' ? 'Make User' : 'Make Admin'}</button>
+                            <button type="button" onClick={() => { setUserId(element._id); setToggle(true); setToggleB(false) }}>Delete User</button>
                             <span id="devide user">
                                 <hr style={{ opacity: "30%" }} />
                             </span>
