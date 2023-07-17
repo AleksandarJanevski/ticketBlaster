@@ -119,6 +119,7 @@ export const CheckOut = () => {
     };
     const orderMany = async () => {
         try {
+            cart.forEach(element => console.log(element.event.date))
             let arr = cart.map(element => ({
                 amount: element.amount,
                 beholder: element.beholder,

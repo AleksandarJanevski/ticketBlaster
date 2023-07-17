@@ -45,13 +45,12 @@ const eventSchema = new mongoose.Schema({
 });
 eventSchema.pre('save', async function (next) {
     today.setHours(0, 0, 0, 0)
-    if (this.date < today && this.date !== today) {
+    if (this.date < today) {
         return next(new Error('Date cannot be less than today'));
     }
     if (this.tickets < 0) {
         return next(new Error('Tickets are sold out'));
     }
-    this.date.setHours(this.date.getHours() + 2);
     next();
 })
 

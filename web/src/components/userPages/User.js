@@ -48,7 +48,11 @@ export const User = () => {
             {role &&
                 <div id="user">
                     <div id="user_top" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <h1>{name}</h1>
+                        <span id='user_top_btn'>
+                            <h1>{name}</h1>
+                            {location.pathname.split('/')[2] === 'events' ? <Link to='/eventForm'><button>Create Event</button></Link> : null}
+                        </span>
+
                         <div id="user_nav">
                             {role === 'admin' ?
                                 <ul>

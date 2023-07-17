@@ -1,0 +1,6 @@
+#manage_events {
+  position: relative;
+}
+#manage_event_card {
+  display: flex;
+}

@@ -29,7 +29,7 @@ export const EventCard = ({ array, option, load, func, setOne, setTwo, id }) => 
                 if (i >= load) return null
                 return (
                     <div key={i} id={id} >
-                        {option === 2 ? <a href={`/eventForm/${element._id}`}> <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}></div></a> : <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}>
+                        {option === 2 ? <Link to={`/eventForm/${element._id}`}> <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}></div></Link> : <div id="event_picture" style={{ backgroundImage: `url(/img/event/${element.picture})` }}>
                         </div>}
                         <div id="event_info">
                             <div id="event_name_location">
@@ -44,6 +44,7 @@ export const EventCard = ({ array, option, load, func, setOne, setTwo, id }) => 
                                 {buttonType(option, element, func)}
                             </div>
                         </div>
+                        {option === 2 ? <div style={{ marginTop: "17,5px", marginBottom: "17.5px" }} id="border"></div> : null}
                     </div>
                 )
             })}

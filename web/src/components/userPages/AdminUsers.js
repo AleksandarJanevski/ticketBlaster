@@ -89,16 +89,23 @@ export const AdminUsers = () => {
             {users && admin && <div>
                 {users.map((element, i) => {
                     return (
-                        <span key={i} id="users_admin">
-                            <img className="previewProfile" style={{ height: '80px', width: '80px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${element.picture}`} alt="Cant reach" />
-                            <p>{element.email}</p>
-                            <p>{element.fullName}</p>
-                            <button type="button" onClick={() => { setUserId(element._id); setUserRole(element.role); setToggleB(true); setToggle(false) }}>{element.role === 'admin' ? 'Make User' : 'Make Admin'}</button>
-                            <button type="button" onClick={() => { setUserId(element._id); setToggle(true); setToggleB(false) }}>Delete User</button>
-                            <span id="devide user">
-                                <hr style={{ opacity: "30%" }} />
-                            </span>
-                        </span>
+                        <div key={i} id="list_users">
+                            <div id="list_users_one">
+                                <div id="list_users_two">
+                                    <img className="previewProfile" style={{ height: '80px', width: '80px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${element.picture}`} alt="Cant reach" />
+                                    <span>
+                                        <p>{element.fullName}</p>
+                                        <p>{element.email}</p>
+                                    </span>
+
+                                </div>
+                                <div id="list_users_three">
+                                    <button id={element.role === 'admin' ? 'makeUser' : 'makeAdmin'} type="button" onClick={() => { setUserId(element._id); setUserRole(element.role); setToggleB(true); setToggle(false) }}>{element.role === 'admin' ? 'Make User' : 'Make Admin'}</button>
+                                    <button type="button" onClick={() => { setUserId(element._id); setToggle(true); setToggleB(false) }}>Delete User</button>
+                                </div>
+                            </div>
+                            <div id="border"></div>
+                        </div>
 
                     )
                 })}

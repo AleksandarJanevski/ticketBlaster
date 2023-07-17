@@ -13,7 +13,6 @@
   letter-spacing: -1.32px;
   color: black;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 #ticket_date {

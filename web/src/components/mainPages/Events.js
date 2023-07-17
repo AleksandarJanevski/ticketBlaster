@@ -24,6 +24,7 @@ export const Events = () => {
                 <div id="hero_info">
                     <p>{formatDate(new Date(hero.date).toLocaleDateString('en-GB'), true)}, {hero.location}</p>
                     <button id="hero_button"><Link to={`/event/${hero._id}`}>Get Tickets</Link></button>
+                    {/* fix the button so its other way around */}
                 </div>
             </div>}
             <div id="eventList">

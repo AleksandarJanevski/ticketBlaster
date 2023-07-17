@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { getConcerts, getStandUp } from '../../redux/actions/eventsActions';
+import { getConcerts, getHero, getStandUp } from '../../redux/actions/eventsActions';
 import { Link } from "react-router-dom";
 import { DeletePopUp } from "./DeletePopUp";
 import { EventCard } from "../mainPages/EventCard";
@@ -11,7 +11,8 @@ export const ManageEvents = () => {
     const [eventId, setEventId] = useState('')
     const dispatch = useDispatch()
     const concerts = useSelector(state => state.eventsReducer.concerts);
-    const standUp = useSelector(state => state.eventsReducer.standUp)
+    const standUp = useSelector(state => state.eventsReducer.standUp);
+    const hero = useSelector(state => state.eventsReducer.hero);
     const role = useSelector(state => state.userReducer.user.role);
     useEffect(() => {
         if (role && role === 'admin') {
@@ -38,10 +39,18 @@ export const ManageEvents = () => {
                 if (updateEvents.category === 'Musical Concert') {
                     let arr = [...concerts]
                     arr = arr.filter(element => element !== updateEvents[0])
+                    console.log(hero, arr[0]);
+                    if (eventId === hero._id) {
+                        dispatch(getHero(arr.slice(0, 1)));//fix this
+                    }
                     dispatch(getConcerts(arr));
                 } else {
                     let arr = [...standUp]
                     arr = arr.filter(element => element !== updateEvents[0])
+                    console.log(hero, arr[0]);
+                    if (eventId === hero._id) {
+                        dispatch(getHero(arr.slice(0, 1)));
+                    }
                     dispatch(getStandUp(arr));
                 }
                 setEvents(filter)
@@ -53,16 +62,12 @@ export const ManageEvents = () => {
     }
     return (
         <div id="manage_events">
-            {role && role === 'admin' ? <>
-                <div>
-                    <button><Link to='/eventForm'>Create Event</Link></button>
-                </div>
-                <div>
-                    {events && <EventCard array={events} option={2} setOne={setToggle} setTwo={setEventId} func={removeEvent} />}
-                </div>
-                {toggle ? <DeletePopUp id={eventId} toggl={() => setToggle(false)} func={removeEvent} /> : null}
-            </> : null}
-
+            {role && role === 'admin' ?
+                <div id="manage_one">
+                    {events && <EventCard id={'manage_event_card'} array={events} option={2} setOne={setToggle} setTwo={setEventId} func={removeEvent} />}
+                    {/* needs custom card */}
+                </div> : null}
+            {toggle ? <DeletePopUp id={eventId} toggl={() => setToggle(false)} func={removeEvent} /> : null}
         </div>
     )
 }

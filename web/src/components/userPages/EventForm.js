@@ -108,14 +108,14 @@ export const EventForm = () => {
 
     const handleUpload = async () => {
         try {
-            let valid = verifyData(event, false);
+            let valid = verifyData(event, false);//fix this not executing if error
             if (valid) {
                 await uploadFunc(previewPic, event.picture, setEvent, event, setSent, sent, 'event');
             }
         } catch (err) {
+            setSent(false)
             alert(err.message)
         }
-
     }
 
     const addRelated = (e) => {

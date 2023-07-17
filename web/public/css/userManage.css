@@ -1,0 +1,126 @@
+#admin_users {
+  position: relative;
+}
+#list_users {
+  display: flex;
+  flex-direction: column;
+  gap: 25.5px;
+}
+#list_users_one {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#list_users_two {
+  display: flex;
+  gap: 29px;
+  align-items: center;
+}
+#list_users_two span {
+  display: flex;
+  flex-direction: column;
+}
+#list_users_two span p:nth-child(1) {
+  color: #393939;
+  font-size: 18px;
+  font-weight: bold;
+}
+#list_users_two span p:nth-child(2) {
+  color: #a7a7a7;
+  font-size: 18px;
+  font-weight: bold;
+}
+#border {
+  width: 1200px;
+  height: 0px;
+  border: 1px solid #d8d8d8;
+  margin-bottom: 25.5px;
+}
+#list_users_three {
+  display: flex;
+  gap: 19px;
+}
+#list_users_three button {
+  all: unset;
+  font-size: 16px;
+  font-family: "Lato";
+  width: 128px;
+  height: 42px;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+}
+#list_users_three #makeAdmin {
+  border: 2px solid black;
+  color: #ff48ab;
+}
+#list_users_three #makeUser {
+  border: 2px solid #ff48ab;
+  color: black;
+}
+#list_users_three button:nth-child(2) {
+  background-color: black;
+  color: white;
+}
+#admin_popup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  width: 739px;
+  height: 278px;
+  box-shadow: 0px 20px 40px #00000029;
+  background-color: white;
+  border-radius: 30px;
+  align-items: center;
+  box-sizing: border-box;
+  padding-top: 27px;
+  padding-left: 45px;
+  padding-right: 40px;
+  padding-bottom: 39px;
+}
+#admin_popup h1 {
+  font-size: 31px;
+  font-weight: bold;
+  letter-spacing: -1.93px;
+}
+#admin_popup p {
+  font-size: 16px;
+  letter-spacing: -0.88px;
+  font-family: "Lato";
+}
+
+#admin_popup #popup_card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+#admin_popup #popup_card span {
+  margin-top: 53px;
+  align-self: flex-end;
+  display: flex;
+  gap: 19px;
+}
+#admin_popup #popup_card span button {
+  all: unset;
+  font-family: "Lato";
+  letter-spacing: -0.88px;
+  font-size: 16px;
+  text-align: center;
+  width: 128px;
+  height: 42px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+#admin_popup #popup_card span button:nth-child(1) {
+  border: 2px solid black;
+}
+#admin_popup #popup_card span button:nth-child(2) {
+  width: 184px;
+  color: white;
+  background-color: black;
+}

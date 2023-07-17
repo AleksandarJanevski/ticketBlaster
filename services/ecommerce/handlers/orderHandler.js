@@ -18,6 +18,7 @@ exports.createMany = async (req, res) => {
                 event.tickets -= order.amount;
             }
         });
+        events = events.filter(event => new Date(event.date) > new Date());
         await Promise.all(events.map(event => event.save()));
         const tickets = await Order.insertMany(orders).then(elements => Order.populate(elements, { path: 'beholder' }));
         const message = `Thank you for purchasing at ticket blaster, here is you purchase code: ${tickets.map(element => element.purchaseNo).join(', ')}`
