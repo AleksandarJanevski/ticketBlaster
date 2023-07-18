@@ -9,7 +9,7 @@ export const EventCard = ({ array, option, load, func, setOne, setTwo, id }) => 
                 if (element.tickets === 0) {
                     return (<button id="getTickets" style={{ color: 'white' }}>Sold Out</button>)
                 } else {
-                    return (<button id="getTickets"><Link to={`/event/${element._id}`}>Get Tickets</Link> </button>);
+                    return (<Link id="getTicketsAnchor" to={`/event/${element._id}`}><button id="getTickets">Get Tickets</button></Link>);
                 }
             case 2:
                 return (<button onClick={() => {
@@ -44,7 +44,6 @@ export const EventCard = ({ array, option, load, func, setOne, setTwo, id }) => 
                                 {buttonType(option, element, func)}
                             </div>
                         </div>
-                        {option === 2 ? <div style={{ marginTop: "17,5px", marginBottom: "17.5px" }} id="border"></div> : null}
                     </div>
                 )
             })}

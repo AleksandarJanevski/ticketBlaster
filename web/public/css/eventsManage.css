@@ -3,4 +3,65 @@
 }
 #manage_event_card {
   display: flex;
+  flex-direction: column;
+  gap: 17.5px;
+}
+#mve1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#mve2_1 {
+  width: 149px;
+  height: 88px;
+  background-size: cover;
+  border-radius: 20px;
+}
+#mve2_1:hover {
+  opacity: 0.8;
+}
+#mve2 {
+  display: flex;
+  gap: 19px;
+  align-items: center;
+}
+#mve2_2 {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+#mve2_2 #mve_name {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: -1.21px;
+}
+#mve2_2 span {
+  display: flex;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -1px;
+}
+#mve2_2 span p:nth-child(1) {
+  color: #ff48ab;
+}
+#mve2_2 span p:nth-child(2) {
+  color: #393939;
+}
+#mve3 button {
+  all: unset;
+  font-family: "Lato";
+  letter-spacing: -0.88px;
+  font-size: 16px;
+  text-align: center;
+  width: 128px;
+  height: 42px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
+#top {
+  scroll-behavior: smooth;
 }

@@ -62,19 +62,14 @@
 }
 #bottom_card button {
   offset: all;
+  font-family: "Lato";
+  font-size: 14px;
   width: 128px;
   height: 33px;
   padding: 8px 28px;
+  letter-spacing: -0.77px;
   color: white;
   background-color: black;
   border: none;
   border-radius: 20px;
-}
-#getTickets a {
-  display: inline-block;
-  width: 72px;
-  height: 17px;
-  text-decoration: none;
-  letter-spacing: -0.77px;
-  color: #ffffff;
 }
