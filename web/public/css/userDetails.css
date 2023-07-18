@@ -23,6 +23,7 @@
   width: 96px;
   border-radius: 50%;
   object-fit: cover;
+  overflow: hidden;
 }
 #user_profile {
   display: flex;

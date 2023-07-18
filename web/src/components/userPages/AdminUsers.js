@@ -92,7 +92,7 @@ export const AdminUsers = () => {
                         <div key={i} id="list_users">
                             <div id="list_users_one">
                                 <div id="list_users_two">
-                                    <img className="previewProfile" style={{ height: '80px', width: '80px', objectFit: 'cover', borderRadius: '50%' }} src={`/img/profile/${element.picture}`} alt="Cant reach" />
+                                    <img className="previewProfile" src={`/img/profile/${element.picture}`} alt="Cant reach" />
                                     <span>
                                         <p>{element.fullName}</p>
                                         <p>{element.email}</p>
