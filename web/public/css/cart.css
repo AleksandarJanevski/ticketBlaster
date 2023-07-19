@@ -1,0 +1,127 @@
+#cart {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 53px;
+  width: 100%;
+  min-height: 751px;
+}
+#cart h1 {
+  font-size: 44px;
+  font: bold;
+  letter-spacing: -2.42px;
+}
+#cart_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 41.5px;
+}
+#cart_left {
+  display: flex;
+  gap: 47px;
+  align-items: center;
+}
+#cart_image {
+  width: 196px;
+  height: 116px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+}
+#cart_left_info {
+  display: flex;
+  flex-direction: column;
+}
+#cart_left_info p:nth-child(1) {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+}
+#cart_left_info p:nth-child(2) {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.99px;
+  color: #ff48ab;
+}
+#cart_left_info p:nth-child(3) {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 4px;
+  letter-spacing: -0.77px;
+  color: #393939;
+}
+#cart_right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+#cart_right p:nth-child(1) {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+}
+#cart_right p:nth-child(2) {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.99px;
+  color: #ff48ab;
+}
+#cart_right button {
+  all: unset;
+  margin-top: 15px;
+  font-family: "Lato";
+  width: 128px;
+  height: 33px;
+  border-radius: 20px;
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  letter-spacing: -0.77px;
+  text-align: center;
+  cursor: pointer;
+}
+#empty_cart {
+  margin-top: 47px;
+  color: #969696;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+}
+#cart_bottom {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+#cart_bottom button {
+  all: unset;
+  width: 229px;
+  height: 42px;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+#cart_bottom a {
+  font-family: "Lato";
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.88px;
+  color: #ffffff;
+}
+#cart_bottom a:nth-child(1) button {
+  background-color: black;
+}
+#cart_bottom a:nth-child(2) button {
+  background-color: #ff48ab;
+}
+#cart_bottom #checkoutBtnfaded {
+  color: white;
+  background-color: #ff48ab;
+  opacity: 0.3;
+  cursor: default;
+}

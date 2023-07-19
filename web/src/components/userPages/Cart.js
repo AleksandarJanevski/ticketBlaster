@@ -30,30 +30,37 @@ export const Cart = () => {
         <div id="cart">
             {id && id ? <>
                 <h1>Shopping Cart</h1>
-                {cart && cart.map((element, i) => {
-                    const price = parseInt(element.amount) * parseInt(element.event.price);
-                    let date = formatDate(new Date(element.event.date).toLocaleDateString('en-GB'))
-                    return (
-                        <span id="cart_events" key={i}>
-                            <div id="cart_left">
-                                <img src={`http://localhost:9000/img/event/${element.event.picture}`} alt="" />
-                                <div id="cart_left_info">
-                                    <p>{element.event.name}</p>
-                                    <p>{date}</p>
-                                    <p>{element.event.location}</p>
+                <div id='cart_mid'>
+                    {cart && cart.length > 0 ? cart.map((element, i) => {
+                        const price = parseInt(element.amount) * parseInt(element.event.price);
+                        let date = formatDate(new Date(element.event.date).toLocaleDateString('en-GB'))
+                        return (
+                            <div id="cart_events" key={i}>
+                                <div id='cart_top'>
+                                    <div id="cart_left">
+                                        <div id='cart_image' style={{ backgroundImage: `url(/img/event/${element.event.picture})` }} />
+                                        <div id="cart_left_info">
+                                            <p>{element.event.name}</p>
+                                            <p>{date}</p>
+                                            <p>{element.event.location}</p>
+                                        </div>
+                                    </div>
+                                    <div id="cart_right">
+                                        <p>${price}.00 USD</p>
+                                        <p>{element.amount} x ${element.event.price}.00 USD</p>
+                                        <button type='button' onClick={() => { cartRemove(element._id) }}>Remove</button>
+                                    </div>
                                 </div>
+                                <div id="border"></div>
                             </div>
-                            <div id="cart_right">
-                                <p>${price}.00 USD</p>
-                                <p>{element.amount} x ${element.event.price}.00 USD</p>
-                                <button type='button' onClick={() => { cartRemove(element._id) }}>Remove</button>
-                            </div>
-                        </span>
-                    );
-                })}
+                        );
+                    }) : <div id='empty_cart'>
+                        <p>No items in cart</p>
+                    </div>}
+                </div>
                 <div id="cart_bottom">
-                    <button><Link to='/'>Back</Link></button>
-                    {cart.length > 0 ? <button ><Link to={'/checkout'}>Checkout</Link></button> : <button style={{ opacity: "0.3" }}>Checkout</button>}
+                    {cart.length > 0 ? <Link to='/'><button>Back</button></Link> : <button style={{ opacity: '0' }}></button>}
+                    {cart.length > 0 ? <Link to={'/checkout'}><button id='checkoutBtn'>Checkout</button></Link> : <button id='checkoutBtnfaded'>Checkout</button>}
                 </div>
             </> : null}
 

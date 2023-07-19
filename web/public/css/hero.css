@@ -11,6 +11,7 @@
   align-items: flex-start;
   justify-content: flex-end;
   margin-bottom: 50px;
+  background-position: top;
 }
 #hero_info {
   display: flex;

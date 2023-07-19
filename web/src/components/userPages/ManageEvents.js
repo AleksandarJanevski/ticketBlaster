@@ -16,8 +16,8 @@ export const ManageEvents = () => {
     const role = useSelector(state => state.userReducer.user.role);
     useEffect(() => {
         if (role && role === 'admin') {
-            const arr = [...concerts].concat([...standUp]);
-            arr.sort((a, b) => { return new Date(a.date) - b.date })
+            let arr = [...concerts].concat([...standUp]);
+            arr.sort((a, b) => { return new Date(a.date) - new Date(b.date) })
             setEvents(arr)
         } else {
             window.location.href = '/'

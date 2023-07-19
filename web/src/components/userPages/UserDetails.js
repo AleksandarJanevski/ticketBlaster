@@ -91,7 +91,7 @@ export const UserDetails = () => {
                 <div id="user_prof_top">
                     <div id="user_profile">
                         {image ? <img className="previewProfile" src={image} alt="Preview" /> :
-                            <img className="previewProfile" src={`/img/profile/${user.picture}`} alt="Cant reach" />}
+                            <div className="previewProfile" style={{ backgroundImage: `url(/img/profile/${user.picture})` }} />}
                         <label htmlFor="" id="fileInput">
                             <input type="file" onChange={picturePreview} accept="image/png, image/jpg, image/jpeg" />
                             Upload Avatar

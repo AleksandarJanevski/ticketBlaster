@@ -1,6 +1,3 @@
-#ticket_history {
-  position: relative;
-}
 #ticket_list {
   display: flex;
   flex-direction: row;

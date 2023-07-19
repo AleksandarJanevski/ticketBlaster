@@ -22,8 +22,8 @@
   height: 96px;
   width: 96px;
   border-radius: 50%;
-  object-fit: cover;
-  overflow: hidden;
+  background-size: cover;
+  background-position: center;
 }
 #user_profile {
   display: flex;
