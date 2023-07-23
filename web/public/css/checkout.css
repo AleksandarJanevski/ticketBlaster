@@ -1,0 +1,90 @@
+#checkout {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 53px;
+  min-height: 804px;
+}
+#checkout_pic {
+  width: 136px;
+  height: 81px;
+  background-size: contain;
+  border-radius: 20px;
+}
+#checkout_mid {
+  display: flex;
+  gap: 136px;
+}
+#checkout_card {
+  display: flex;
+  align-items: center;
+  min-width: 428px;
+  max-width: 480px;
+  max-height: 105.5px;
+  justify-content: space-between;
+}
+#checkout_right {
+  display: flex;
+  flex-direction: column;
+}
+#checkout_list {
+  overflow-y: auto;
+  height: 530px;
+  overflow-x: hidden;
+  width: 482px;
+  padding-right: 10px;
+}
+#checkout_right span {
+  display: flex;
+  flex-direction: column;
+}
+#checkout_bottom {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+#checkout_card_left {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+#checkout_card_left aside,
+#checkout_card_left p {
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#checkout_card_left aside p:nth-child(1),
+aside:nth-child(2) p:nth-child(1) {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+}
+#checkout_card_left aside p:nth-child(2),
+aside:nth-child(2) p:nth-child(2) {
+  font-size: 18px;
+  color: #ff48ab;
+  font-weight: bold;
+  letter-spacing: -0.99px;
+}
+#checkout_card_left aside p:nth-child(3) {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: -0.77px;
+  color: #393939;
+}
+#checkout_price {
+  text-align: right;
+  overflow: visible;
+}
+#checkout_total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+}

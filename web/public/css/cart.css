@@ -6,6 +6,7 @@
   gap: 53px;
   width: 100%;
   min-height: 751px;
+  height: 100%;
 }
 #cart h1 {
   font-size: 44px;
@@ -17,6 +18,9 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 41.5px;
+}
+#cart_mid {
+  margin-bottom: 59px;
 }
 #cart_left {
   display: flex;
@@ -92,6 +96,8 @@
 #cart_bottom {
   position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   width: 100%;

@@ -5,25 +5,35 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 export const User = () => {
     const role = useSelector(state => state.userReducer.user.role);
     const location = useLocation();
+    const [focus, setFocus] = useState(0)
     const [name, setName] = useState('')
     useEffect(() => {
         siteName();
     }, [location, name]);
-    // useEffect(() => {
-    //     if (!role) {
-    //         window.location.href = '/'
-    //     }
-    // }, [role]);
+    useEffect(() => {
+        if (!role) {
+            window.location.href = '/'
+        }
+    }, [role]);
     const siteName = () => {
         const loc = location.pathname.split('/')[2]
-        if (loc === 'details') {
-            setName('User Details')
-        } else if (loc === 'manage') {
-            setName('Users')
-        } else if (loc === 'events') {
-            setName('Events');
-        } else {
-            setName('Ticket History')
+        switch (loc) {
+            case 'details':
+                setName('User Details');
+                setFocus(3);
+                break;
+            case 'manage':
+                setName('Users');
+                setFocus(2);
+                break;
+            case 'events':
+                setName('Events');
+                setFocus(1);
+                break;
+            default:
+                setName('Ticket History');
+                setFocus(0);
+                break;
         }
     }
     const logOut = async () => {
@@ -56,10 +66,10 @@ export const User = () => {
                         <div id="user_nav">
                             {role === 'admin' ?
                                 <ul>
-                                    <li><Link to='/user/events'>Events</Link></li>
-                                    <li><Link to='/user/manage'>Users</Link></li>
-                                    <li><Link to="/user/ticketHistory">Ticket History</Link></li>
-                                    <li><Link to="/user/details">User Details</Link></li>
+                                    <li><Link style={{ color: focus === 1 ? "#ff48ab" : "#393939" }} to='/user/events'>Events</Link></li>
+                                    <li><Link style={{ color: focus === 2 ? "#ff48ab" : "#393939" }} to='/user/manage'>Users</Link></li>
+                                    <li><Link style={{ color: focus === 0 ? "#ff48ab" : "#393939" }} to="/user/ticketHistory">Ticket History</Link></li>
+                                    <li><Link style={{ color: focus === 3 ? "#ff48ab" : "#393939" }} to="/user/details">User Details</Link></li>
                                     <li><button onClick={logOut}>Log Out</button></li>
                                 </ul> :
                                 <ul>

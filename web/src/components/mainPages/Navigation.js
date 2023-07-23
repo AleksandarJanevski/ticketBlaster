@@ -1,24 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from "react-redux";
 import logo from './logo.png'
 
 export const Navigation = () => {
     const id = useSelector(state => state.idReducer.id.id)
     const [loggedIn, setLoggedIn] = useState(false);
+    const [focus, setFocus] = useState(0);
+    const location = useLocation();
     useEffect(() => {
         if (id) {
             setLoggedIn(true)
         }
     }, [id]);
+    useEffect(() => {
+        let category = location.pathname.split('/')[2]
+        switch (category) {
+            case 'standUpComedy': {
+                setFocus(2)
+                break;
+            }
+            case 'musicalConcerts': {
+                setFocus(1)
+                break;
+            }
+            default: setFocus(0);
+        }
+    }, [location])
     return (
         <div id="main_header">
             <header>
                 <nav id="navbar">
                     <ul>
                         <li><Link to="/"><img src={logo} alt="" /></Link></li>
-                        <li><Link to="/category/musicalConcerts">Musical Concerts</Link></li>
-                        <li><Link to="/category/standUpComedy">Stand-up Comedy</Link></li>
+                        <li><Link style={{ color: focus === 1 ? "#ff48ab" : "white" }} to="/category/musicalConcerts">Musical Concerts</Link></li>
+                        <li><Link style={{ color: focus === 2 ? "#ff48ab" : "white" }} to="/category/standUpComedy">Stand-up Comedy</Link></li>
                     </ul>
                 </nav>
                 <div id="rightSide">
