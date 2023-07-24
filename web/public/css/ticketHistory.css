@@ -21,3 +21,6 @@
 #bottom_card button {
   cursor: pointer;
 }
+#ticket_history {
+  min-height: 700px;
+}

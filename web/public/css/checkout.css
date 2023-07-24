@@ -5,51 +5,80 @@
   align-items: flex-start;
   gap: 53px;
   min-height: 804px;
+  position: relative;
+}
+#checkout h1 {
+  font-size: 44px;
+  font-weight: bold;
+  letter-spacing: -2.42px;
+  text-align: left;
 }
 #checkout_pic {
   width: 136px;
   height: 81px;
-  background-size: contain;
+  background-size: cover;
+  background-position: center;
   border-radius: 20px;
 }
 #checkout_mid {
   display: flex;
   gap: 136px;
 }
-#checkout_card {
-  display: flex;
-  align-items: center;
-  min-width: 428px;
-  max-width: 480px;
-  max-height: 105.5px;
-  justify-content: space-between;
+#checkout_div {
+  margin-right: 10px;
 }
-#checkout_right {
-  display: flex;
-  flex-direction: column;
+#checkout_div #border {
+  width: 428px;
+  max-width: inherit;
 }
 #checkout_list {
   overflow-y: auto;
-  height: 530px;
+  max-height: 505px;
   overflow-x: hidden;
-  width: 482px;
-  padding-right: 10px;
 }
-#checkout_right span {
-  display: flex;
-  flex-direction: column;
+#checkout_list::-webkit-scrollbar {
+  width: 10px;
 }
-#checkout_bottom {
-  position: absolute;
-  bottom: 0;
+#checkout_list::-webkit-scrollbar-track {
+  border-radius: 20px;
+  background: #f1f1f1;
+}
+#checkout_list::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: #ff48ab;
+}
+#checkout_list::-webkit-scrollbar-thumb:hover {
+  background: #ff89c8;
+}
+#checkout_card {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  align-items: center;
 }
 #checkout_card_left {
   display: flex;
   gap: 15px;
   align-items: center;
+}
+#checkout_price {
+  text-align: right;
+  padding-right: 2px;
+}
+#checkout_total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18.5px;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.32px;
+}
+#checkout_card_left {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+#checkout_card_left aside {
+  width: 130px;
 }
 #checkout_card_left aside,
 #checkout_card_left p {
@@ -70,6 +99,7 @@ aside:nth-child(2) p:nth-child(2) {
   color: #ff48ab;
   font-weight: bold;
   letter-spacing: -0.99px;
+  margin-bottom: 4px;
 }
 #checkout_card_left aside p:nth-child(3) {
   font-size: 14px;
@@ -77,14 +107,130 @@ aside:nth-child(2) p:nth-child(2) {
   letter-spacing: -0.77px;
   color: #393939;
 }
-#checkout_price {
-  text-align: right;
-  overflow: visible;
+#checkout_right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
-#checkout_total {
+#checkout_right span {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+#expire {
+  font-family: "Lato";
+  box-sizing: border-box;
+  padding: 20px 18px;
+  width: 357px;
+  height: 42px;
+  border: 1px solid black;
+  border-radius: 21px;
+  font-size: 18px;
+  color: black;
+  position: relative;
+}
+
+input[type="month"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  top: 15px;
+  background-image: url("https://cdn4.iconfinder.com/data/icons/geomicons/32/672341-triangle-down-512.png");
+  background-size: 10px 8px;
+  cursor: pointer;
+}
+#checkout_bottom {
+  position: absolute;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
-  font-size: 24px;
+  width: 100%;
+}
+#checkout_bottom button {
+  font-family: "Lato";
+  width: 229px;
+  height: 42px;
+  text-align: center;
+  color: white;
+  border-radius: 20px;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
   font-weight: bold;
+  letter-spacing: -0.88px;
+}
+#checkout_bottom button:nth-child(1) {
+  background-color: black;
+}
+#checkout_bottom button:nth-child(2) {
+  background-color: #ff48ab;
+}
+#gratitude h1 {
+  font-size: 44px;
+  font-weight: bold;
+  letter-spacing: -2.42px;
+}
+#gratitude {
+  display: flex;
+  flex-direction: column;
+  gap: 51px;
+  position: relative;
+}
+#gratitude_list {
+  display: flex;
+  flex-direction: column;
+}
+#gratitude_card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#gratitude_image {
+  width: 136px;
+  height: 81px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+}
+#gratitude_left {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+#gl_div {
+  display: flex;
+  flex-direction: column;
+}
+#gl_div p:nth-child(1),
+#gratitude_right span p:nth-child(1) {
+  font: normal normal bold 24px/29px Lato;
   letter-spacing: -1.32px;
+}
+#gl_div p:nth-child(2),
+#gratitude_right span p:nth-child(2) {
+  font: normal normal bold 18px/22px Lato;
+  letter-spacing: -0.99px;
+  color: #ff48ab;
+}
+#gl_div p:nth-child(3) {
+  font: normal normal bold 14px/17px Lato;
+  letter-spacing: -0.77px;
+  color: #393939;
+}
+#gratitude_right {
+  display: flex;
+  text-align: right;
+  gap: 35px;
+  align-items: center;
+}
+#gratitude_right button {
+  border: 0;
+  width: 128px;
+  height: 33px;
+  text-align: center;
+  color: white;
+  background-color: black;
+  border-radius: 20px;
+  cursor: pointer;
 }

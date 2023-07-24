@@ -7,7 +7,6 @@ footer {
   bottom: 0;
   right: 0;
   left: 0;
-  clear: both;
 }
 #footerNav {
   display: flex;

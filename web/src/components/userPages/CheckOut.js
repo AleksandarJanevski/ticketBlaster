@@ -33,12 +33,11 @@ export const CheckOut = () => {
         location: '',
         image: ''
     });
-    // useEffect(() => {
-    //     if (cart.length === 0) {
-    //         window.location.href = '/'
-    //         console.log('object');
-    //     }
-    // }, [])
+    useEffect(() => {
+        if (cart.length === 0) {
+            window.location.href = '/'
+        }
+    }, [])
     useEffect(() => {
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
@@ -157,8 +156,9 @@ export const CheckOut = () => {
                                         let date = formatDate(
                                             new Date(element.event.date).toLocaleDateString('en-GB')
                                         );
+                                        const lastElem = i === cart.length - 1
                                         return (
-                                            <div key={i}>
+                                            <div id='checkout_div' key={i}>
                                                 <div id="checkout_card">
                                                     <div id='checkout_card_left'>
                                                         <div id='checkout_pic' style={{ backgroundImage: `url(/img/event/${element.event.picture})` }}></div>
@@ -175,7 +175,7 @@ export const CheckOut = () => {
                                                         </p>
                                                     </aside>
                                                 </div>
-                                                <div style={{ minWidth: "428px", maxWidth: '480px', marginBottom: "24.5px", marginTop: "24.5px" }} id="border"></div>
+                                                <div style={{ marginBottom: lastElem ? '0' : '24.5px', marginTop: "24.5px" }} id="border"></div>
                                             </div>
 
                                         );
@@ -214,6 +214,7 @@ export const CheckOut = () => {
                                 <input
                                     type="month"
                                     id="expire"
+                                    placeholder='aa'
                                     min={currentDate}
                                     max={maxDate}
                                     onChange={e => {
@@ -249,7 +250,7 @@ export const CheckOut = () => {
                         <button onClick={cardVerify}>Pay Now</button>
                     </div>
                 </div> : <div id='gratitude'>
-                    <h1>Thank you for your purchase</h1>
+                    <h1>Thank you for your purchase!</h1>
                     <span>
                         {purchase.map((element, i) => {
                             const price = parseInt(element.amount) * parseInt(element.event.price);
@@ -257,18 +258,19 @@ export const CheckOut = () => {
                                 new Date(element.event.date).toLocaleDateString('en-GB')
                             );
                             return (
-                                <span key={i}>
+                                <div onClick={() => document.addEventListener('mousedown', function () {
+                                    setToggleB(false)
+                                })} id='gratitude_list' key={i}>
                                     <div id="gratitude_card">
                                         <div id="gratitude_left">
-                                            <img
-                                                src={`http://localhost:9000/img/event/${element.event.picture}`}
-                                                alt=""
-                                            />
-                                            <aside>
+                                            <div id='gratitude_image' style={{ backgroundImage: `url(/img/event/${element.event.picture})` }}>
+
+                                            </div>
+                                            <div id='gl_div'>
                                                 <p>{element.event.name}</p>
                                                 <p>{date}</p>
                                                 <p>{element.event.location}</p>
-                                            </aside>
+                                            </div>
                                         </div>
                                         <div id="gratitude_right">
                                             <span>
@@ -289,12 +291,13 @@ export const CheckOut = () => {
                                             }}>Print</button>
                                         </div>
                                     </div>
-                                </span>
+                                    <div style={{ margin: '24.5px 0' }} id="border"></div>
+                                </div>
                             );
                         })}
                     </span>
                 </div>}
-            {toggleB ? <PrintEvent name={print.name} image={print.image} location={print.location} date={print.date} /> : null}
+            {toggleB ? <PrintEvent style={{ top: '146px' }} name={print.name} image={print.image} location={print.location} date={print.date} /> : null}
         </div>
     );
 };

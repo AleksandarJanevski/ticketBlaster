@@ -19,11 +19,10 @@ export const TicketHistory = () => {
             }
         }, true);
     }, []);
-    useEffect(() => {
-        console.log(tickets);
-    }, [tickets])
     return (
-        <div id="ticket_history">
+        <div onClick={() => document.addEventListener('mousedown', function () {
+            setToggle(false)
+        })} id="ticket_history">
             <div id="ticket_list">
                 <div>
                     <TicketCard array={tickets.filter((element, i) => i % 2 === 0)} setPrint={setPrint} setToggle={setToggle} />
