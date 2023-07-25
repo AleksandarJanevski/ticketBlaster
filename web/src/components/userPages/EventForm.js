@@ -342,10 +342,6 @@ export const EventForm = () => {
                   }}
                 />
               )}
-
-              {/* 
-                        {image && !eventId ? <div id="preview_event" style={{backgroundImage:`url(${image})`}}></div> : <div id="event_photo">Event Photo</div>}
-                        {eventId && !image && <img className="preview" style={{ height: '300px' }} src={`/img/event/${event.picture}`} alt="Cant reach" />} */}
             </span>
             <div id="eventDetails">
               <div id="event_textarea">
