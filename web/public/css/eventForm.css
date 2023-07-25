@@ -1,0 +1,158 @@
+#eventForm {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+#eventForm label {
+  font: normal normal bold 18px/22px Lato;
+  letter-spacing: -0.99px;
+  color: #393939;
+}
+#eForm_one {
+  display: flex;
+  gap: 35px;
+}
+#eForm_one input,
+select {
+  width: 357px;
+  height: 42px;
+  border-radius: 20px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  padding: 0 20px;
+  font-size: 18px;
+}
+#eForm_two {
+  margin-top: 31px;
+  display: flex;
+  gap: 35px;
+  align-items: center;
+}
+#event_photo {
+  width: 357px;
+  height: 211px;
+  border: 1px solid #707070;
+  border-radius: 18px;
+  background-color: #f0f0f0;
+  text-align: center;
+  line-height: 211px;
+  letter-spacing: -0.99px;
+  color: #393939;
+  font-size: 18px;
+  font-weight: bold;
+}
+#eventArt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 21px;
+}
+#preview_event {
+  width: 357px;
+  height: 211px;
+  border: 1px solid #707070;
+  border-radius: 18px;
+  background-size: cover;
+  background-position: center;
+}
+#eventDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+}
+#price_amount_details {
+  display: flex;
+  gap: 20px;
+}
+#eventDetails span,
+#event_textarea,
+#eForm_one span {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#inputDetails {
+  width: 750px;
+  height: 141px;
+  border: 1px solid #000000;
+  border-radius: 21px;
+  box-sizing: border-box;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-family: "Lato";
+  letter-spacing: -0.77px;
+  color: #393939;
+}
+#divFile {
+  width: 357px;
+  height: 42px;
+  background-color: #000000;
+  border-radius: 20px;
+  text-align: center;
+  box-sizing: border-box;
+  color: white;
+  position: relative;
+  font-size: 16px;
+  letter-spacing: -0.88px;
+  line-height: 42px;
+}
+#eventArt input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 357px;
+  height: 42px;
+  border-radius: 20px;
+}
+#eventArt input::file-selector-button {
+  width: 357px;
+  height: 42px;
+  border-radius: 20px;
+  opacity: 0;
+  cursor: pointer;
+}
+#price_amount_details input {
+  height: 42px;
+  width: 235px;
+  border-radius: 21px;
+  padding: 21px 13px;
+  font-size: 14px;
+  border: 1px solid black;
+}
+#eForm_three {
+  margin-top: 40px;
+  margin-bottom: 102px;
+}
+#relatedList {
+  display: flex;
+  gap: 31px;
+}
+#eventRelated {
+  display: flex;
+  gap: 20px;
+  max-width: 360px;
+}
+#eventRelated #event_info {
+  max-width: 140px;
+  display: flex;
+  flex-direction: column;
+}
+#eventRelated #event_name_location {
+  display: flex;
+  flex-direction: column;
+}
+#eventRelated #event_picture {
+  width: 200px;
+  height: 153px;
+  background-position: center;
+}
+#eventRelated button {
+  margin-left: 6px;
+}
+
+#eventButton {
+  position: absolute;
+  bottom: 53px;
+  right: 0;
+}

@@ -36,14 +36,13 @@ export const App = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path='/resetPassword/:token' element={<ResetPassword />} />
-          <Route path='/eventForm' element={<EventForm />} >
-            <Route path="/eventForm/:eventId" element={<EventForm />} />
-          </Route>
           <Route path="/user" element={<User />}>
             <Route path={'events'} element={<ManageEvents />} />
             <Route path={'manage'} element={<AdminUsers />} />
             <Route path={'ticketHistory'} element={<TicketHistory />} />
             <Route path={'details'} element={<UserDetails />} />
+            <Route path={'eventForm'} element={<EventForm />} />
+            <Route path={'eventForm/:eventId'} element={<EventForm />} />
           </Route>
           <Route path="/checkout" element={<CheckOut />} />
         </Routes>

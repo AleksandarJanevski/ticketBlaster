@@ -10,11 +10,11 @@ export const User = () => {
     useEffect(() => {
         siteName();
     }, [location, name]);
-    useEffect(() => {
-        if (!role) {
-            window.location.href = '/'
-        }
-    }, [role]);
+    // useEffect(() => {
+    //     if (!role) {
+    //         window.location.href = '/'
+    //     }
+    // }, [role]);
     const siteName = () => {
         const loc = location.pathname.split('/')[2]
         switch (loc) {
@@ -27,6 +27,10 @@ export const User = () => {
                 setFocus(2);
                 break;
             case 'events':
+                setName('Events');
+                setFocus(1);
+                break;
+            case "eventForm":
                 setName('Events');
                 setFocus(1);
                 break;
@@ -60,7 +64,7 @@ export const User = () => {
                     <div id="user_top" style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span id='user_top_btn'>
                             <h1 id='top'>{name}</h1>
-                            {location.pathname.split('/')[2] === 'events' ? <Link to='/eventForm'><button>Create Event</button></Link> : null}
+                            {location.pathname.split('/')[2] === 'events' ? <Link to='/user/eventForm'><button>Create Event</button></Link> : null}
                         </span>
 
                         <div id="user_nav">

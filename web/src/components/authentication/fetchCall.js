@@ -13,7 +13,7 @@ export const FetchCall = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (!id) {
-            getId()
+            getId();
         }
         if (concerts.length < 1 && standUp.length < 1 && hero) {
             fetchEvents();

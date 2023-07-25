@@ -65,7 +65,7 @@ export const ManageEvents = () => {
                             <div key={element._id} id="manage_event_card">
                                 <div id="mve1">
                                     <span id="mve2">
-                                        <Link to={`/eventForm/${element._id}`}> <div id="mve2_1" style={{ backgroundImage: `url(/img/event/${element.picture})` }}></div></Link>
+                                        <Link to={`/user/eventForm/${element._id}`}> <div id="mve2_1" style={{ backgroundImage: `url(/img/event/${element.picture})` }}></div></Link>
                                         <div id="mve2_2">
                                             <p id="mve_name">{element.name}</p>
                                             <span>
