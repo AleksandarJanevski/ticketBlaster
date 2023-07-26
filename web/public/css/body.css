@@ -12,6 +12,7 @@ html {
 body {
   position: relative;
   min-height: 100%;
+  height: max-content;
   padding-bottom: 136px;
   box-sizing: inherit;
 }
@@ -19,4 +20,27 @@ body {
   max-width: 85.72rem;
   margin: 0 auto;
   margin-top: 50px;
+}
+@media screen and (max-width: 992px) {
+  body {
+    height: max-content;
+  }
+  header {
+    width: 100rem;
+    background-color: black;
+    padding: 0 1rem;
+  }
+  footer {
+    width: 100%;
+    width: 100rem;
+  }
+  #footerNav {
+    width: 100rem;
+    padding: 0 1rem;
+  }
+  #content {
+    max-width: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+  }
 }

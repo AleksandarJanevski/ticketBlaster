@@ -141,6 +141,11 @@ export const EventForm = () => {
 
   const addRelated = (e) => {
     e.preventDefault();
+    if (related === "") {
+      return alert(
+        "Please make sure you have selected a category or a related event!"
+      );
+    }
     const array = [...event.relatedEvents];
     let arr = [...matching];
     if (arr.length === 2) {
@@ -396,37 +401,54 @@ export const EventForm = () => {
             </div>
           </div>
           <div id="eForm_three">
-            <label htmlFor="">Related Events</label>
-            <span>
-              {["Musical Concert", "Stand-up Comedy"].includes(
-                event.category
-              ) ? (
-                <Dropdown
-                  elements={
-                    event.category === "Musical Concert" ? concerts : standUp
-                  }
-                  onChange={(e) => {
-                    setRelated(e.target.value);
-                  }}
-                />
-              ) : (
-                <select id="dropdown-select"></select>
-              )}
+            <div id="eForm__three_flex">
+              <div id="relatedInput">
+                <label htmlFor="">Related Events</label>
+                <span>
+                  {["Musical Concert", "Stand-up Comedy"].includes(
+                    event.category
+                  ) ? (
+                    <Dropdown
+                      elements={
+                        event.category === "Musical Concert"
+                          ? concerts
+                          : standUp
+                      }
+                      onChange={(e) => {
+                        setRelated(e.target.value);
+                      }}
+                    />
+                  ) : (
+                    <select id="dropdown-select"></select>
+                  )}
+                </span>
+              </div>
+
               {event.category ? (
-                <button onClick={addRelated}>Add</button>
+                <button id="addRelated" onClick={addRelated}>
+                  Add
+                </button>
               ) : (
                 <button
+                  id="addRelated"
                   onClick={(e) => {
                     e.preventDefault();
-                    alert("Please select event category first");
+                    return alert("Please select event category first");
                   }}
                 >
                   Add
                 </button>
               )}
-            </span>
+            </div>
 
-            <div id="relatedEvents">
+            <div
+              style={
+                event.relatedEvents.length > 0
+                  ? { marginBottom: "102px" }
+                  : null
+              }
+              id="relatedEvents"
+            >
               {event.relatedEvents ? (
                 <div id="relatedList">
                   <EventCard

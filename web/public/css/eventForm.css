@@ -13,7 +13,7 @@
   gap: 35px;
 }
 #eForm_one input,
-select {
+#eForm_one select {
   width: 357px;
   height: 42px;
   border-radius: 20px;
@@ -21,6 +21,52 @@ select {
   box-sizing: border-box;
   padding: 0 20px;
   font-size: 18px;
+}
+
+#eForm_one input[type="date"] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("https://cdn4.iconfinder.com/data/icons/geomicons/32/672341-triangle-down-512.png");
+  background-size: 9px 10px;
+  background-position-x: 95%;
+  background-position-y: 15px;
+  background-repeat: no-repeat;
+  position: relative;
+}
+#eForm_one input[type="date"]::-webkit-calendar-picker-indicator {
+  width: 357px;
+  height: 42px;
+  position: absolute;
+  left: 300px;
+  opacity: 0;
+}
+#eForm_one input[type="date"]::-webkit-datetime-edit-text {
+  opacity: 0;
+}
+#eForm_one input[type="date"]::-webkit-datetime-edit {
+  opacity: 0;
+}
+#eForm_one input[type="date"]:valid::-webkit-datetime-edit-text {
+  opacity: 1;
+}
+#eForm_one input[type="date"]:valid::-webkit-datetime-edit {
+  opacity: 1;
+}
+
+#eForm_one select {
+  padding: unset;
+  text-indent: 20px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("https://cdn4.iconfinder.com/data/icons/geomicons/32/672341-triangle-down-512.png");
+  background-size: 9px 10px;
+  background-position-x: 95%;
+  background-position-y: 15px;
+  background-repeat: no-repeat;
+  cursor: url("https://cdn4.iconfinder.com/data/icons/geomicons/32/672341-triangle-down-512.png")
+    pointer;
 }
 #eForm_two {
   margin-top: 31px;
@@ -53,7 +99,7 @@ select {
   border: 1px solid #707070;
   border-radius: 18px;
   background-size: cover;
-  background-position: center;
+  background-position: top;
 }
 #eventDetails {
   display: flex;
@@ -150,7 +196,63 @@ select {
 #eventRelated button {
   margin-left: 6px;
 }
+#eventRelated #event_name_location p:nth-child(2) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#eventRelated #event_name_location p:nth-child(3) {
+  letter-spacing: -0.77px;
+  color: #393939;
+  font-weight: bold;
+}
 
+#eForm_three {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+#eForm_three #relatedInput {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#eForm__three_flex {
+  display: flex;
+  gap: 19px;
+  align-items: flex-end;
+}
+#eForm_three #dropdown-select {
+  width: 357px;
+  height: 42px;
+  border-radius: 21px;
+  letter-spacing: -0.77px;
+  text-indent: 22px;
+  box-sizing: border-box;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("https://cdn4.iconfinder.com/data/icons/geomicons/32/672341-triangle-down-512.png");
+  background-size: 9px 10px;
+  background-position-x: 95%;
+  background-position-y: 15px;
+  background-repeat: no-repeat;
+}
+
+#addRelated,
+#eventButton {
+  all: unset;
+  font-family: "Lato";
+  background-color: black;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  width: 116px;
+  height: 42px;
+  letter-spacing: -0.88px;
+  font-size: 14px;
+  cursor: pointer;
+}
 #eventButton {
   position: absolute;
   bottom: 53px;
