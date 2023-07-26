@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { verifyData } from "../functions/functions";
+import validator from "validator";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +13,6 @@ export const SignUp = () => {
   useEffect(() => {
     document.addEventListener("keypress", detectEnter, true);
   }, []);
-
   useEffect(() => {
     if (enter) {
       singUp();
@@ -36,6 +36,16 @@ export const SignUp = () => {
     if (password !== confirm) {
       return alert("Passwords do not match");
     }
+    const isMail = validator.isEmail(email);
+    if (!isMail) {
+      return alert("Please provide a real email");
+    }
+    const isPass = validator.isStrongPassword(password);
+    if (!isPass) {
+      return alert(
+        "Password needs to contain 8 characters, lowercase: 1, uppercase: 1, numbers: 1, symbols: 1."
+      );
+    }
     try {
       const response = await fetch("/api/v1/users", {
         method: "POST",
@@ -54,9 +64,6 @@ export const SignUp = () => {
         window.location.href = "/";
       }
     } catch (err) {
-      alert(
-        "Please provide a stronger password - Capitilized letter, number and special sign"
-      );
       setEnter(false);
       return console.log(err);
     }
