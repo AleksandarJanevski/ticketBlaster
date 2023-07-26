@@ -1,23 +1,23 @@
-const express = require('express');
-const db = require('../../pkg/database/index');
+const express = require("express");
+const db = require("../../pkg/database/index");
 const api = express();
-const auth = require('./handlers/authHandler');
-const cookieParser = require('cookie-parser');
+const auth = require("./handlers/authHandler");
+const cookieParser = require("cookie-parser");
 
 api.use(express.json());
 api.use(cookieParser());
-db.init()
+db.init();
 
-api.post('/api/v1/auth/login', auth.login);
-api.post('/api/v1/auth/forgotPassword', auth.forgotPassword);
-api.post('/api/v1/auth/resetPassword/:token', auth.resetPassword);
-api.get('/api/v1/auth/verify/:token', auth.verify);
+api.post("/api/v1/auth/login", auth.login);
+api.post("/api/v1/auth/forgotPassword", auth.forgotPassword);
+api.post("/api/v1/auth/resetPassword/:token", auth.resetPassword);
+api.get("/api/v1/auth/verify/:token", auth.verify);
 api.use(auth.protectRoute);
-api.get('/api/v1/auth', auth.cookieVerify);
-api.get('/api/v1/auth/logout', auth.logout);
-api.post('/api/v1/auth/changePassword/:id', auth.changePassword);
+api.get("/api/v1/auth", auth.cookieVerify);
+api.get("/api/v1/auth/logout", auth.logout);
+api.post("/api/v1/auth/changePassword/:id", auth.changePassword);
 
-api.listen(process.env.AUTH, err => {
-    if (err) return console.log(err);
-    console.log(`Auth Service started on ` + process.env.AUTH);
-})
+api.listen(process.env.AUTH, (err) => {
+  if (err) return console.log(err);
+  console.log(`Auth Service started on ` + process.env.AUTH);
+});

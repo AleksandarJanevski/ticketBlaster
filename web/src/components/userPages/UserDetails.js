@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { preview, uploadFunc, verifyData } from "../functions/functions";
 import { getUser } from "../../redux/actions/userActions";
+import validator from "validator";
 
 export const UserDetails = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export const UserDetails = () => {
   const [change, setChange] = useState(false);
   const picturePreview = (e) => {
     preview(e, setPreviewPic, setImage);
+    console.log(image, e.target);
   };
   useEffect(() => {
     if (sent) {
@@ -48,6 +50,10 @@ export const UserDetails = () => {
   };
   const updateUser = async () => {
     try {
+      const isMail = validator.isEmail(user.email);
+      if (!isMail) {
+        return alert("Please provide a real email");
+      }
       const response = await fetch(`/api/v1/users/${id}`, {
         method: "PATCH",
         body: JSON.stringify(user),
@@ -62,6 +68,7 @@ export const UserDetails = () => {
         document.getElementById("fileInput").value = "";
       }
       setSent(false);
+      alert("Profile Updated!");
     } catch (err) {
       return console.log(err);
     }
@@ -70,6 +77,12 @@ export const UserDetails = () => {
     try {
       if (!password && confirmPassword && password !== confirmPassword) {
         return alert("Passwords do not match");
+      }
+      const isPass = validator.isStrongPassword(password);
+      if (!isPass) {
+        return alert(
+          "Password needs to contain 8 characters, lowercase: 1, uppercase: 1, numbers: 1, symbols: 1."
+        );
       }
       const body = {
         newPassword: password,
@@ -100,7 +113,12 @@ export const UserDetails = () => {
           <div id="user_prof_top">
             <div id="user_profile">
               {image ? (
-                <img className="previewProfile" src={image} alt="Preview" />
+                <div
+                  className="previewProfile"
+                  style={{
+                    backgroundImage: `url(${image})`,
+                  }}
+                />
               ) : (
                 <div
                   className="previewProfile"
@@ -150,7 +168,7 @@ export const UserDetails = () => {
                   type="text"
                   className="inputField"
                   onChange={(e) => {
-                    setUser({ ...user, fullName: e.target.value });
+                    setUser({ ...user, email: e.target.value });
                   }}
                   value={user.email}
                   required
