@@ -10,6 +10,9 @@ exports.addToBasket = async (req, res) => {
     });
     if (basketItem) {
       basketItem.amount += parseInt(amount);
+      if (basketItem.amount > 4) {
+        return res.status(400).send("Exeeded maximum number of tickets");
+      }
       await basketItem.save();
     } else {
       await Basket.create({

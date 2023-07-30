@@ -5,9 +5,11 @@ import validator from "validator";
 
 export const ResetPassword = () => {
   const { token } = useParams();
-  const [password, setPassword] = useState("");
+  const [reset, setReset] = useState({
+    password: "",
+    confirm: "", //change variable names in service
+  });
   const [toggle, setToggle] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [enter, setEnter] = useState(false);
 
   useEffect(() => {
@@ -30,25 +32,18 @@ export const ResetPassword = () => {
   }, [toggle]);
   const resetPassword = async () => {
     try {
-      if (
-        (!password && confirmPassword && password !== confirmPassword) ||
-        password.trim() === ""
-      ) {
+      if (reset.password !== reset.confirm) {
         return alert("Passwords do not match");
       }
-      const isPass = validator.isStrongPassword(password);
+      const isPass = validator.isStrongPassword(reset.password);
       if (!isPass) {
         return alert(
           "Password needs to contain 8 characters, lowercase: 1, uppercase: 1, numbers: 1, symbols: 1."
         );
       }
-      const body = {
-        newPassword: password,
-        confirmPassword: confirmPassword,
-      };
       const response = await fetch(`/api/v1/auth/resetPassword/${token}`, {
         method: "POST",
-        body: JSON.stringify(body),
+        body: JSON.stringify(reset),
         headers: {
           "content-type": "application/json",
         },
@@ -76,9 +71,9 @@ export const ResetPassword = () => {
             type="password"
             className="inputField"
             required
-            value={password}
+            value={reset.password}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setReset({ ...reset, password: e.target.value });
             }}
           />
         </span>
@@ -90,9 +85,9 @@ export const ResetPassword = () => {
             type="password"
             className="inputField"
             required
-            value={confirmPassword}
+            value={reset.confirm}
             onChange={(e) => {
-              setConfirmPassword(e.target.value);
+              setReset({ ...reset, confirm: e.target.value });
             }}
           />
         </span>

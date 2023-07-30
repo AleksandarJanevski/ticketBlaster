@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatDate } from "../functions/functions";
+import { formatDate } from "../utils/reusableFunctions";
 import { Link } from "react-router-dom";
 export const EventCard = ({
   array,

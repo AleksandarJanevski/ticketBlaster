@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { preview, uploadFunc, verifyData } from "../functions/functions";
+import { preview, uploadFunc, verifyData } from "../utils/reusableFunctions";
 import { getUser } from "../../redux/actions/userActions";
 import validator from "validator";
 

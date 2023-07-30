@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Dropdown } from "./Dropdown";
-import { EventCard } from "../mainPages/EventCard";
+import { Dropdown } from "../Dropdown";
+import { EventCard } from "../../mainPages/EventCard";
 import { useSelector } from "react-redux";
 import {
   preview,
   verifyData,
   uploadFunc,
   fetchEvents,
-} from "../functions/functions";
+} from "../../utils/reusableFunctions";
 
 export const EventForm = () => {
   const role = useSelector((state) => state.userReducer.user.role);

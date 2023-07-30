@@ -18,7 +18,7 @@ api.use(
   jwt.expressjwt({
     secret: process.env.JWT_SECRET,
     algorithms: ["HS256"],
-    getToken: auth.getCookie,
+    getToken: auth.getAuthToken,
   })
 );
 api.post("/api/v1/ecommerce/orderMany", order.createMany);

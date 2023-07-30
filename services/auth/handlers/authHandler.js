@@ -88,7 +88,6 @@ exports.forgotPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const userToken = req.params.token;
-    console.log(userToken);
     if (!userToken) return res.status(401).send("permission denied");
     const hashedToken = hashToken(userToken);
     const user = await User.findOne({
@@ -99,11 +98,11 @@ exports.resetPassword = async (req, res) => {
       return res
         .status(404)
         .send("Token is invalid, expired or user does not exist");
-    const { newPassword, confirmPassword } = req.body;
-    if (!newPassword || (!confirmPassword && newPassword !== confirmPassword)) {
+    const { password, confirm } = req.body;
+    if (!password || (!confirm && password !== confirm)) {
       return res.status(400).send("passwords do not match");
     }
-    user.password = newPassword;
+    user.password = password;
     user.passwordResetToken = undefined;
     user.passwordResetExpire = undefined;
     await user.save();
@@ -207,9 +206,13 @@ exports.verify = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
-exports.getCookie = (req) => {
-  if (req && req.headers.cookie) {
-    return req.headers.cookie.slice(4);
+
+exports.getAuthToken = (req) => {
+  if (req && req.cookies.jwt) {
+    return req.cookies.jwt;
+  }
+  if (req.headers.authorization && req.headers.authorization.split(" ")[0]) {
+    return req.headers.authorization.split(" ")[0];
   }
   return null;
 };

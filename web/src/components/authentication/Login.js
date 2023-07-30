@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import validator from "validator";
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
   const [enter, setEnter] = useState(false);
   const [fail, setFail] = useState(false);
 
@@ -23,29 +25,26 @@ export const Login = () => {
   };
   async function login() {
     try {
-      const isMail = validator.isEmail(email);
+      const isMail = validator.isEmail(user.email);
       if (!isMail) {
-        return alert("Invalid email or password");
+        setFail(true);
       }
-      const isPass = validator.isStrongPassword(password);
+      const isPass = validator.isStrongPassword(user.password);
       if (!isPass) {
-        return alert("Invalid email or password");
+        setFail(true);
       }
       const response = await fetch("/api/v1/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
+        body: JSON.stringify(user),
         credentials: "include",
       });
       const result = await response.json();
       console.log(result);
       if (result.status === "success") {
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "/";
       }
     } catch (err) {
       setEnter(false);
@@ -65,9 +64,9 @@ export const Login = () => {
             type="text"
             className="inputField"
             required
-            value={email}
+            value={user.email}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setUser({ ...user, email: e.target.value });
             }}
           />
         </span>
@@ -79,9 +78,9 @@ export const Login = () => {
             type="password"
             className="inputField"
             required
-            value={password}
+            value={user.password}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setUser({ ...user, password: e.target.value });
             }}
           />
         </span>

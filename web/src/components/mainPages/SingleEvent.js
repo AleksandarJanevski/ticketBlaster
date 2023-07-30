@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { formatDate } from "../functions/functions";
+import { formatDate } from "../utils/reusableFunctions";
 import { EventCard } from "./EventCard";
 import { useSelector, useDispatch } from "react-redux";
 import { getBasket } from "../../redux/actions/userActions";
@@ -60,6 +60,10 @@ export const SingleEvent = () => {
       if (event.tickets < amount) {
         return alert("No tickets available");
       }
+      if (amount > 4) {
+        setAmount(4);
+        return alert("Maximum 4 tickets per user");
+      }
       const response = await fetch(`/api/v1/ecommerce/basket/${user}`, {
         method: "POST",
         body: JSON.stringify({
@@ -70,6 +74,9 @@ export const SingleEvent = () => {
           "content-type": "application/json",
         },
       });
+      if (response.status === 400) {
+        return alert("Exceeded maximum number of tickets");
+      }
       const result = await response.json();
       if (result.status === "success") {
         dispatch(
@@ -81,7 +88,7 @@ export const SingleEvent = () => {
         window.location.href = "/cart";
       }
     } catch (err) {
-      return console.log(err);
+      return console.error(err);
     }
   };
   return (

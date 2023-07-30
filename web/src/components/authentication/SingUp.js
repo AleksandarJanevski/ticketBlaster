@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { verifyData } from "../functions/functions";
+import { verifyData } from "../utils/reusableFunctions";
 import validator from "validator";
 
 export const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [name, setName] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    confirm: "",
+    fullName: "",
+  });
   const [enter, setEnter] = useState(false);
 
   useEffect(() => {
@@ -25,22 +27,16 @@ export const SignUp = () => {
     }
   };
   async function singUp() {
-    const obj = {
-      email: email,
-      password: password,
-      confirm_password: confirm,
-      name: name,
-    };
-    const verified = verifyData(obj, true);
+    const verified = verifyData(user, true);
     if (!verified) return;
-    if (password !== confirm) {
+    if (user.password !== user.confirm) {
       return alert("Passwords do not match");
     }
-    const isMail = validator.isEmail(email);
+    const isMail = validator.isEmail(user.email);
     if (!isMail) {
       return alert("Please provide a real email");
     }
-    const isPass = validator.isStrongPassword(password);
+    const isPass = validator.isStrongPassword(user.password);
     if (!isPass) {
       return alert(
         "Password needs to contain 8 characters, lowercase: 1, uppercase: 1, numbers: 1, symbols: 1."
@@ -52,11 +48,7 @@ export const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          fullName: name,
-          email: email,
-          password: password,
-        }),
+        body: JSON.stringify(user),
         credentials: "include",
       });
       const result = await response.json();
@@ -80,9 +72,9 @@ export const SignUp = () => {
             type="text"
             className="inputField"
             required
-            value={name}
+            value={user.fullName}
             onChange={(e) => {
-              setName(e.target.value);
+              setUser({ ...user, fullName: e.target.value });
             }}
           />
         </span>
@@ -94,9 +86,9 @@ export const SignUp = () => {
             type="text"
             className="inputField"
             required
-            value={email}
+            value={user.email}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setUser({ ...user, email: e.target.value });
             }}
           />
         </span>
@@ -108,9 +100,9 @@ export const SignUp = () => {
             type="password"
             className="inputField"
             required
-            value={password}
+            value={user.password}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setUser({ ...user, password: e.target.value });
             }}
           />
         </span>
@@ -122,9 +114,9 @@ export const SignUp = () => {
             type="password"
             className="inputField"
             required
-            value={confirm}
+            value={user.confirm}
             onChange={(e) => {
-              setConfirm(e.target.value);
+              setUser({ ...user, confirm: e.target.value });
             }}
           />
         </span>

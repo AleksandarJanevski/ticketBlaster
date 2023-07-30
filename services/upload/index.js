@@ -3,27 +3,22 @@ const db = require("../../pkg/database/index");
 const upload = require("./handlers/uploadHandler");
 const jwt = require("express-jwt");
 const auth = require("../auth/handlers/authHandler");
+const cookieParser = require("cookie-parser");
 
 const api = express();
 
 api.use(express.json());
 api.use(express.urlencoded({ extended: true }));
 api.use(express.static("public"));
+api.use(cookieParser());
 
 db.init();
-
-function getCookie(req) {
-  if (req && req.headers.cookie) {
-    return req.headers.cookie.slice(4);
-  }
-  return null;
-}
 
 api.use(
   jwt.expressjwt({
     secret: process.env.JWT_SECRET,
     algorithms: ["HS256"],
-    getToken: auth.getCookie,
+    getToken: auth.getAuthToken,
   })
 );
 api.post("/api/v1/upload/:destination", upload.uploadPicture, (req, res) => {
