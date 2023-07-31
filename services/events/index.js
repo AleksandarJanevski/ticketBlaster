@@ -9,14 +9,14 @@ api.use(cookieParser());
 api.use(express.json());
 db.init();
 
-api.get("/api/v1/events/search/:keyword", events.search);
+// api.get("/api/v1/events/search/:keyword", events.search);
+// api.get("/api/v1/events/hero", events.getHero);
+api.get("/api/v1/events", events.getAll);
 api.get("/api/v1/events/standUp", events.getAllStandUp);
 api.get("/api/v1/events/concerts", events.getAllConcerts);
-api.get("/api/v1/events/hero", events.getHero);
-api.get("/api/v1/events/getAll", events.getAll);
 api.get("/api/v1/events/:id", events.getOne);
 
-api.use(auth.protectAdmin);
+api.use(auth.protectRoute);
 
 api.post("/api/v1/events", events.create);
 api.patch("/api/v1/events/:id", events.update);

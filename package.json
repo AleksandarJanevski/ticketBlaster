@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"node .\\services\\proxy\\index.js\" \"node .\\services\\auth\\index.js\" \"node .\\services\\ecommerce\\index.js\" \"node .\\services\\events\\index.js\" \"node .\\services\\upload\\index.js\" \"node .\\services\\users\\index.js\""
+    "start": "concurrently \"nodemon .\\services\\proxy\\index.js\" \"nodemon .\\services\\auth\\index.js\" \"nodemon .\\services\\ecommerce\\index.js\" \"nodemon .\\services\\events\\index.js\" \"nodemon .\\services\\upload\\index.js\" \"nodemon .\\services\\users\\index.js\""
   },
   "keywords": [],
   "author": "",

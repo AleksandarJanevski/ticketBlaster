@@ -67,6 +67,10 @@ exports.create = async (req, res) => {
 };
 exports.getAll = async (req, res) => {
   try {
+    const { decoded } = req;
+    if (decoded.role !== "admin") {
+      return res.status(401).send("Unauthorized");
+    }
     const users = await User.find();
     res.status(200).json({ status: "success", data: { users } });
   } catch (err) {
@@ -77,7 +81,7 @@ exports.getAll = async (req, res) => {
 exports.getOne = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select(
-      "fullName email picture role"
+      "fullName email picture"
     );
     res.status(200).json({ status: "success", data: { user } });
   } catch (err) {
@@ -110,6 +114,10 @@ exports.update = async (req, res) => {
 };
 exports.delete = async (req, res) => {
   try {
+    const { decoded } = req;
+    if (decoded.role !== "admin") {
+      return res.status(401).send("Unauthorized");
+    }
     const user = await User.findById(req.params.id);
     if (user && user.picture !== "default.png") {
       unlink(user.picture);
@@ -123,6 +131,10 @@ exports.delete = async (req, res) => {
 };
 exports.role = async (req, res) => {
   try {
+    const { decoded } = req;
+    if (decoded.role !== "admin") {
+      return res.status(401).send("Unauthorized");
+    }
     const role = req.body.role;
     console.log(role);
     if (!role || (role !== "admin" && role !== "user")) {

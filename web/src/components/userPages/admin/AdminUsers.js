@@ -45,10 +45,8 @@ export const AdminUsers = () => {
       if (type === "admin") {
         update.role = "user";
       }
-
-      console.log(update.role);
       const response = await fetch(`/api/v1/users/role/${user}`, {
-        method: "POST",
+        method: "PATCH",
         body: JSON.stringify(update),
         headers: {
           "Content-type": "application/json",

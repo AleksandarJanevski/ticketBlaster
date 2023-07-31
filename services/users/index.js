@@ -24,10 +24,10 @@ api.use(
 api.get("/api/v1/users/:id", user.getOne);
 api.patch("/api/v1/users/:id", user.update);
 
-api.use(auth.protectAdmin);
+api.use(auth.protectRoute);
 
 api.get("/api/v1/users", user.getAll);
-api.post("/api/v1/users/role/:id", user.role); //patch?
+api.patch("/api/v1/users/role/:id", user.role); //patch?
 api.delete("/api/v1/users/:id", user.delete);
 
 api.listen(process.env.USERS, (err) => {

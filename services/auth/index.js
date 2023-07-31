@@ -12,7 +12,9 @@ api.post("/api/v1/auth/login", auth.login);
 api.post("/api/v1/auth/forgotPassword", auth.forgotPassword);
 api.post("/api/v1/auth/resetPassword/:token", auth.resetPassword);
 api.get("/api/v1/auth/verify/:token", auth.verify);
+
 api.use(auth.protectRoute);
+
 api.get("/api/v1/auth", auth.cookieVerify);
 api.get("/api/v1/auth/logout", auth.logout);
 api.post("/api/v1/auth/changePassword/:id", auth.changePassword);

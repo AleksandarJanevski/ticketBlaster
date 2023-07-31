@@ -169,6 +169,11 @@ exports.protectRoute = async (req, res, next) => {
     let token;
     if (req.cookies && req.cookies.jwt) {
       token = req.cookies.jwt;
+    } else if (
+      req.headers.authorization &&
+      req.headers.authorization.split(" ")[0]
+    ) {
+      token = req.headers.authorization.split(" ")[0];
     }
     if (!token) {
       return res.status(401).send("Unauthorized access");

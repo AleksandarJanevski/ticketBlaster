@@ -48,7 +48,7 @@ export const InitialCall = () => {
   };
   const fetchEvents = async () => {
     await redux(
-      "/api/v1/events/getAll",
+      "/api/v1/events",
       dispatch,
       getHero,
       4,
