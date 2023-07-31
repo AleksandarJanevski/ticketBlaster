@@ -14,9 +14,26 @@ export const Cart = () => {
       setRendered(true);
     }
   }, [cart]);
-  const cartRemove = async (event) => {
+  const cartRemove = async (item, eventIndex) => {
     try {
-      const response = await fetch(`/api/v1/ecommerce/basket/${event}`, {
+      if(!item){
+        const response = await fetch(`/api/v1/ecommerce/basket/delete`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          event:cart[eventIndex].event._id,
+          beholder:id
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (response.status === 204) {
+        const filter = cart.filter((element) => element.event._id !== cart[eventIndex].event._id);
+        dispatch(getBasket(filter));
+      }
+      }else{
+        const response = await fetch(`/api/v1/ecommerce/basket/${item}`, {
         method: "DELETE",
         headers: {
           "Content-type": "application/json",
@@ -24,8 +41,9 @@ export const Cart = () => {
         credentials: "include",
       });
       if (response.status === 204) {
-        const filter = cart.filter((element) => element._id !== event);
+        const filter = cart.filter((element) => element._id !== item);
         dispatch(getBasket(filter));
+      }
       }
     } catch (err) {
       return console.log(err);
@@ -68,7 +86,7 @@ export const Cart = () => {
                         <button
                           type="button"
                           onClick={() => {
-                            cartRemove(element._id);
+                            cartRemove(element._id, i);
                           }}
                         >
                           Remove

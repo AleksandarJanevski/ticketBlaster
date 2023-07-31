@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { formatDate } from "../utils/reusableFunctions";
 import { EventCard } from "./EventCard";
 import { useSelector, useDispatch } from "react-redux";
 import { getBasket } from "../../redux/actions/userActions";
+import { element } from "prop-types";
 
 export const SingleEvent = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [event, setEvent] = useState({});
   const [amount, setAmount] = useState(1);
   const concerts = useSelector((state) => state.eventsReducer.concerts);
   const standUp = useSelector((state) => state.eventsReducer.standUp);
   const role = useSelector((state) => state.userReducer.user.role);
   const user = useSelector((state) => state.idReducer.id.id);
+  const cart = useSelector((state) => state.userReducer.basket);
   const [toggle, setToggle] = useState(false);
   const { id } = useParams();
   useEffect(() => {
@@ -79,13 +82,31 @@ export const SingleEvent = () => {
       }
       const result = await response.json();
       if (result.status === "success") {
+        let basket = [...cart]
+        const events = [...concerts].concat([...standUp]);
+        let existing = basket.findIndex(element=> element.event._id === id);
+        console.log(existing)
+      if(existing >= 0){
+        let num = basket[existing].amount+amount
+        basket[existing] = { ...basket[existing], amount: num };
         dispatch(
-          getBasket({
-            amount: amount,
-            event: id,
-          })
+          getBasket(basket)
         );
-        window.location.href = "/cart";
+        navigate("/cart");
+      }else{
+        let item = {
+          amount: amount,
+          beholder: user,
+        }
+        item.event = events.find(element => element._id === id)
+       basket.push(item);
+       console.log(basket, events)
+        dispatch(
+          getBasket(basket)
+        );
+        navigate("/cart")
+      }
+        
       }
     } catch (err) {
       return console.error(err);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { Dropdown } from "../Dropdown";
 import { EventCard } from "../../mainPages/EventCard";
 import { useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import {
 export const EventForm = () => {
   const role = useSelector((state) => state.userReducer.user.role);
   const { eventId } = useParams();
+  const navigate = useNavigate();
   const [concerts, setConcerts] = useState([]);
   const [standUp, setStandUp] = useState([]);
   const [matching, setMatching] = useState([]);
@@ -37,7 +38,7 @@ export const EventForm = () => {
   });
   useEffect(() => {
     if (role && role !== "admin") {
-      window.location.href = "/";
+      navigate('/');
     }
   }, [role]);
 

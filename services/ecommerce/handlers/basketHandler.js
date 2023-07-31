@@ -58,6 +58,19 @@ exports.delete = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
+exports.deleteOne = async (req, res) => {
+  try {
+    const {event, beholder} = req.body
+    await Basket.findOneAndRemove({
+      event:event,
+      beholder:beholder
+    });
+    res.status(204).json({ status: "removed" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("internal server error");
+  }
+};
 exports.deleteMany = async (req, res) => {
   try {
     const orders = req.body;

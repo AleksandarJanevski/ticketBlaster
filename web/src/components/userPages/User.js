@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation,useNavigate } from 'react-router-dom'
 
 export const User = () => {
     const role = useSelector(state => state.userReducer.user.role);
+    const navigate = useNavigate();
     const location = useLocation();
     const [focus, setFocus] = useState(0)
     const [name, setName] = useState('')
     useEffect(() => {
         siteName();
     }, [location, name]);
-    // useEffect(() => {
-    //     if (!role) {
-    //         window.location.href = '/'
-    //     }
-    // }, [role]);
+    useEffect(() => {
+        if (!role) {
+           navigate("/");
+        }
+    }, [role]);
     const siteName = () => {
         const loc = location.pathname.split('/')[2]
         switch (loc) {

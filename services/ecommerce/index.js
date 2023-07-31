@@ -24,6 +24,7 @@ api.use(
 api.post("/api/v1/ecommerce/orderMany", order.createMany);
 api.get("/api/v1/ecommerce/basket/:id", basket.getBasket);
 api.post("/api/v1/ecommerce/basket/:id", basket.addToBasket);
+api.delete("/api/v1/ecommerce/basket/delete",basket.deleteOne);
 api.delete("/api/v1/ecommerce/basket/:id", basket.delete);
 api.delete("/api/v1/ecommerce/deleteMany", basket.deleteMany);
 api.get("/api/v1/ecommerce/order/:id", order.get);

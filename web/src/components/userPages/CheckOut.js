@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { formatDate, verifyData } from "../utils/reusableFunctions";
 import { PrintEvent } from "./PrintEvent";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { getBasket, getTickets } from "../../redux/actions/userActions";
 
 export const CheckOut = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.userReducer.basket);
   const tickets = useSelector((state) => state.userReducer.tickets);
+  const navigate = useNavigate();
   const [total, setTotal] = useState(0);
   const [gratitude, setGratitude] = useState(false);
   const currentDate = new Date().toISOString().split("T")[0].slice(0, 7);
@@ -35,7 +36,7 @@ export const CheckOut = () => {
   });
   useEffect(() => {
     if (cart.length === 0) {
-      window.location.href = "/";
+      navigate("/")
     }
   }, []);
   useEffect(() => {

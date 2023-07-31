@@ -133,25 +133,25 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-exports.protectAdmin = async (req, res, next) => {
-  try {
-    let token;
-    if (req.cookies && req.cookies.jwt) {
-      token = req.cookies.jwt;
-    }
-    if (!token) {
-      return res.status(401).send("Unauthorized access");
-    }
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (decoded.role !== "admin") {
-      return res.status(401).send("Unauthorized access");
-    }
-    next();
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send("internal server error");
-  }
-};
+// exports.protectAdmin = async (req, res, next) => {
+//   try {
+//     let token;
+//     if (req.cookies && req.cookies.jwt) {
+//       token = req.cookies.jwt;
+//     }
+//     if (!token) {
+//       return res.status(401).send("Unauthorized access");
+//     }
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     if (decoded.role !== "admin") {
+//       return res.status(401).send("Unauthorized access");
+//     }
+//     next();
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).send("internal server error");
+//   }
+// };
 exports.cookieVerify = async (req, res) => {
   try {
     const { decoded } = req;
@@ -171,9 +171,9 @@ exports.protectRoute = async (req, res, next) => {
       token = req.cookies.jwt;
     } else if (
       req.headers.authorization &&
-      req.headers.authorization.split(" ")[0]
+      req.headers.authorization.split(" ")[1]
     ) {
-      token = req.headers.authorization.split(" ")[0];
+      token = req.headers.authorization.split(" ")[1];
     }
     if (!token) {
       return res.status(401).send("Unauthorized access");
@@ -213,11 +213,12 @@ exports.verify = async (req, res) => {
 };
 
 exports.getAuthToken = (req) => {
+  if (req.headers.authorization && req.headers.authorization.split(" ")[1]) {
+    return req.headers.authorization.split(" ")[1];
+  }
   if (req && req.cookies.jwt) {
     return req.cookies.jwt;
   }
-  if (req.headers.authorization && req.headers.authorization.split(" ")[0]) {
-    return req.headers.authorization.split(" ")[0];
-  }
+
   return null;
 };
