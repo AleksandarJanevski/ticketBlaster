@@ -40,12 +40,12 @@
         letter-spacing: -0.88px;
       }
       #ticket_info #image {
-        width: 270px;
-        height: 169px;
+        width: 500px;
+        height: 281px;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        border-radius: 18px;
+        border-radius: 19px;
       }
       #ticket_info_right {
         display: flex;
@@ -53,9 +53,15 @@
       }
       p {
         font: "Lato";
-        font-size: 16px;
+        font-size: 22px;
         font-weight: 800;
         letter-spacing: -0.5px;
+      }
+      span {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
       }
     </style>
     <% if(!ticket){ %>
@@ -77,7 +83,7 @@
           <span>
             <p>Event Name: <%=ticket.eventName%></p>
             <p>
-              Event Date: <%= new
+              Location: <%=ticket.location%> - <%= new
               Date(ticket.eventTime).toLocaleDateString("en-GB")%>
             </p>
             <p>Purchase ID: <%=ticket.purchaseNo%></p>

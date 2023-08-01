@@ -80,6 +80,7 @@ exports.getTicket = async (req, res) => {
       amount: order.amount,
       fee: `${order.amount * event.price} USD`,
       picture: event.picture,
+      location: event.location,
     };
     res.render("ticket", { ticket });
     // res.status(200).json({ status: "success", data: { ticket } });
