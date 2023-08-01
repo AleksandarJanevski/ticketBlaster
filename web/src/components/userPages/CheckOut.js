@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { formatDate, verifyData } from "../utils/reusableFunctions";
 import { PrintEvent } from "./PrintEvent";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getBasket, getTickets } from "../../redux/actions/userActions";
+import { element } from "prop-types";
 
 export const CheckOut = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.userReducer.basket);
   const tickets = useSelector((state) => state.userReducer.tickets);
+  const { id } = useSelector((state) => state.idReducer.id);
   const navigate = useNavigate();
   const [total, setTotal] = useState(0);
   const [gratitude, setGratitude] = useState(false);
@@ -36,7 +38,7 @@ export const CheckOut = () => {
   });
   useEffect(() => {
     if (cart.length === 0) {
-      navigate("/")
+      navigate("/");
     }
   }, []);
   useEffect(() => {
@@ -101,12 +103,13 @@ export const CheckOut = () => {
 
   const removeMany = async () => {
     try {
-      let arr = cart.map((element) => ({
-        _id: element._id,
-      }));
-      const response = await fetch("/api/v1/ecommerce/deleteMany", {
+      const events = cart.map((element) => element.event._id);
+      const response = await fetch("/api/v1/ecommerce/basket/removeMany", {
         method: "DELETE",
-        body: JSON.stringify(arr),
+        body: JSON.stringify({
+          beholder: id,
+          events: events,
+        }),
         headers: {
           "Content-type": "application/json",
         },
@@ -125,6 +128,7 @@ export const CheckOut = () => {
       console.log(err);
     }
   };
+
   const orderMany = async () => {
     try {
       cart.forEach((element) => console.log(element.event.date));
@@ -134,7 +138,7 @@ export const CheckOut = () => {
         event: element.event._id,
         eventDate: element.event.date,
       }));
-      const response = await fetch("/api/v1/ecommerce/orderMany", {
+      const response = await fetch("/api/v1/ecommerce/order", {
         method: "POST",
         body: JSON.stringify(arr),
         headers: {

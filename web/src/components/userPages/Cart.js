@@ -16,34 +16,36 @@ export const Cart = () => {
   }, [cart]);
   const cartRemove = async (item, eventIndex) => {
     try {
-      if(!item){
-        const response = await fetch(`/api/v1/ecommerce/basket/delete`, {
-        method: "DELETE",
-        body: JSON.stringify({
-          event:cart[eventIndex].event._id,
-          beholder:id
-        }),
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
-      if (response.status === 204) {
-        const filter = cart.filter((element) => element.event._id !== cart[eventIndex].event._id);
-        dispatch(getBasket(filter));
-      }
-      }else{
+      if (!item) {
+        const response = await fetch(`/api/v1/ecommerce/basket`, {
+          method: "DELETE",
+          body: JSON.stringify({
+            event: cart[eventIndex].event._id,
+            beholder: id,
+          }),
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        });
+        if (response.status === 204) {
+          const filter = cart.filter(
+            (element) => element.event._id !== cart[eventIndex].event._id
+          );
+          dispatch(getBasket(filter));
+        }
+      } else {
         const response = await fetch(`/api/v1/ecommerce/basket/${item}`, {
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
-      if (response.status === 204) {
-        const filter = cart.filter((element) => element._id !== item);
-        dispatch(getBasket(filter));
-      }
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        });
+        if (response.status === 204) {
+          const filter = cart.filter((element) => element._id !== item);
+          dispatch(getBasket(filter));
+        }
       }
     } catch (err) {
       return console.log(err);

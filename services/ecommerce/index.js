@@ -11,9 +11,12 @@ const api = express();
 
 api.use(express.json());
 api.use(express.urlencoded({ extended: true }));
+api.use(express.static("public"));
 api.use(cookieParser());
+api.set("view engine", "ejs");
 db.init();
 
+api.get("/api/v1/ecommerce/ticket/:purchase", order.getTicket);
 api.use(
   jwt.expressjwt({
     secret: process.env.JWT_SECRET,
@@ -21,12 +24,11 @@ api.use(
     getToken: auth.getAuthToken,
   })
 );
-api.post("/api/v1/ecommerce/orderMany", order.createMany);
+api.delete("/api/v1/ecommerce/basket", basket.deleteOne);
 api.get("/api/v1/ecommerce/basket/:id", basket.getBasket);
 api.post("/api/v1/ecommerce/basket/:id", basket.addToBasket);
-api.delete("/api/v1/ecommerce/basket/delete",basket.deleteOne);
-api.delete("/api/v1/ecommerce/basket/:id", basket.delete);
-api.delete("/api/v1/ecommerce/deleteMany", basket.deleteMany);
+api.delete("/api/v1/ecommerce/basket/removeMany", basket.removeMany);
+api.post("/api/v1/ecommerce/order", order.createMany);
 api.get("/api/v1/ecommerce/order/:id", order.get);
 api.post("/api/v1/ecommerce/payment", purchase.validate);
 

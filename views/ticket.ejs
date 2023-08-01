@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./ticket.css" />
+    <title>Ticket</title>
+  </head>
+  <body>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        min-width: 1200px;
+      }
+      #ticket {
+        display: flex;
+        flex-direction: column;
+      }
+      #ticket_info {
+        margin: 0 auto;
+        width: max-content;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding-right: 20px;
+        border: 3px solid #ff48ab;
+        justify-content: flex-start;
+        border-radius: 20px;
+      }
+      #ticket h1 {
+        background-color: black;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        margin-bottom: 30px;
+        width: 100%;
+        letter-spacing: -0.88px;
+      }
+      #ticket_info #image {
+        width: 270px;
+        height: 169px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 18px;
+      }
+      #ticket_info_right {
+        display: flex;
+        gap: 20px;
+      }
+      p {
+        font: "Lato";
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+      }
+    </style>
+    <% if(!ticket){ %>
+    <h1>Something went wrong...</h1>
+    <%}else{%>
+    <div id="ticket">
+      <h1>ticketblaster - Thank you for your purchase!</h1>
+      <div id="ticket_info">
+        <div
+          id="image"
+          style="background-image: url('/img/event/<%= ticket.picture %>')"
+        ></div>
+        <div id="ticket_info_right">
+          <span>
+            <p>Beholder: <%=ticket.beholder%></p>
+            <p>Tickets Purchased: <%=ticket.amount%></p>
+            <p>Total Fee: <%=ticket.fee%></p>
+          </span>
+          <span>
+            <p>Event Name: <%=ticket.eventName%></p>
+            <p>
+              Event Date: <%= new
+              Date(ticket.eventTime).toLocaleDateString("en-GB")%>
+            </p>
+            <p>Purchase ID: <%=ticket.purchaseNo%></p>
+          </span>
+        </div>
+      </div>
+    </div>
+    <%}%>
+  </body>
+</html>

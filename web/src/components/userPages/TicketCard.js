@@ -39,6 +39,7 @@ export const TicketCard = ({ array, setPrint, setToggle }) => {
                         location: element.event.location,
                         date: date,
                         image: `/img/event/${element.event.picture}`,
+                        purchaseId: element.purchaseNo,
                       };
                       setPrint(obj);
                       setToggle(true);

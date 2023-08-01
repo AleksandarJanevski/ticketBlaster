@@ -49,21 +49,21 @@ exports.getBasket = async (req, res) => {
   }
 };
 
-exports.delete = async (req, res) => {
-  try {
-    await Basket.findByIdAndDelete(req.params.id);
-    res.status(204).json({ status: "removed" });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send("internal server error");
-  }
-};
+// exports.delete = async (req, res) => {
+//   try {
+//     await Basket.findByIdAndDelete(req.params.id);
+//     res.status(204).json({ status: "removed" });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).send("internal server error");
+//   }
+// };
 exports.deleteOne = async (req, res) => {
   try {
-    const {event, beholder} = req.body
+    const { event, beholder } = req.body;
     await Basket.findOneAndRemove({
-      event:event,
-      beholder:beholder
+      event: event,
+      beholder: beholder,
     });
     res.status(204).json({ status: "removed" });
   } catch (err) {
@@ -71,10 +71,20 @@ exports.deleteOne = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
-exports.deleteMany = async (req, res) => {
+// exports.deleteMany = async (req, res) => {
+//   try {
+//     const orders = req.body;
+//     await Basket.deleteMany({ _id: { $in: orders } });
+//     res.status(204).json({ status: "removed" });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).send("internal server error");
+//   }
+// };
+exports.removeMany = async (req, res) => {
   try {
-    const orders = req.body;
-    await Basket.deleteMany({ _id: { $in: orders } });
+    const { beholder, events } = req.body;
+    await Basket.deleteMany({ event: { $in: events }, beholder: beholder });
     res.status(204).json({ status: "removed" });
   } catch (err) {
     console.log(err);
