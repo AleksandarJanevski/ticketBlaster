@@ -19,7 +19,6 @@ export const PrintEvent = ({ name, image, date, location, style, value }) => {
           id="qr"
           style={{ height: "152px", width: "152px" }}
         />
-        {/* <img id="qr" src={'/img/qr-code.png'} alt="" /> */}
       </div>
     </div>
   );
