@@ -1,6 +1,8 @@
+#checkout_top {
+  position: relative;
+}
 #checkout {
   display: flex;
-  position: relative;
   flex-direction: column;
   align-items: flex-start;
   gap: 53px;
@@ -140,6 +142,12 @@ input[type="month"]::-webkit-calendar-picker-indicator {
   background-size: 10px 8px;
   cursor: pointer;
 }
+input[type="month"]::-webkit-datetime-edit {
+  opacity: 0;
+}
+input[type="month"]:valid::-webkit-datetime-edit {
+  opacity: 1;
+}
 #checkout_bottom {
   position: absolute;
   bottom: 0;
@@ -175,7 +183,6 @@ input[type="month"]::-webkit-calendar-picker-indicator {
   display: flex;
   flex-direction: column;
   gap: 51px;
-  position: relative;
 }
 #gratitude_list {
   display: flex;

@@ -4,7 +4,6 @@ import { formatDate, verifyData } from "../utils/reusableFunctions";
 import { PrintEvent } from "./PrintEvent";
 import { Link, useNavigate } from "react-router-dom";
 import { getBasket, getTickets } from "../../redux/actions/userActions";
-import { element } from "prop-types";
 
 export const CheckOut = () => {
   const dispatch = useDispatch();
@@ -35,6 +34,7 @@ export const CheckOut = () => {
     date: "",
     location: "",
     image: "",
+    purchaseNo: "",
   });
   useEffect(() => {
     if (cart.length === 0) {
@@ -116,9 +116,9 @@ export const CheckOut = () => {
         credentials: "include",
       });
       if (response.status === 204) {
-        setPurchase([...cart]);
+        console.log(purchase);
         setGratitude(true);
-        let arr2 = [...tickets].concat(cart);
+        let arr2 = [...tickets].concat(purchase);
         arr2.sort((a, b) => {
           return new Date(b.eventDate) - new Date(a.eventDate);
         });
@@ -148,6 +148,7 @@ export const CheckOut = () => {
       });
       const result = await response.json();
       if (result.status === "success") {
+        setPurchase(result.tickets);
         setToggle(!toggle);
       }
     } catch (err) {
@@ -156,7 +157,7 @@ export const CheckOut = () => {
   };
 
   return (
-    <div>
+    <div id="checkout_top">
       {!gratitude ? (
         <div id="checkout">
           <h1>Checkout</h1>
@@ -246,7 +247,6 @@ export const CheckOut = () => {
                 <input
                   type="month"
                   id="expire"
-                  placeholder="aa"
                   min={currentDate}
                   max={maxDate}
                   onChange={(e) => {
@@ -336,7 +336,9 @@ export const CheckOut = () => {
                             location: element.event.location,
                             date: date,
                             image: `/img/event/${element.event.picture}`,
+                            purchaseNo: element.purchaseNo,
                           };
+                          console.log(obj);
                           setPrint(obj);
                           setToggleB(true);
                         }}
@@ -353,13 +355,15 @@ export const CheckOut = () => {
         </div>
       )}
       {toggleB ? (
-        <PrintEvent
-          style={{ top: "146px" }}
-          name={print.name}
-          image={print.image}
-          location={print.location}
-          date={print.date}
-        />
+        <div id="gratitude_card">
+          <PrintEvent
+            name={print.name}
+            image={print.image}
+            location={print.location}
+            date={print.date}
+            value={`192.168.0.13:9000/api/v1/ecommerce/ticket/${print.purchaseNo}`}
+          />
+        </div>
       ) : null}
     </div>
   );

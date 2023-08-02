@@ -30,10 +30,9 @@ exports.createMany = async (req, res) => {
       }
     });
     events = array;
-    console.log(events);
     await Promise.all(events.map((event) => event.save()));
     const tickets = await Order.insertMany(orders).then((elements) =>
-      Order.populate(elements, { path: "beholder" })
+      Order.populate(elements, [{ path: "beholder" }, { path: "event" }])
     );
     const message = `Thank you for purchasing at ticket blaster, here is you purchase code: ${tickets
       .map((element) => element.purchaseNo)
@@ -48,7 +47,7 @@ exports.createMany = async (req, res) => {
     } catch (err) {
       return console.log(err);
     }
-    res.status(201).json({ status: "success" });
+    res.status(201).json({ status: "success", tickets });
   } catch (err) {
     console.log(err);
     return res.status(500).send("internal server error");
@@ -67,23 +66,24 @@ exports.get = async (req, res) => {
 };
 exports.getTicket = async (req, res) => {
   try {
-    console.log(req.params.purchase);
-    // let order = req.params.purchase;
     const order = await Order.findOne({ purchaseNo: req.params.purchase });
-    const user = await User.findById(order.beholder);
-    const event = await Event.findById(order.event);
-    const ticket = {
-      purchaseNo: req.params.purchase,
-      beholder: user.fullName,
-      eventName: event.name,
-      eventTime: event.date,
-      amount: order.amount,
-      fee: `${order.amount * event.price} USD`,
-      picture: event.picture,
-      location: event.location,
-    };
-    res.render("ticket", { ticket });
-    // res.status(200).json({ status: "success", data: { ticket } });
+    if (!order) {
+      throw Error("Internal server error");
+    } else {
+      const user = await User.findById(order.beholder);
+      const event = await Event.findById(order.event);
+      const ticket = {
+        purchaseNo: req.params.purchase,
+        beholder: user.fullName,
+        eventName: event.name,
+        eventTime: event.date,
+        amount: order.amount,
+        fee: `${order.amount * event.price} USD`,
+        picture: event.picture,
+        location: event.location,
+      };
+      res.render("ticket", { ticket });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).send("internal server error");
