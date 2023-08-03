@@ -7,14 +7,9 @@ const User = require("../../../pkg/user/userSchema");
 exports.createMany = async (req, res) => {
   try {
     const { decoded } = req;
-    const orders = req.body;
+    let orders = req.body;
     orders.forEach((element) => {
-      if (
-        !element.amount ||
-        !element.event ||
-        !element.beholder || //problem on frontend
-        !element.eventDate
-      ) {
+      if (!element.amount || !element.event || !element.eventDate) {
         return res.status(400).send("Purchase error");
       }
     });
@@ -25,9 +20,11 @@ exports.createMany = async (req, res) => {
       const event = events.find(
         (event) => event._id.toString() === order.event
       );
+      orders;
       if (event) {
         event.tickets -= order.amount;
         array.push(event);
+        order.beholder = decoded.id;
       }
     });
     events = array;

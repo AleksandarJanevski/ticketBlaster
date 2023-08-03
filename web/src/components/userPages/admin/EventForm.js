@@ -235,7 +235,8 @@ export const EventForm = () => {
         });
         const result = await response.json();
         if (result.status === "success") {
-          navigate("/eventForm");
+          //need disptach for navigate
+          window.location.href = `/eventForm`;
         }
       }
     } catch (err) {
@@ -258,7 +259,8 @@ export const EventForm = () => {
         });
         const result = await response.json();
         if (result.status === "success") {
-          navigate(`/event/${eventId}`);
+          // navigate(`/event/${eventId}`)
+          window.location.href = `/event/${eventId}`;
         }
         setSent(false);
       }

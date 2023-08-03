@@ -83,8 +83,9 @@ exports.deleteOne = async (req, res) => {
 // };
 exports.removeMany = async (req, res) => {
   try {
-    const { beholder, events } = req.body;
-    await Basket.deleteMany({ event: { $in: events }, beholder: beholder });
+    const { decoded } = req;
+    const { events } = req.body;
+    await Basket.deleteMany({ event: { $in: events }, beholder: decoded.id });
     res.status(204).json({ status: "removed" });
   } catch (err) {
     console.log(err);

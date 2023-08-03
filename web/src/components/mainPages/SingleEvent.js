@@ -4,7 +4,6 @@ import { formatDate } from "../utils/reusableFunctions";
 import { EventCard } from "./EventCard";
 import { useSelector, useDispatch } from "react-redux";
 import { getBasket } from "../../redux/actions/userActions";
-import { element } from "prop-types";
 
 export const SingleEvent = () => {
   const dispatch = useDispatch();
@@ -14,7 +13,6 @@ export const SingleEvent = () => {
   const concerts = useSelector((state) => state.eventsReducer.concerts);
   const standUp = useSelector((state) => state.eventsReducer.standUp);
   const role = useSelector((state) => state.userReducer.user.role);
-  const user = useSelector((state) => state.idReducer.id.id);
   const cart = useSelector((state) => state.userReducer.basket);
   const [toggle, setToggle] = useState(false);
   const { id } = useParams();
@@ -94,7 +92,6 @@ export const SingleEvent = () => {
         } else {
           let item = {
             amount: amount,
-            beholder: user,
           };
           item.event = events.find((element) => element._id === id);
           basket.push(item);
