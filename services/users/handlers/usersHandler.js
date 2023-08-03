@@ -80,7 +80,8 @@ exports.getAll = async (req, res) => {
 };
 exports.getOne = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select(
+    const { decoded } = req;
+    const user = await User.findById(decoded.id).select(
       "fullName email picture role"
     );
     res.status(200).json({ status: "success", data: { user } });
@@ -91,7 +92,8 @@ exports.getOne = async (req, res) => {
 };
 exports.update = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const { decoded } = req;
+    const user = await User.findById(decoded.id);
     console.log(user.picture, req.body.picture);
     if (!user) {
       return res.status(404).send("User not found");

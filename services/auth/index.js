@@ -15,9 +15,9 @@ api.get("/api/v1/auth/verify/:token", auth.verify);
 
 api.use(auth.protectRoute);
 
-api.get("/api/v1/auth", auth.cookieVerify);
+// api.get("/api/v1/auth", auth.cookieVerify); //delete
 api.get("/api/v1/auth/logout", auth.logout);
-api.post("/api/v1/auth/changePassword/:id", auth.changePassword);
+api.post("/api/v1/auth/changePassword", auth.changePassword);
 
 api.listen(process.env.AUTH, (err) => {
   if (err) return console.log(err);

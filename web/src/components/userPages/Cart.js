@@ -7,7 +7,7 @@ import { getBasket } from "../../redux/actions/userActions";
 export const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.userReducer.basket);
-  const { id } = useSelector((state) => state.idReducer.id);
+  const user = useSelector((state) => state.userReducer.user);
   const [rendered, setRendered] = useState(false);
   useEffect(() => {
     if (cart.length > 0) {
@@ -16,36 +16,19 @@ export const Cart = () => {
   }, [cart]);
   const cartRemove = async (item, eventIndex) => {
     try {
-      if (!item) {
-        const response = await fetch(`/api/v1/ecommerce/basket`, {
-          method: "DELETE",
-          body: JSON.stringify({
-            event: cart[eventIndex].event._id,
-            beholder: id,
-          }),
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
-        if (response.status === 204) {
-          const filter = cart.filter(
-            (element) => element.event._id !== cart[eventIndex].event._id
-          );
-          dispatch(getBasket(filter));
-        }
-      } else {
-        const response = await fetch(`/api/v1/ecommerce/basket/${item}`, {
-          method: "DELETE",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
-        if (response.status === 204) {
-          const filter = cart.filter((element) => element._id !== item);
-          dispatch(getBasket(filter));
-        }
+      const response = await fetch(`/api/v1/ecommerce/basket`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          event: item,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (response.status === 204) {
+        const filter = cart.filter((element) => element.event._id !== item);
+        dispatch(getBasket(filter));
       }
     } catch (err) {
       return console.log(err);
@@ -53,7 +36,7 @@ export const Cart = () => {
   };
   return (
     <div id="cart">
-      {id && id ? (
+      {user && user ? (
         <>
           <h1>Shopping Cart</h1>
           <div id="cart_mid">
@@ -88,7 +71,7 @@ export const Cart = () => {
                         <button
                           type="button"
                           onClick={() => {
-                            cartRemove(element._id, i);
+                            cartRemove(element.event._id, i);
                           }}
                         >
                           Remove

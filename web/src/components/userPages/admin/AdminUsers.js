@@ -2,23 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AdminDelete } from "./AdminDelete";
 import { AdminRole } from "./AdminRole";
+import { useNavigate } from "react-router-dom";
 
 export const AdminUsers = () => {
-  const admin = useSelector((state) => state.userReducer.user.role);
-  const op = useSelector((state) => state.idReducer.id.id);
+  const user = useSelector((state) => state.userReducer.user);
+  const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
   const [toggleB, setToggleB] = useState(false);
   const [userId, setUserId] = useState("");
   const [userRole, setUserRole] = useState("");
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    if (admin && admin !== "admin") {
-      window.location.href = "/";
+    if (user.role && user.role !== "admin") {
+      navigate("/");
     }
-    if (op) {
-      getUsers();
-    }
-  }, [op]);
+    getUsers();
+  }, [user]);
   const getUsers = async () => {
     try {
       const response = await fetch("/api/v1/users", {
@@ -30,7 +29,9 @@ export const AdminUsers = () => {
       });
       const result = await response.json();
       if (result.status === "success") {
-        const filter = result.data.users.filter((users) => users._id !== op);
+        const filter = result.data.users.filter(
+          (users) => users.fullName !== user.fullName
+        );
         setUsers(filter);
       }
     } catch (err) {
@@ -84,7 +85,7 @@ export const AdminUsers = () => {
 
   return (
     <div id="admin_users">
-      {users && admin && (
+      {users && user.role === "admin" && (
         <div>
           {users.map((element, i) => {
             return (

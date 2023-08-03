@@ -2,10 +2,10 @@ const Basket = require("../../../pkg/ecommerce/basketSchema");
 
 exports.addToBasket = async (req, res) => {
   try {
+    const { decoded } = req;
     const { event, amount } = req.body;
-    const id = req.params.id;
     const basketItem = await Basket.findOne({
-      beholder: id,
+      beholder: decoded.id,
       event: event,
     });
     if (basketItem) {
@@ -17,7 +17,7 @@ exports.addToBasket = async (req, res) => {
     } else {
       await Basket.create({
         event: event,
-        beholder: id,
+        beholder: decoded.id,
         amount: amount,
       });
     }
@@ -30,9 +30,8 @@ exports.addToBasket = async (req, res) => {
 
 exports.getBasket = async (req, res) => {
   try {
-    let basket = await Basket.find({ beholder: req.params.id }).populate(
-      "event"
-    );
+    const { decoded } = req;
+    let basket = await Basket.find({ beholder: decoded.id }).populate("event");
     if (basket.length === 0) {
       res.status(200);
     }
@@ -60,10 +59,11 @@ exports.getBasket = async (req, res) => {
 // };
 exports.deleteOne = async (req, res) => {
   try {
-    const { event, beholder } = req.body;
+    const { decoded } = req;
+    const { event } = req.body;
     await Basket.findOneAndRemove({
       event: event,
-      beholder: beholder,
+      beholder: decoded.id,
     });
     res.status(204).json({ status: "removed" });
   } catch (err) {

@@ -75,7 +75,7 @@ export const UserDetails = () => {
   };
   const changePassword = async () => {
     try {
-      if (!password && confirmPassword && password !== confirmPassword) {
+      if (password !== confirmPassword) {
         return alert("Passwords do not match");
       }
       const isPass = validator.isStrongPassword(password);
@@ -88,7 +88,7 @@ export const UserDetails = () => {
         newPassword: password,
         confirmPassword: confirmPassword,
       };
-      const response = await fetch(`/api/v1/auth/changePassword/${id}`, {
+      const response = await fetch(`/api/v1/auth/changePassword`, {
         method: "POST",
         body: JSON.stringify(body),
         headers: {

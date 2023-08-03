@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getConcerts,
@@ -11,40 +11,43 @@ import {
   getBasket,
   getTickets,
 } from "../../redux/actions/userActions";
-import { idActions } from "../../redux/actions/idActions";
 
 export const InitialCall = () => {
   const concerts = useSelector((state) => state.eventsReducer.concerts);
   const standUp = useSelector((state) => state.eventsReducer.standUp);
   const hero = useSelector((state) => state.eventsReducer.hero);
-  const id = useSelector((state) => state.idReducer.id.id);
+  const user = useSelector((state) => state.userReducer.user);
+  const cart = useSelector((state) => state.userReducer.basket);
+  const tickets = useSelector((state) => state.userReducer.tickets);
+  const [fetched, setFetched] = useState(false);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!id) {
-      getId();
-    }
     if (concerts.length < 1 && standUp.length < 1 && hero) {
       fetchEvents();
     }
   }, []);
   useEffect(() => {
-    if (id) {
-      fetchCart();
+    if (!user.fullName) {
       fetchUser();
-      fetchTickets();
     }
-  }, [id]);
-  const getId = async () => {
-    await redux("/api/v1/auth", dispatch, idActions, 5);
-  };
+  }, [user]);
+  useEffect(() => {
+    if (user.fullName && !fetched) {
+      fetchCart();
+      fetchTickets();
+      setFetched(true);
+    }
+  }, [user]);
+
   const fetchCart = async () => {
-    await redux(`/api/v1/ecommerce/basket/${id}`, dispatch, getBasket, 1);
+    await redux("/api/v1/ecommerce/basket", dispatch, getBasket, 1);
   };
   const fetchUser = async () => {
-    await redux(`/api/v1/users/${id}`, dispatch, getUser, 2);
+    await redux(`/api/v1/users/one`, dispatch, getUser, 2);
   };
   const fetchTickets = async () => {
-    await redux(`/api/v1/ecommerce/order/${id}`, dispatch, getTickets, 3);
+    await redux(`/api/v1/ecommerce/order`, dispatch, getTickets, 3);
   };
   const fetchEvents = async () => {
     await redux(

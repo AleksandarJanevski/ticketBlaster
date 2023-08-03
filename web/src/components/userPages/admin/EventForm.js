@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Dropdown } from "../Dropdown";
 import { EventCard } from "../../mainPages/EventCard";
 import { useSelector } from "react-redux";
@@ -38,7 +38,7 @@ export const EventForm = () => {
   });
   useEffect(() => {
     if (role && role !== "admin") {
-      navigate('/');
+      navigate("/");
     }
   }, [role]);
 
@@ -235,7 +235,7 @@ export const EventForm = () => {
         });
         const result = await response.json();
         if (result.status === "success") {
-          window.location.href = "/eventForm";
+          navigate("/eventForm");
         }
       }
     } catch (err) {
@@ -258,7 +258,7 @@ export const EventForm = () => {
         });
         const result = await response.json();
         if (result.status === "success") {
-          window.location.href = `/events/${eventId}`;
+          navigate(`/event/${eventId}`);
         }
         setSent(false);
       }

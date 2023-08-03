@@ -20,7 +20,8 @@
   border: 1px solid black;
   box-sizing: border-box;
   padding: 0 20px;
-  font-size: 18px;
+  font-size: 14px;
+  letter-spacing: -0.77px;
 }
 
 #eForm_one input[type="date"] {

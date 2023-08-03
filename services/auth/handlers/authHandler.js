@@ -116,11 +116,12 @@ exports.resetPassword = async (req, res) => {
 };
 exports.changePassword = async (req, res) => {
   try {
+    const { decoded } = req;
     const { newPassword, confirmPassword } = req.body;
     if (!newPassword || !confirmPassword || newPassword !== confirmPassword) {
       return res.status(400).send("Bad request");
     }
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(decoded.id);
     if (!user) {
       return res.status(404).send("User not found");
     }

@@ -97,7 +97,7 @@ export const CheckOut = () => {
         console.log("success");
       }
     } catch (err) {
-      console.log(err);
+      return alert("Invalid Credit Card Info");
     }
   };
 
@@ -131,13 +131,14 @@ export const CheckOut = () => {
 
   const orderMany = async () => {
     try {
-      cart.forEach((element) => console.log(element.event.date));
+      // cart.forEach((element) => console.log(element.event.date));
       let arr = cart.map((element) => ({
         amount: element.amount,
         beholder: element.beholder,
         event: element.event._id,
         eventDate: element.event.date,
       }));
+      console.log(arr);
       const response = await fetch("/api/v1/ecommerce/order", {
         method: "POST",
         body: JSON.stringify(arr),
@@ -152,7 +153,8 @@ export const CheckOut = () => {
         setToggle(!toggle);
       }
     } catch (err) {
-      console.log(err);
+      setTransaction(false);
+      return console.log(err);
     }
   };
 

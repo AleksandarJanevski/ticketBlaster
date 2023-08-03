@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { formatDate } from "../utils/reusableFunctions";
 import { EventCard } from "./EventCard";
 import { useSelector, useDispatch } from "react-redux";
@@ -67,7 +67,7 @@ export const SingleEvent = () => {
         setAmount(4);
         return alert("Maximum 4 tickets per user");
       }
-      const response = await fetch(`/api/v1/ecommerce/basket/${user}`, {
+      const response = await fetch(`/api/v1/ecommerce/basket`, {
         method: "POST",
         body: JSON.stringify({
           amount: amount,
@@ -82,31 +82,26 @@ export const SingleEvent = () => {
       }
       const result = await response.json();
       if (result.status === "success") {
-        let basket = [...cart]
+        let basket = [...cart];
         const events = [...concerts].concat([...standUp]);
-        let existing = basket.findIndex(element=> element.event._id === id);
-        console.log(existing)
-      if(existing >= 0){
-        let num = basket[existing].amount+amount
-        basket[existing] = { ...basket[existing], amount: num };
-        dispatch(
-          getBasket(basket)
-        );
-        navigate("/cart");
-      }else{
-        let item = {
-          amount: amount,
-          beholder: user,
+        let existing = basket.findIndex((element) => element.event._id === id);
+        console.log(existing);
+        if (existing >= 0) {
+          let num = basket[existing].amount + amount;
+          basket[existing] = { ...basket[existing], amount: num };
+          dispatch(getBasket(basket));
+          navigate("/cart");
+        } else {
+          let item = {
+            amount: amount,
+            beholder: user,
+          };
+          item.event = events.find((element) => element._id === id);
+          basket.push(item);
+          console.log(basket, events);
+          dispatch(getBasket(basket));
+          navigate("/cart");
         }
-        item.event = events.find(element => element._id === id)
-       basket.push(item);
-       console.log(basket, events)
-        dispatch(
-          getBasket(basket)
-        );
-        navigate("/cart")
-      }
-        
       }
     } catch (err) {
       return console.error(err);

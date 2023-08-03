@@ -6,12 +6,13 @@ const User = require("../../../pkg/user/userSchema");
 
 exports.createMany = async (req, res) => {
   try {
+    const { decoded } = req;
     const orders = req.body;
     orders.forEach((element) => {
       if (
         !element.amount ||
         !element.event ||
-        !element.beholder ||
+        !element.beholder || //problem on frontend
         !element.eventDate
       ) {
         return res.status(400).send("Purchase error");
@@ -32,15 +33,16 @@ exports.createMany = async (req, res) => {
     events = array;
     await Promise.all(events.map((event) => event.save()));
     const tickets = await Order.insertMany(orders).then((elements) =>
-      Order.populate(elements, [{ path: "beholder" }, { path: "event" }])
+      Order.populate(elements, { path: "event" })
     );
+    const user = await User.findById(decoded.id);
     const message = `Thank you for purchasing at ticket blaster, here is you purchase code: ${tickets
       .map((element) => element.purchaseNo)
       .join(", ")}`;
     const html = await mail("ticket", message);
     try {
       await sendEmail({
-        email: tickets[0].beholder.email,
+        email: user.email,
         subject: "Purchase Confirm",
         html: html,
       });
@@ -55,9 +57,8 @@ exports.createMany = async (req, res) => {
 };
 exports.get = async (req, res) => {
   try {
-    const orders = await Order.find({ beholder: req.params.id }).populate(
-      "event"
-    );
+    const { decoded } = req;
+    const orders = await Order.find({ beholder: decoded.id }).populate("event");
     res.status(200).json({ status: "success", data: { orders } });
   } catch (err) {
     console.log(err);

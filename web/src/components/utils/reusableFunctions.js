@@ -172,9 +172,6 @@ export const redux = async (url, func, action, option, action2, action3) => {
           func(action2(comedy));
           func(action3(concerts));
           break;
-        case 5:
-          func(action(result.data.id));
-          break;
         default:
           break;
       }
