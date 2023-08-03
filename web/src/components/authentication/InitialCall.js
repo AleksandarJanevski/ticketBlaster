@@ -17,8 +17,6 @@ export const InitialCall = () => {
   const standUp = useSelector((state) => state.eventsReducer.standUp);
   const hero = useSelector((state) => state.eventsReducer.hero);
   const user = useSelector((state) => state.userReducer.user);
-  const cart = useSelector((state) => state.userReducer.basket);
-  const tickets = useSelector((state) => state.userReducer.tickets);
   const [fetched, setFetched] = useState(false);
   const dispatch = useDispatch();
 
