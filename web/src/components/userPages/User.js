@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { logOut } from "../../redux/actions/userActions";
 
 export const User = () => {
   const role = useSelector((state) => state.userReducer.user.role);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [focus, setFocus] = useState(0);
@@ -41,7 +43,7 @@ export const User = () => {
         break;
     }
   };
-  const logOut = async () => {
+  const log_out = async () => {
     try {
       const response = await fetch(`/api/v1/auth/logout`, {
         method: "GET",
@@ -51,7 +53,8 @@ export const User = () => {
         credentials: "include",
       });
       if (response.status === 204) {
-        window.location.href = "/";
+        dispatch(logOut());
+        navigate("/");
       }
       sessionStorage.setItem("signed", "false");
     } catch (err) {
@@ -111,7 +114,7 @@ export const User = () => {
                     </Link>
                   </li>
                   <li>
-                    <button onClick={logOut}>Log Out</button>
+                    <button onClick={log_out}>Log Out</button>
                   </li>
                 </ul>
               ) : (

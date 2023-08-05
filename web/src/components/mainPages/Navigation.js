@@ -11,6 +11,8 @@ export const Navigation = () => {
   useEffect(() => {
     if (user.fullName) {
       setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
     }
   }, [user]);
   useEffect(() => {
@@ -81,7 +83,7 @@ export const Navigation = () => {
                 <li>
                   <Link to="/cart">
                     <i
-                      className="fa-solid fa-cart-shopping"
+                      className="fa-solid fa-lg fa-cart-shopping"
                       style={{ color: "#ff48ab" }}
                     ></i>
                   </Link>
@@ -89,7 +91,7 @@ export const Navigation = () => {
                 <li>
                   <Link to="/user/details">
                     <i
-                      className="fa-solid fa-user"
+                      className="fa-solid fa-lg fa-user"
                       style={{ color: "#ff48ab" }}
                     ></i>
                   </Link>

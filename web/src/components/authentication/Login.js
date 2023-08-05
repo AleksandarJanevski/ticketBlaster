@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import validator from "validator";
+import { redux } from "../utils/reusableFunctions";
+import {
+  getUser,
+  getBasket,
+  getTickets,
+} from "../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -23,6 +31,15 @@ export const Login = () => {
     if (e.key === "Enter") {
       setEnter(true);
     }
+  };
+  const fetchCart = async () => {
+    await redux("/api/v1/ecommerce/basket", dispatch, getBasket, 1);
+  };
+  const fetchUser = async () => {
+    await redux(`/api/v1/users/one`, dispatch, getUser, 2);
+  };
+  const fetchTickets = async () => {
+    await redux(`/api/v1/ecommerce/order`, dispatch, getTickets, 3);
   };
   async function login() {
     try {
@@ -45,7 +62,10 @@ export const Login = () => {
       const result = await response.json();
       console.log(result);
       if (result.status === "success") {
-        window.location.href = "/";
+        fetchUser();
+        fetchCart();
+        fetchTickets();
+        navigate("/");
       }
     } catch (err) {
       setEnter(false);

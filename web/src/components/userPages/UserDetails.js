@@ -64,7 +64,7 @@ export const UserDetails = () => {
       });
       const result = await response.json();
       if (result.status === "success") {
-        dispatch(getUser(user));
+        dispatch(getUser(user)); //check if its really working
         document.getElementById("fileInput").value = "";
       }
       setSent(false);

@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const formatDate = (date, bool) => {
   try {
     const months = [
@@ -94,17 +92,19 @@ export const uploadFunc = async (
 ) => {
   try {
     if (update && update !== current) {
-      const response = await axios.post(
-        `/api/v1/upload/${location}`,
-        { picture: update },
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
+      const formData = new FormData();
+      formData.append("picture", update);
+
+      const response = await fetch(`/api/v1/upload/${location}`, {
+        method: "POST",
+        body: formData,
+        headers: {
           credentials: "include",
-        }
-      );
-      const pictureName = response.data.filename;
+        },
+      });
+
+      const data = await response.json();
+      const pictureName = data.filename;
       setObj({ ...object, picture: pictureName });
     }
     setTrigger(!trigger);
