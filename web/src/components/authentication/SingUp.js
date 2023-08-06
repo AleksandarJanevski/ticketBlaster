@@ -2,9 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { verifyData } from "../utils/reusableFunctions";
 import validator from "validator";
+import {
+  getUser,
+  getBasket,
+  getTickets,
+} from "../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
+import { redux } from "../utils/reusableFunctions";
 
 export const SignUp = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -15,6 +23,9 @@ export const SignUp = () => {
 
   useEffect(() => {
     document.addEventListener("keypress", detectEnter, true);
+    return () => {
+      document.removeEventListener("keypress", detectEnter);
+    };
   }, []);
   useEffect(() => {
     if (enter) {
@@ -26,6 +37,15 @@ export const SignUp = () => {
     if (e.key === "Enter") {
       setEnter(true);
     }
+  };
+  const fetchCart = async () => {
+    await redux("/api/v1/ecommerce/basket", dispatch, getBasket, 1);
+  };
+  const fetchUser = async () => {
+    await redux(`/api/v1/users/one`, dispatch, getUser, 2);
+  };
+  const fetchTickets = async () => {
+    await redux(`/api/v1/ecommerce/order`, dispatch, getTickets, 3);
   };
   async function singUp() {
     const verified = verifyData(user, true);
@@ -54,7 +74,10 @@ export const SignUp = () => {
       });
       const result = await response.json();
       if (result.status === "success") {
-        window.location.href = "/";
+        fetchUser();
+        fetchCart();
+        fetchTickets();
+        navigate("/");
       }
     } catch (err) {
       setEnter(false);

@@ -21,6 +21,9 @@ export const Login = () => {
 
   useEffect(() => {
     document.addEventListener("keypress", detectEnter, true);
+    return () => {
+      document.removeEventListener("keypress", detectEnter);
+    };
   }, []);
   useEffect(() => {
     if (enter) {

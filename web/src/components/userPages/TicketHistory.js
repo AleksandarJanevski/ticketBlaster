@@ -55,7 +55,7 @@ export const TicketHistory = () => {
           image={print.image}
           location={print.location}
           date={print.date}
-          value={`192.168.0.13:9000/api/v1/ecommerce/ticket/${print.purchaseId}`}
+          value={`192.168.0.28:9000/api/v1/ecommerce/ticket/${print.purchaseId}`}
         />
       ) : null}
     </div>

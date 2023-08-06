@@ -13,7 +13,14 @@ export const ResetPassword = () => {
   const [enter, setEnter] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("keypress", detectEnter, true);
+    document
+      .getElementById("reset_password")
+      .addEventListener("keypress", detectEnter, true);
+    return () => {
+      document
+        .getElementById("reset_password")
+        .removeEventListener("keypress", detectEnter, true);
+    };
   }, []);
   useEffect(() => {
     if (enter) {

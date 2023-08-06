@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import logo from "./logo.png";
 
@@ -8,6 +8,9 @@ export const Navigation = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [focus, setFocus] = useState(0);
   const location = useLocation();
+  const [search, setSearch] = useState("");
+  const [enter, setEnter] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     if (user.fullName) {
       setLoggedIn(true);
@@ -29,7 +32,32 @@ export const Navigation = () => {
       default:
         setFocus(0);
     }
+    if (location.pathname !== "/search") {
+      setSearch("");
+    }
   }, [location]);
+  useEffect(() => {
+    if (enter) {
+      navigate(`/search?keyword=${search}`);
+      setEnter(false);
+    }
+  }, [enter]);
+
+  useEffect(() => {
+    function detectEnter(e) {
+      if (e.key === "Enter") {
+        setEnter(true);
+      }
+    }
+    document
+      .getElementById("search_bar")
+      .addEventListener("keypress", detectEnter);
+    return () => {
+      document
+        .getElementById("search_bar")
+        .removeEventListener("keypress", detectEnter);
+    };
+  }, [enter]);
   return (
     <div id="main_header">
       <header>
@@ -60,9 +88,16 @@ export const Navigation = () => {
         </nav>
         <div id="rightSide">
           <div id="search">
-            <form action="/search" method="get">
-              <input type="text" placeholder="Search" name="keyword" />
-            </form>
+            <input
+              id="search_bar"
+              type="text"
+              placeholder="Search"
+              name="keyword"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
           </div>
           {!loggedIn ? (
             <div id="userAccess">

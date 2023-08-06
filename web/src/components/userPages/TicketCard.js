@@ -9,7 +9,8 @@ export const TicketCard = ({ array, setPrint, setToggle }) => {
         let date = formatDate(
           new Date(element.event.date).toLocaleDateString("en-GB")
         );
-        let now = new Date(element.event.date) < Date.now();
+        const today = new Date().setHours(0, 0, 0, 0);
+        let now = new Date(element.event.date) < today;
         return (
           <div
             key={i}

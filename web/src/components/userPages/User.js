@@ -126,7 +126,7 @@ export const User = () => {
                     <Link to="/user/details">User Details</Link>
                   </li>
                   <li>
-                    <button onClick={logOut}>Log Out</button>
+                    <button onClick={log_out}>Log Out</button>
                   </li>
                 </ul>
               )}
