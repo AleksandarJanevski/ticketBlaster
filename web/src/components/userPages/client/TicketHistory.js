@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { printAction } from "../../../redux/actions/printAction";
 
 export const TicketHistory = () => {
-  const navgate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const tickets = useSelector((state) => state.userReducer.tickets);
   const [toggle, setToggle] = useState(false);
@@ -75,7 +75,7 @@ export const TicketHistory = () => {
                   value: `192.168.0.28:9000/api/v1/ecommerce/ticket/${print.purchaseId}`,
                 })
               );
-              navgate("/printPage");
+              navigate("/printPage");
             }}
           >
             <i class="fa-solid fa-print fa-lg" style={{ color: "#FF48AB" }}></i>

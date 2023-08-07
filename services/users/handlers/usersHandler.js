@@ -77,7 +77,7 @@ exports.getAll = async (req, res) => {
     if (decoded.role !== "admin") {
       return res.status(401).send("Unauthorized");
     }
-    const users = await User.find();
+    const users = await User.find({ deleted: "false" });
     res.status(200).json({ status: "success", data: { users } });
   } catch (err) {
     console.log(err);
@@ -88,8 +88,11 @@ exports.getOne = async (req, res) => {
   try {
     const { decoded } = req;
     const user = await User.findById(decoded.id).select(
-      "fullName email picture role"
+      "fullName email picture role deleted"
     );
+    if (user.deleted === true) {
+      return res.status(401).send("User has been deleted");
+    }
     res.status(200).json({ status: "success", data: { user } });
   } catch (err) {
     console.log(err);
@@ -125,12 +128,15 @@ exports.delete = async (req, res) => {
     if (decoded.role !== "admin") {
       return res.status(401).send("Unauthorized");
     }
-    const user = await User.findById(req.params.id);
-    if (user && user.picture !== "default.png") {
-      unlink(user.picture);
-    }
-    await User.findByIdAndDelete(req.params.id);
-    res.status(204).json({ status: "success" });
+    // const user = await User.findById(req.params.id);
+    // if (user && user.picture !== "default.png") {
+    //   unlink(user.picture);
+    // }
+    // await User.findByIdAndDelete(req.params.id);
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      deleted: true,
+    });
+    res.status(204).json({ status: "success", data: "User deleted" });
   } catch (err) {
     console.log(err);
     return res.status(500).send("internal server error");

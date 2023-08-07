@@ -62,6 +62,9 @@ export const Login = () => {
         body: JSON.stringify(user),
         credentials: "include",
       });
+      if (response.status === 401) {
+        return alert("Your Account has been suspended");
+      }
       const result = await response.json();
       console.log(result);
       if (result.status === "success") {

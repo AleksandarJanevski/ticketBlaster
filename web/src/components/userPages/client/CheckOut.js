@@ -4,12 +4,12 @@ import { formatDate, verifyData } from "../../utils/reusableFunctions";
 import { PrintEvent } from "../utils/PrintEvent";
 import { Link, useNavigate } from "react-router-dom";
 import { getBasket, getTickets } from "../../../redux/actions/userActions";
+import { printAction } from "../../../redux/actions/printAction";
 
 export const CheckOut = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.userReducer.basket);
   const tickets = useSelector((state) => state.userReducer.tickets);
-  const { id } = useSelector((state) => state.idReducer.id);
   const navigate = useNavigate();
   const [total, setTotal] = useState(0);
   const [gratitude, setGratitude] = useState(false);
@@ -107,7 +107,6 @@ export const CheckOut = () => {
       const response = await fetch("/api/v1/ecommerce/basket/removeMany", {
         method: "DELETE",
         body: JSON.stringify({
-          beholder: id,
           events: events,
         }),
         headers: {
@@ -131,7 +130,6 @@ export const CheckOut = () => {
 
   const orderMany = async () => {
     try {
-      // cart.forEach((element) => console.log(element.event.date));
       let arr = cart.map((element) => ({
         amount: element.amount,
         beholder: element.beholder,
@@ -301,11 +299,11 @@ export const CheckOut = () => {
               );
               return (
                 <div
-                  onClick={() =>
-                    document.addEventListener("mousedown", function () {
-                      setToggleB(false);
-                    })
-                  }
+                  // onClick={() =>
+                  //   document.addEventListener("mousedown", function () {
+                  //     setToggleB(false);
+                  //   })
+                  // }
                   id="gratitude_list"
                   key={i}
                 >
@@ -357,14 +355,34 @@ export const CheckOut = () => {
         </div>
       )}
       {toggleB ? (
-        <div id="gratitude_card">
-          <PrintEvent
-            name={print.name}
-            image={print.image}
-            location={print.location}
-            date={print.date}
-            value={`192.168.0.13:9000/api/v1/ecommerce/ticket/${print.purchaseNo}`}
-          />
+        <div id="print_toggle">
+          <div id="gratitude_card">
+            <PrintEvent
+              name={print.name}
+              image={print.image}
+              location={print.location}
+              date={print.date}
+              value={`192.168.0.13:9000/api/v1/ecommerce/ticket/${print.purchaseNo}`}
+            />
+          </div>
+          <button
+            id="printCard"
+            type="button"
+            onClick={() => {
+              dispatch(
+                printAction({
+                  name: print.name,
+                  image: print.image,
+                  location: print.location,
+                  date: print.date,
+                  value: `192.168.0.28:9000/api/v1/ecommerce/ticket/${print.purchaseNo}`,
+                })
+              );
+              navigate("/printPage");
+            }}
+          >
+            <i class="fa-solid fa-print fa-lg" style={{ color: "#FF48AB" }}></i>
+          </button>
         </div>
       ) : null}
     </div>
