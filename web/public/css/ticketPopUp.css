@@ -66,3 +66,21 @@
 #print {
   scroll-behavior: smooth;
 }
+
+#print_toggle button {
+  offset: all;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-family: "Lato";
+  font-size: 14px;
+  width: 128px;
+  height: 33px;
+  padding: 8px 28px;
+  letter-spacing: -0.77px;
+  color: white;
+  background-color: black;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}

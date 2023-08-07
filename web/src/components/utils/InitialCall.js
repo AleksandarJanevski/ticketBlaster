@@ -5,7 +5,7 @@ import {
   getStandUp,
   getHero,
 } from "../../redux/actions/eventsActions";
-import { redux } from "../utils/reusableFunctions";
+import { redux } from "./reusableFunctions";
 import {
   getUser,
   getBasket,

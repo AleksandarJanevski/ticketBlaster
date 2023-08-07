@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { preview, uploadFunc, verifyData } from "../utils/reusableFunctions";
-import { getUser } from "../../redux/actions/userActions";
+import { preview, uploadFunc, verifyData } from "../../utils/reusableFunctions";
+import { getUser } from "../../../redux/actions/userActions";
 import validator from "validator";
 
 export const UserDetails = () => {
@@ -18,7 +18,6 @@ export const UserDetails = () => {
   const [image, setImage] = useState("");
   const [previewPic, setPreviewPic] = useState("");
   const [sent, setSent] = useState(false);
-  const id = useSelector((state) => state.idReducer.id.id);
   const [change, setChange] = useState(false);
   const picturePreview = (e) => {
     preview(e, setPreviewPic, setImage);
@@ -54,7 +53,7 @@ export const UserDetails = () => {
       if (!isMail) {
         return alert("Please provide a real email");
       }
-      const response = await fetch(`/api/v1/users/${id}`, {
+      const response = await fetch("/api/v1/users", {
         method: "PATCH",
         body: JSON.stringify(user),
         headers: {
@@ -96,11 +95,13 @@ export const UserDetails = () => {
         },
         credentials: "include",
       });
+      //do it from user handler ?
       const result = await response.json();
       if (result.status === "success") {
         setPassword("");
         setConfirmPassword("");
         setChange(false);
+        alert("Password Updated!");
       }
     } catch (err) {
       return console.log(err);

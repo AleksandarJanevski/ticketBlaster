@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { formatDate, verifyData } from "../utils/reusableFunctions";
-import { PrintEvent } from "./PrintEvent";
+import { formatDate, verifyData } from "../../utils/reusableFunctions";
+import { PrintEvent } from "../utils/PrintEvent";
 import { Link, useNavigate } from "react-router-dom";
-import { getBasket, getTickets } from "../../redux/actions/userActions";
+import { getBasket, getTickets } from "../../../redux/actions/userActions";
 
 export const CheckOut = () => {
   const dispatch = useDispatch();

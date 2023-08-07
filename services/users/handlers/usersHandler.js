@@ -25,6 +25,12 @@ exports.create = async (req, res) => {
         .status(400)
         .send("Bad request, please provide the needed information");
     }
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      return res
+        .status(401)
+        .send("User already exists with that email address!"); //do the error on Front end
+    }
     const verifyToken = cryptoToken();
     const hashedToken = hashToken(verifyToken);
     const user = await User.create({
@@ -45,20 +51,20 @@ exports.create = async (req, res) => {
     } catch (err) {
       return console.log(err);
     }
-    let token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: process.env.JWT_EXPIRES,
-      }
-    );
-    res.cookie("jwt", token, {
-      expires: new Date(
-        Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-      ),
-      secure: false,
-      httpOnly: true,
-    });
+    // let token = jwt.sign(
+    //   { id: user._id, role: user.role },
+    //   process.env.JWT_SECRET,
+    //   {
+    //     expiresIn: process.env.JWT_EXPIRES,
+    //   }
+    // );
+    // res.cookie("jwt", token, {
+    //   expires: new Date(
+    //     Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+    //   ),
+    //   secure: false,
+    //   httpOnly: true,
+    // });
     res.status(201).json({ status: "success" });
   } catch (err) {
     console.log(err);
@@ -94,7 +100,6 @@ exports.update = async (req, res) => {
   try {
     const { decoded } = req;
     const user = await User.findById(decoded.id);
-    console.log(user.picture, req.body.picture);
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -138,7 +143,6 @@ exports.role = async (req, res) => {
       return res.status(401).send("Unauthorized");
     }
     const role = req.body.role;
-    console.log(role);
     if (!role || (role !== "admin" && role !== "user")) {
       return res.status(400).send("Bad request");
     }

@@ -11,6 +11,7 @@
   border-radius: 20px;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
 }
 #event_info {
   width: 296px;

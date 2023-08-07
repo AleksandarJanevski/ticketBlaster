@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { AdminDelete } from "./AdminDelete";
-import { AdminRole } from "./AdminRole";
+import { AdminDelete } from "../utils/AdminDelete";
+import { AdminRole } from "../utils/AdminRole";
 import { useNavigate } from "react-router-dom";
 
 export const AdminUsers = () => {

@@ -4,10 +4,10 @@ import {
   getConcerts,
   getHero,
   getStandUp,
-} from "../../redux/actions/eventsActions";
+} from "../../../redux/actions/eventsActions";
 import { Link } from "react-router-dom";
-import { formatDate } from "../utils/reusableFunctions";
-import { DeletePopUp } from "./DeletePopUp";
+import { formatDate } from "../../utils/reusableFunctions";
+import { DeletePopUp } from "../utils/DeletePopUp";
 
 export const ManageEvents = () => {
   const [events, setEvents] = useState([]);

@@ -14,10 +14,14 @@ footer {
   width: 1200px;
   margin: 0 auto;
 }
+#footerNav ul li:nth-child(1) {
+  margin-right: 58.79px;
+}
 #footerNav ul {
   display: flex;
   align-items: center;
   gap: 22px;
+  list-style: none;
 }
 #footerNav ul li a {
   color: #d3d3d3;

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import validator from "validator";
 
 export const ResetPassword = () => {
+  const navigate = useNavigate();
   const { token } = useParams();
   const [reset, setReset] = useState({
     password: "",
@@ -58,7 +59,7 @@ export const ResetPassword = () => {
       });
       const result = await response.json();
       if (result.status === "success") {
-        window.location.href = "/";
+        navigate("/login");
       }
     } catch (err) {
       setToggle(false);

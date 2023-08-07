@@ -1,5 +1,5 @@
 import React from "react";
-import { formatDate } from "../utils/reusableFunctions";
+import { formatDate } from "../../utils/reusableFunctions";
 
 export const TicketCard = ({ array, setPrint, setToggle }) => {
   return (

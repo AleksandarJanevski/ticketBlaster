@@ -1,5 +1,5 @@
 import React from "react";
-import { InitialCall } from "./authentication/InitialCall";
+import { InitialCall } from "./utils/InitialCall";
 import { Navigation } from "./mainPages/Navigation";
 import { Route, Routes } from "react-router-dom";
 import { SignUp } from "./authentication/SingUp";
@@ -10,15 +10,16 @@ import { Events } from "./mainPages/Events";
 import { EventForm } from "./userPages/admin/EventForm";
 import { User } from "./userPages/User";
 import { AdminUsers } from "./userPages/admin/AdminUsers";
-import { TicketHistory } from "./userPages/TicketHistory";
-import { ManageEvents } from "./userPages/ManageEvents";
-import { UserDetails } from "./userPages/UserDetails";
+import { TicketHistory } from "./userPages/client/TicketHistory";
+import { ManageEvents } from "./userPages/admin/ManageEvents";
+import { UserDetails } from "./userPages/client/UserDetails";
 import { SingleEvent } from "./mainPages/SingleEvent";
-import { Cart } from "./userPages/Cart";
+import { Cart } from "./userPages/client/Cart";
 import { Search } from "./mainPages/Search";
 import { CategoryEvents } from "./mainPages/CategoryEvents";
-import { CheckOut } from "./userPages/CheckOut";
+import { CheckOut } from "./userPages/client/CheckOut";
 import { Footer } from "./mainPages/Footer";
+import { PrintCard } from "./userPages/client/PrintCard";
 
 export const App = () => {
   return (
@@ -45,6 +46,7 @@ export const App = () => {
             <Route path={"eventForm/:eventId"} element={<EventForm />} />
           </Route>
           <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/printPage" element={<PrintCard />}></Route>
         </Routes>
       </div>
       <Footer />

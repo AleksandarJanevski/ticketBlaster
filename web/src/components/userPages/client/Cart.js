@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { formatDate } from "../utils/reusableFunctions";
+import { formatDate } from "../../utils/reusableFunctions";
 import { Link } from "react-router-dom";
-import { getBasket } from "../../redux/actions/userActions";
+import { getBasket } from "../../../redux/actions/userActions";
 
 export const Cart = () => {
   const dispatch = useDispatch();

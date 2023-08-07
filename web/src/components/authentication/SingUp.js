@@ -72,12 +72,15 @@ export const SignUp = () => {
         body: JSON.stringify(user),
         credentials: "include",
       });
+      if (response.status === 401) {
+        return alert("User already exists with that email address!");
+      }
       const result = await response.json();
       if (result.status === "success") {
         fetchUser();
         fetchCart();
         fetchTickets();
-        navigate("/");
+        navigate("/login");
       }
     } catch (err) {
       setEnter(false);

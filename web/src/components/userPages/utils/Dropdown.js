@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatDate } from "../utils/reusableFunctions";
+import { formatDate } from "../../utils/reusableFunctions";
 export const Dropdown = ({ elements, onChange, ime }) => {
   return (
     <div className="custom_select">

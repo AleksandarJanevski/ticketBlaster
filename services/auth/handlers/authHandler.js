@@ -134,25 +134,6 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-// exports.protectAdmin = async (req, res, next) => {
-//   try {
-//     let token;
-//     if (req.cookies && req.cookies.jwt) {
-//       token = req.cookies.jwt;
-//     }
-//     if (!token) {
-//       return res.status(401).send("Unauthorized access");
-//     }
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//     if (decoded.role !== "admin") {
-//       return res.status(401).send("Unauthorized access");
-//     }
-//     next();
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).send("internal server error");
-//   }
-// };
 exports.cookieVerify = async (req, res) => {
   try {
     const { decoded } = req;

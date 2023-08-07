@@ -56,7 +56,6 @@ export const User = () => {
         dispatch(logOut());
         navigate("/");
       }
-      sessionStorage.setItem("signed", "false");
     } catch (err) {
       return console.log(err);
     }

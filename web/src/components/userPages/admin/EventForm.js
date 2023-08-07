@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Dropdown } from "../Dropdown";
+import { Dropdown } from "../utils/Dropdown";
 import { EventCard } from "../../mainPages/EventCard";
 import { useSelector } from "react-redux";
 import {

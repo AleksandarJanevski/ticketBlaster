@@ -24,7 +24,7 @@ api.post("/api/v1/users", user.create);
 api.use(auth.protectRoute);
 api.get("/api/v1/users", user.getAll);
 api.get("/api/v1/users/one", user.getOne); //change from cookie/FE
-api.patch("/api/v1/users/:id", user.update); //change from cookie/FE
+api.patch("/api/v1/users", user.update); //change from cookie/FE
 api.patch("/api/v1/users/role/:id", user.role);
 api.delete("/api/v1/users/:id", user.delete);
 
