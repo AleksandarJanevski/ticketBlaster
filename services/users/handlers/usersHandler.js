@@ -106,6 +106,9 @@ exports.update = async (req, res) => {
     if (!user) {
       return res.status(404).send("User not found");
     }
+    if (user.deleted === true) {
+      return res.status(401).send("User has been deleted");
+    }
     if (user.picture !== req.body.picture && user.picture !== "default.png") {
       await unlink(user.picture);
     }
@@ -128,12 +131,7 @@ exports.delete = async (req, res) => {
     if (decoded.role !== "admin") {
       return res.status(401).send("Unauthorized");
     }
-    // const user = await User.findById(req.params.id);
-    // if (user && user.picture !== "default.png") {
-    //   unlink(user.picture);
-    // }
-    // await User.findByIdAndDelete(req.params.id);
-    const user = await User.findByIdAndUpdate(req.params.id, {
+    await User.findByIdAndUpdate(req.params.id, {
       deleted: true,
     });
     res.status(204).json({ status: "success", data: "User deleted" });
