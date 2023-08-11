@@ -37,6 +37,7 @@ exports.getBasket = async (req, res) => {
     if (basket.length === 0) {
       res.status(200);
     }
+    //delete here the events
     basket = basket.filter(
       (element) =>
         new Date(element.event.date) >= new Date().setHours(0, 0, 0, 0) &&
@@ -50,15 +51,6 @@ exports.getBasket = async (req, res) => {
   }
 };
 
-// exports.delete = async (req, res) => {
-//   try {
-//     await Basket.findByIdAndDelete(req.params.id);
-//     res.status(204).json({ status: "removed" });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).send("internal server error");
-//   }
-// };
 exports.deleteOne = async (req, res) => {
   try {
     const { decoded } = req;
@@ -73,16 +65,7 @@ exports.deleteOne = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
-// exports.deleteMany = async (req, res) => {
-//   try {
-//     const orders = req.body;
-//     await Basket.deleteMany({ _id: { $in: orders } });
-//     res.status(204).json({ status: "removed" });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).send("internal server error");
-//   }
-// };
+
 exports.removeMany = async (req, res) => {
   try {
     const { decoded } = req;

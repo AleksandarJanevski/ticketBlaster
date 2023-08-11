@@ -32,7 +32,8 @@
   height: 47px;
   text-align: left;
 }
-#hero_button {
+#hero_button,
+#hero_sold {
   all: unset;
   background-color: #ffffff;
   width: 168px;
@@ -41,7 +42,8 @@
   text-align: center;
   border-radius: 20px;
 }
-#hero_btn {
+#hero_btn,
+#hero_sold {
   text-decoration: none;
   color: black;
   font-weight: 900;

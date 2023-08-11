@@ -119,10 +119,20 @@ export const User = () => {
               ) : (
                 <ul>
                   <li>
-                    <Link to="/user/ticketHistory">Ticket History</Link>
+                    <Link
+                      style={{ color: focus === 0 ? "#ff48ab" : "#393939" }}
+                      to="/user/ticketHistory"
+                    >
+                      Ticket History
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/user/details">User Details</Link>
+                    <Link
+                      style={{ color: focus === 3 ? "#ff48ab" : "#393939" }}
+                      to="/user/details"
+                    >
+                      User Details
+                    </Link>
                   </li>
                   <li>
                     <button onClick={log_out}>Log Out</button>

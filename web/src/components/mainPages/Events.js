@@ -33,9 +33,13 @@ export const Events = () => {
               )}
               , {hero.location}
             </p>
-            <Link id="hero_btn" to={`/event/${hero._id}`}>
-              <button id="hero_button"> Get Tickets</button>
-            </Link>
+            {hero.tickets > 1 ? (
+              <Link id="hero_btn" to={`/event/${hero._id}`}>
+                <button id="hero_button"> Get Tickets</button>
+              </Link>
+            ) : (
+              <button id="hero_sold">Sold Out</button>
+            )}
           </div>
         </div>
       )}

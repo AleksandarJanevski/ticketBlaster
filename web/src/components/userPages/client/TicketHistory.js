@@ -29,14 +29,7 @@ export const TicketHistory = () => {
     );
   }, []);
   return (
-    <div
-      // onClick={() =>
-      //   document.addEventListener("mousedown", function () {
-      //     setToggle(false);
-      //   })
-      // }
-      id="ticket_history"
-    >
+    <div id="ticket_history">
       <div id="ticket_list">
         <div>
           <TicketCard
