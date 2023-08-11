@@ -235,8 +235,7 @@ export const EventForm = () => {
         });
         const result = await response.json();
         if (result.status === "success") {
-          //need disptach for navigate
-          window.location.href = `/eventForm`;
+          window.location.href = `/user/eventForm`;
         }
       }
     } catch (err) {

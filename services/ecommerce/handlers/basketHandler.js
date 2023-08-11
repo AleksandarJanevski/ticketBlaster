@@ -1,4 +1,5 @@
 const Basket = require("../../../pkg/ecommerce/basketSchema");
+const Event = require("../../../pkg/event/eventSchema");
 
 exports.addToBasket = async (req, res) => {
   try {
@@ -8,10 +9,11 @@ exports.addToBasket = async (req, res) => {
       beholder: decoded.id,
       event: event,
     });
+    const basketEvent = await Event.findById(event);
     if (basketItem) {
       basketItem.amount += parseInt(amount);
-      if (basketItem.amount > 4) {
-        return res.status(400).send("Exeeded maximum number of tickets");
+      if (basketItem.amount > 4 || basketEvent.tickets < basketItem.amount) {
+        return res.status(400).send("Exceeded maximum number of tickets");
       }
       await basketItem.save();
     } else {

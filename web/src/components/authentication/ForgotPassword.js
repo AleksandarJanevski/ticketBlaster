@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import validator from "validator";
+import { useSelector } from "react-redux";
 
 export const ForgotPassword = () => {
+  const client = useSelector((state) => state.userReducer.user);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [toggle, setToggle] = useState(true);
   const [enter, setEnter] = useState(false);
   useEffect(() => {
     document.addEventListener("keypress", detectEnter, true);
+    return () => {
+      document.removeEventListener("keypress", detectEnter, true);
+    };
   }, []);
+  useEffect(() => {
+    if (client.fullName) {
+      navigate("/");
+    }
+  }, [client]);
   useEffect(() => {
     if (enter) {
       sendReset();
@@ -76,7 +87,7 @@ export const ForgotPassword = () => {
       ) : (
         <span>
           <h2 style={{ marginBottom: "20px" }}>
-            A password reset link has been sent to your email
+            A password reset link has been sent to your email.
           </h2>
           <Link to={"/login"}>
             <button id="authBtn2" type="button">

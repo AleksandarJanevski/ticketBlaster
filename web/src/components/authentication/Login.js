@@ -7,9 +7,10 @@ import {
   getBasket,
   getTickets,
 } from "../../redux/actions/userActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Login = () => {
+  const client = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -25,6 +26,11 @@ export const Login = () => {
       document.removeEventListener("keypress", detectEnter);
     };
   }, []);
+  useEffect(() => {
+    if (client.fullName) {
+      navigate("/");
+    }
+  }, [client]);
   useEffect(() => {
     if (enter) {
       login();

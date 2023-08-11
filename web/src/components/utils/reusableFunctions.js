@@ -40,7 +40,7 @@ export const formatDate = (date, bool) => {
       return `${month} ${day} ${year}`;
     }
   } catch (err) {
-    console.log(err);
+    return console.log(err);
   }
 };
 export const preview = (e, setUpload, setPreview) => {
@@ -61,6 +61,7 @@ export const preview = (e, setUpload, setPreview) => {
     setPreview("");
   }
 };
+
 export function verifyData(obj, bool) {
   for (let key in obj) {
     if (
@@ -81,6 +82,7 @@ export function verifyData(obj, bool) {
   }
   return true;
 }
+
 export const uploadFunc = async (
   update,
   current,
@@ -112,6 +114,7 @@ export const uploadFunc = async (
     return console.log(err);
   }
 };
+
 export const fetchEvents = async (event, option) => {
   try {
     const response = await fetch(`/api/v1/events/${event}`, {
@@ -131,6 +134,7 @@ export const fetchEvents = async (event, option) => {
     return console.log(err);
   }
 };
+
 export const redux = async (url, func, action, option, action2, action3) => {
   try {
     const response = await fetch(url, {

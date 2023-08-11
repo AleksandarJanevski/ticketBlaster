@@ -51,6 +51,7 @@ export const SingleEvent = () => {
       return 4;
     }
   };
+
   const addToCart = async () => {
     try {
       if (!role) {
@@ -85,7 +86,10 @@ export const SingleEvent = () => {
         let existing = basket.findIndex((element) => element.event._id === id);
         console.log(existing);
         if (existing >= 0) {
-          let num = basket[existing].amount + amount;
+          let num = Number(basket[existing].amount) + Number(amount);
+          if (num > event.tickets) {
+            return alert("Exceeded maximum number of tickets");
+          }
           basket[existing] = { ...basket[existing], amount: num };
           dispatch(getBasket(basket));
           navigate("/cart");
@@ -95,7 +99,6 @@ export const SingleEvent = () => {
           };
           item.event = events.find((element) => element._id === id);
           basket.push(item);
-          console.log(basket, events);
           dispatch(getBasket(basket));
           navigate("/cart");
         }

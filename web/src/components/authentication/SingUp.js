@@ -7,10 +7,11 @@ import {
   getBasket,
   getTickets,
 } from "../../redux/actions/userActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { redux } from "../utils/reusableFunctions";
 
 export const SignUp = () => {
+  const client = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState({
@@ -27,6 +28,11 @@ export const SignUp = () => {
       document.removeEventListener("keypress", detectEnter);
     };
   }, []);
+  useEffect(() => {
+    if (client.fullName) {
+      navigate("/");
+    }
+  }, [client]);
   useEffect(() => {
     if (enter) {
       singUp();

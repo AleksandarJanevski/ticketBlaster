@@ -41,6 +41,7 @@
   position: absolute;
   left: 300px;
   opacity: 0;
+  cursor: pointer;
 }
 #eForm_one input[type="date"]::-webkit-datetime-edit-text {
   opacity: 0;
@@ -66,8 +67,7 @@
   background-position-x: 95%;
   background-position-y: 15px;
   background-repeat: no-repeat;
-  cursor: url("https://cdn4.iconfinder.com/data/icons/geomicons/32/672341-triangle-down-512.png")
-    pointer;
+  cursor: pointer;
 }
 #eForm_two {
   margin-top: 31px;

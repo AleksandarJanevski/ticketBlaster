@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import validator from "validator";
+import { useSelector } from "react-redux";
 
 export const ResetPassword = () => {
+  const client = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
   const { token } = useParams();
   const [reset, setReset] = useState({
@@ -17,17 +19,22 @@ export const ResetPassword = () => {
     document
       .getElementById("reset_password")
       .addEventListener("keypress", detectEnter, true);
-    return () => {
-      document
-        .getElementById("reset_password")
-        .removeEventListener("keypress", detectEnter, true);
-    };
+    // return () => {
+    //   document
+    //     .getElementById("reset_password")
+    //     .removeEventListener("keypress", detectEnter, true);
+    // };
   }, []);
   useEffect(() => {
     if (enter) {
       setToggle(!toggle);
     }
   }, [enter]);
+  useEffect(() => {
+    if (client.fullName) {
+      navigate("/");
+    }
+  }, [client]);
   const detectEnter = (e) => {
     if (e.key === "Enter") {
       setEnter(true);
