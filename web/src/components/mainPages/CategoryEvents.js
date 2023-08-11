@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { EventCard } from "./EventCard";
+import { EventCard } from "../utils/EventCard";
 import { useSelector } from "react-redux";
 
 export const CategoryEvents = () => {

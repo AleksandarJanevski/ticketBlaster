@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { EventCard } from "./EventCard";
+import { EventCard } from "../utils/EventCard";
 import { formatDate } from "../utils/reusableFunctions";
 import { Link } from "react-router-dom";
 

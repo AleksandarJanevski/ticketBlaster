@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatDate } from "../utils/reusableFunctions";
+import { formatDate } from "./reusableFunctions";
 import { Link } from "react-router-dom";
 export const EventCard = ({
   array,
@@ -16,7 +16,10 @@ export const EventCard = ({
       case 1:
         if (element.tickets === 0) {
           return (
-            <button id="getTickets" style={{ color: "white" }}>
+            <button
+              id="getTickets"
+              style={{ color: "white", cursor: "default" }}
+            >
               Sold Out
             </button>
           );

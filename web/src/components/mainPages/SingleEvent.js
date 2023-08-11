@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { formatDate } from "../utils/reusableFunctions";
-import { EventCard } from "./EventCard";
+import { EventCard } from "../utils/EventCard";
 import { useSelector, useDispatch } from "react-redux";
 import { getBasket } from "../../redux/actions/userActions";
 
