@@ -224,6 +224,10 @@ export const EventForm = () => {
   const createEvent = async () => {
     try {
       let valid = verifyData(event, true);
+      console.log(event.price, event.tickets);
+      if (event.price < 0 || event.tickets < 0) {
+        return alert("Invalid Event Data!");
+      }
       if (valid) {
         const response = await fetch("/api/v1/events", {
           method: "POST",
@@ -246,6 +250,10 @@ export const EventForm = () => {
   const updateEvent = async () => {
     try {
       let valid = verifyData(event, true);
+      console.log(event.price, event.tickets);
+      if (event.price < 0 || event.tickets < 0) {
+        return alert("Invalid Event Data!");
+      }
       if (valid) {
         verifyData(event, true);
         const response = await fetch(`/api/v1/events/${eventId}`, {
@@ -258,7 +266,7 @@ export const EventForm = () => {
         });
         const result = await response.json();
         if (result.status === "success") {
-          // navigate(`/event/${eventId}`)
+          // navigate(`/event/${eventId}`)? dispatch!
           window.location.href = `/event/${eventId}`;
         }
         setSent(false);
@@ -372,6 +380,7 @@ export const EventForm = () => {
                     onChange={(e) => {
                       setEvent({ ...event, price: e.target.value });
                     }}
+                    min={1}
                   />
                 </span>
                 <span>

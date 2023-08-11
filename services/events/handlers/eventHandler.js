@@ -79,12 +79,14 @@ exports.create = async (req, res) => {
       return res.status(401).send("Unauthorized");
     }
     let data = req.body;
-    console.log(req.body);
 
     for (let key in data) {
       if (!data[key]) {
-        return res.status(400).send("please provide valid data for the event");
+        return res.status(400).send("Please provide valid data for the event");
       }
+    }
+    if (data.price < 1 || data.tickets < 1) {
+      return res.status(400).send("Please provide valid data for the event");
     }
     const event = await Event.create({
       name: data.name,
@@ -133,6 +135,9 @@ exports.update = async (req, res) => {
       res.status(404).send("event not found");
     }
     let data = req.body;
+    if (data.price < 0 || data.tickets < 0) {
+      return res.status(400).send("Please provide valid data for the event");
+    }
     if (data.picture && data.picture !== event.picture) {
       unlink(event.picture);
     }
