@@ -10,13 +10,19 @@ exports.addToBasket = async (req, res) => {
       event: event,
     });
     const basketEvent = await Event.findById(event);
+    if (amount > 4 || amount <= 0 || basketEvent.date < new Date()) {
+      return res.status(400).send("Bad Request");
+    }
+    if (basketEvent.tickets < amount) {
+      return res.status(403).send("Tickets Unavailable");
+    }
     if (basketItem) {
       basketItem.amount += parseInt(amount);
       if (basketItem.amount > 4 || basketEvent.tickets < basketItem.amount) {
         return res.status(400).send("Exceeded maximum number of tickets");
       }
       await basketItem.save();
-    } else {
+    } else if (basketEvent.tickets > amount) {
       await Basket.create({
         event: event,
         beholder: decoded.id,
@@ -37,7 +43,11 @@ exports.getBasket = async (req, res) => {
     if (basket.length === 0) {
       res.status(200);
     }
-    //delete here the events
+    const expired = basket.filter(
+      (element) =>
+        new Date(element.event.date) < new Date().setHours(0, 0, 0, 0) &&
+        element.event.tickets < 0
+    );
     basket = basket.filter(
       (element) =>
         new Date(element.event.date) >= new Date().setHours(0, 0, 0, 0) &&

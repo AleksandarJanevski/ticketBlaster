@@ -16,17 +16,27 @@ export const SingleEvent = () => {
   const cart = useSelector((state) => state.userReducer.basket);
   const [toggle, setToggle] = useState(false);
   const { id } = useParams();
+  const [btnToggle, setBtnToggle] = useState(true);
+
+  useEffect(() => {
+    if (event && event.tickets <= 0) {
+      window.location.href = "/";
+    }
+  }, [event]);
+
   useEffect(() => {
     if (id && event._id !== id) {
       getEvent();
     }
   }, [concerts, standUp, id]);
+
   useEffect(() => {
     if (toggle) {
       getRelated();
       setToggle(!toggle);
     }
   }, [toggle]);
+
   const getEvent = () => {
     let events = [...concerts].concat([...standUp]);
     let filter = events.filter((element) => element._id === id);
@@ -42,18 +52,9 @@ export const SingleEvent = () => {
     setEvent({ ...event, relatedEvents: filterRelated });
   };
 
-  const maxTickets = () => {
-    if (event.tickets < 4) {
-      return event.tickets;
-    } else if (event.tickets === 0) {
-      return 0;
-    } else {
-      return 4;
-    }
-  };
-
   const addToCart = async () => {
     try {
+      setBtnToggle(false);
       if (!role) {
         return alert(
           "Please log in or create an account to continue this action"
@@ -66,6 +67,25 @@ export const SingleEvent = () => {
         setAmount(4);
         return alert("Maximum 4 tickets per user");
       }
+      if (amount < 1) {
+        setAmount(1);
+        return alert("Invalid Input");
+      }
+
+      let basket = [...cart];
+      const events = [...concerts].concat([...standUp]);
+      let existing;
+      let num;
+      if (basket.length > 0) {
+        existing = basket.findIndex((element) => element.event._id === id);
+        if (existing >= 0) {
+          num = Number(basket[existing].amount) + Number(amount);
+        }
+        if ((existing >= 0 && num > event.tickets) || num > 4) {
+          setBtnToggle(true);
+          return alert("Exceeded maximum number of tickets");
+        }
+      }
       const response = await fetch(`/api/v1/ecommerce/basket`, {
         method: "POST",
         body: JSON.stringify({
@@ -77,19 +97,16 @@ export const SingleEvent = () => {
         },
       });
       if (response.status === 400) {
+        setBtnToggle(true);
         return alert("Exceeded maximum number of tickets");
+      }
+      if (response.status === 403) {
+        alert("No tickets available");
+        return (window.location.href = "/");
       }
       const result = await response.json();
       if (result.status === "success") {
-        let basket = [...cart];
-        const events = [...concerts].concat([...standUp]);
-        let existing = basket.findIndex((element) => element.event._id === id);
-        console.log(existing);
         if (existing >= 0) {
-          let num = Number(basket[existing].amount) + Number(amount);
-          if (num > event.tickets) {
-            return alert("Exceeded maximum number of tickets");
-          }
           basket[existing] = { ...basket[existing], amount: num };
           dispatch(getBasket(basket));
           navigate("/cart");
@@ -104,6 +121,7 @@ export const SingleEvent = () => {
         }
       }
     } catch (err) {
+      setBtnToggle(true);
       return console.error(err);
     }
   };
@@ -132,15 +150,19 @@ export const SingleEvent = () => {
                 <input
                   type="number"
                   value={amount}
-                  max={maxTickets()}
+                  max={4}
                   min={1}
                   onChange={(e) => {
                     setAmount(e.target.value);
                   }}
                 />
-                <button type="button" onClick={addToCart}>
-                  Add to cart
-                </button>
+                {btnToggle ? (
+                  <button type="button" onClick={addToCart}>
+                    Add to cart
+                  </button>
+                ) : (
+                  <button type="button">Add to cart</button>
+                )}
               </span>
             </div>
           </div>

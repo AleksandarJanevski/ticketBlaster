@@ -250,7 +250,6 @@ export const EventForm = () => {
   const updateEvent = async () => {
     try {
       let valid = verifyData(event, true);
-      console.log(event.price, event.tickets);
       if (event.price < 0 || event.tickets < 0) {
         return alert("Invalid Event Data!");
       }
@@ -266,7 +265,6 @@ export const EventForm = () => {
         });
         const result = await response.json();
         if (result.status === "success") {
-          // navigate(`/event/${eventId}`)? dispatch!
           window.location.href = `/event/${eventId}`;
         }
         setSent(false);

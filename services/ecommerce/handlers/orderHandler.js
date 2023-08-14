@@ -20,7 +20,6 @@ exports.createMany = async (req, res) => {
       const event = events.find(
         (event) => event._id.toString() === order.event
       );
-      orders;
       if (event) {
         event.tickets -= order.amount;
         array.push(event);

@@ -14,17 +14,16 @@ api.use(cookieParser());
 
 db.init();
 
-api.use(
-  jwt.expressjwt({
-    secret: process.env.JWT_SECRET,
-    algorithms: ["HS256"],
-    getToken: auth.getAuthToken,
-  })
+api.use(auth.protectRoute);
+api.post(
+  "/api/v1/upload/:destination",
+  upload.adminFilter,
+  upload.uploadPicture,
+  (req, res) => {
+    const filename = req.file.filename;
+    res.json({ filename });
+  }
 );
-api.post("/api/v1/upload/:destination", upload.uploadPicture, (req, res) => {
-  const filename = req.file.filename;
-  res.json({ filename });
-});
 
 api.listen(process.env.UPLOAD, (err) => {
   if (err) return console.log(err);

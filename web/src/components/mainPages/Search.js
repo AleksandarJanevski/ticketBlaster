@@ -8,7 +8,7 @@ export const Search = () => {
   const concerts = useSelector((state) => state.eventsReducer.concerts);
   const standUp = useSelector((state) => state.eventsReducer.standUp);
   let param = useLocation()
-    .search.replaceAll("+", " ")
+    .search.replaceAll("%20", " ")
     .replace("?keyword=", "");
 
   useEffect(() => {

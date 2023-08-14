@@ -81,7 +81,11 @@ export const CheckOut = () => {
         payment.cardNo < 1000000000000000 ||
         payment.cardNo > 9007199254740991
       ) {
-        return alert("Please add a valid credit card number");
+        return alert(
+          "Please add a valid credit card number, you entered " +
+            payment.cardNo.toString().length +
+            " digits. 16 required!"
+        );
       }
       verifyData(payment, true);
       const response = await fetch("/api/v1/ecommerce/payment", {
@@ -115,7 +119,6 @@ export const CheckOut = () => {
         credentials: "include",
       });
       if (response.status === 204) {
-        console.log(purchase);
         setGratitude(true);
         let arr2 = [...tickets].concat(purchase);
         arr2.sort((a, b) => {
@@ -298,15 +301,7 @@ export const CheckOut = () => {
                 new Date(element.event.date).toLocaleDateString("en-GB")
               );
               return (
-                <div
-                  // onClick={() =>
-                  //   document.addEventListener("mousedown", function () {
-                  //     setToggleB(false);
-                  //   })
-                  // }
-                  id="gratitude_list"
-                  key={i}
-                >
+                <div id="gratitude_list" key={i}>
                   <div id="gratitude_card">
                     <div id="gratitude_left">
                       <div

@@ -51,20 +51,7 @@ exports.create = async (req, res) => {
     } catch (err) {
       return console.log(err);
     }
-    // let token = jwt.sign(
-    //   { id: user._id, role: user.role },
-    //   process.env.JWT_SECRET,
-    //   {
-    //     expiresIn: process.env.JWT_EXPIRES,
-    //   }
-    // );
-    // res.cookie("jwt", token, {
-    //   expires: new Date(
-    //     Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-    //   ),
-    //   secure: false,
-    //   httpOnly: true,
-    // });
+
     res.status(201).json({ status: "success" });
   } catch (err) {
     console.log(err);
@@ -74,7 +61,9 @@ exports.create = async (req, res) => {
 exports.getAll = async (req, res) => {
   try {
     const { decoded } = req;
+    console.log(decoded);
     if (decoded.role !== "admin") {
+      console.log(decoded);
       return res.status(401).send("Unauthorized");
     }
     const users = await User.find({ deleted: "false" });
@@ -99,6 +88,7 @@ exports.getOne = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
+
 exports.update = async (req, res) => {
   try {
     const { decoded } = req;
@@ -125,6 +115,7 @@ exports.update = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
+
 exports.delete = async (req, res) => {
   try {
     const { decoded } = req;
@@ -140,6 +131,7 @@ exports.delete = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
+
 exports.role = async (req, res) => {
   try {
     const { decoded } = req;

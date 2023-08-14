@@ -83,9 +83,6 @@ export const SignUp = () => {
       }
       const result = await response.json();
       if (result.status === "success") {
-        fetchUser();
-        fetchCart();
-        fetchTickets();
         navigate("/login");
       }
     } catch (err) {

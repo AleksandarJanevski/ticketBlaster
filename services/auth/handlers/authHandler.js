@@ -50,10 +50,8 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    res.cookie("jwt", "Session Expired", {
-      expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 10),
+    res.clearCookie("jwt", {
       secure: false,
-      httpOnly: true,
     });
     res.status(204).json({ status: "signed out" });
   } catch (err) {
@@ -109,14 +107,13 @@ exports.resetPassword = async (req, res) => {
     user.passwordResetToken = undefined;
     user.passwordResetExpire = undefined;
     await user.save();
-    const token = jwtToken({ id: user._id, role: user.role });
-    cookie(res, "jwt", token);
     res.status(200).json({ status: "success" });
   } catch (err) {
     console.log(err);
     return res.status(500).send("internal server error");
   }
 };
+
 exports.changePassword = async (req, res) => {
   try {
     const { decoded } = req;
@@ -137,18 +134,6 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-exports.cookieVerify = async (req, res) => {
-  try {
-    const { decoded } = req;
-    const userData = {
-      id: decoded.id,
-    };
-    res.status(200).json({ status: "success", data: userData });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send("internal server error");
-  }
-};
 exports.protectRoute = async (req, res, next) => {
   try {
     let token;
@@ -204,6 +189,5 @@ exports.getAuthToken = (req) => {
   if (req && req.cookies.jwt) {
     return req.cookies.jwt;
   }
-
   return null;
 };
