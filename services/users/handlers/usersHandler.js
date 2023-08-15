@@ -76,12 +76,14 @@ exports.getAll = async (req, res) => {
 exports.getOne = async (req, res) => {
   try {
     const { decoded } = req;
-    const user = await User.findById(decoded.id).select(
+    let user = await User.findById(decoded.id).select(
       "fullName email picture role deleted"
     );
     if (user.deleted === true) {
-      return res.status(401).send("User has been deleted");
+      return res.status(403).send("User has been deleted");
     }
+    user = user.toObject();
+    delete user.deleted;
     res.status(200).json({ status: "success", data: { user } });
   } catch (err) {
     console.log(err);

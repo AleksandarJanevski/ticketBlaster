@@ -13,9 +13,6 @@ export const CheckOut = () => {
   const navigate = useNavigate();
   const [total, setTotal] = useState(0);
   const [gratitude, setGratitude] = useState(false);
-  const currentDate = new Date().toISOString().split("T")[0].slice(0, 7);
-  const year = currentDate[3];
-  const maxDate = currentDate.replace(year, parseInt(year) + 5);
   const [toggle, setToggle] = useState(false);
   const [toggleB, setToggleB] = useState(false);
   const [transaction, setTransaction] = useState(false);
@@ -36,6 +33,20 @@ export const CheckOut = () => {
     image: "",
     purchaseNo: "",
   });
+
+  const currentDate = new Date().toISOString().slice(0, 7);
+  let [year, month] = currentDate.split("-");
+  month = Number(month) + 1;
+  if (month > 12) {
+    month = Number(month) - 12;
+    year = Number(year) + 1;
+  }
+  if (Number(month) < 10) {
+    month = `0${month}`;
+  }
+  const minDate = `${year}-${month}`;
+  const maxDate = `${Number(year) + 5}-${month}`;
+
   useEffect(() => {
     if (cart.length === 0) {
       navigate("/");
@@ -98,7 +109,6 @@ export const CheckOut = () => {
       });
       if (response.status === 200) {
         setTransaction(!transaction);
-        console.log("success");
       }
     } catch (err) {
       return alert("Invalid Credit Card Info");
@@ -250,7 +260,7 @@ export const CheckOut = () => {
                 <input
                   type="month"
                   id="expire"
-                  min={currentDate}
+                  min={minDate}
                   max={maxDate}
                   onChange={(e) => {
                     const [year, month] = e.target.value.split("-");

@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 exports.sendEmail = async (options) => {
   const transport = nodemailer.createTransport({
@@ -6,20 +6,19 @@ exports.sendEmail = async (options) => {
     port: process.env.EMAIL_PORT,
     auth: {
       user: process.env.EMAIL_ADDRESS,
-      pass: process.env.EMAIL_PASSWORD
-    }
+      pass: process.env.EMAIL_PASSWORD,
+    },
   });
   transport.verify((err, succes) => {
     if (err) return console.log(err);
     else return console.log(succes);
   });
   const mailOptions = {
-    from: 'TicketBlaster <customarecare@tblaster.com>',
+    from: "TicketBlaster <customercare@tblaster.com>",
     to: options.email,
     date: Date.now(),
     subject: options.subject,
-    html: options.html
-  }
-  await transport.sendMail(mailOptions)
-}
-
+    html: options.html,
+  };
+  await transport.sendMail(mailOptions);
+};

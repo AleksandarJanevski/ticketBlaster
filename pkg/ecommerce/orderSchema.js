@@ -1,31 +1,31 @@
-const mongoose = require('mongoose');
-const uuid = require('uuid');
+const mongoose = require("mongoose");
+const uuid = require("uuid");
 
 const orderSchema = new mongoose.Schema({
-    amount: {
-        type: Number,
+  amount: {
+    type: Number,
+  },
+  event: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Event",
+  },
+  beholder: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true, "User must have Identification"],
+    ref: "User",
+  },
+  purchaseNo: {
+    type: String,
+    default: function () {
+      return uuid.v4();
     },
-    event: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Event'
-    },
-    beholder: {
-        type: String,
-        required: [true, 'User must have Identification'],
-        ref: 'User'
-    },
-    purchaseNo: {
-        type: String,
-        default: function () {
-            return uuid.v4();
-        }
-    },
-    eventDate: {
-        type: Date,
-        required: true
-    }
+  },
+  eventDate: {
+    type: Date,
+    required: true,
+  },
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;

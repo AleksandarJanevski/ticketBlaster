@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).send("Invalid email or password");
     if (user.deleted === true) {
-      return res.status(401).send("Unauthorized Acess");
+      return res.status(403).send("Unauthorized Acess");
     }
     const validatePassword = bcrypt.compareSync(password, user.password);
     if (!validatePassword)

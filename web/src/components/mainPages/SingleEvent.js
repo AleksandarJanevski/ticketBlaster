@@ -52,6 +52,16 @@ export const SingleEvent = () => {
     setEvent({ ...event, relatedEvents: filterRelated });
   };
 
+  const maxTickets = () => {
+    if (event.tickets < 4) {
+      return event.tickets;
+    } else if (event.tickets === 0) {
+      return 0;
+    } else {
+      return 4;
+    }
+  };
+
   const addToCart = async () => {
     try {
       setBtnToggle(false);
@@ -150,7 +160,7 @@ export const SingleEvent = () => {
                 <input
                   type="number"
                   value={amount}
-                  max={4}
+                  max={maxTickets()}
                   min={1}
                   onChange={(e) => {
                     setAmount(e.target.value);

@@ -12,7 +12,8 @@ const basketSchema = new mongoose.Schema({
     ref: "Event",
   },
   beholder: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: [true, "User must have Identification"],
   },
 });

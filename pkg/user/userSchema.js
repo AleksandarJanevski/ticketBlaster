@@ -30,16 +30,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "default.png",
   },
-  purchaseHistory: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "event",
-    },
-  ],
-  payment: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "payment",
-  },
   passwordResetToken: String,
   passwordResetExpire: Date,
   verifyToken: String,
