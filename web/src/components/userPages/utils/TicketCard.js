@@ -48,9 +48,9 @@ export const TicketCard = ({ array, setPrint, setToggle }) => {
                   >
                     <a
                       style={{ textDecoration: "none", color: "white" }}
-                      href="#print"
+                      href="#main_header"
                     >
-                      Print{" "}
+                      Print
                     </a>
                   </button>
                 ) : (

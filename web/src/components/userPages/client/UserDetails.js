@@ -95,7 +95,6 @@ export const UserDetails = () => {
         },
         credentials: "include",
       });
-      //do it from user handler ?
       const result = await response.json();
       if (result.status === "success") {
         setPassword("");

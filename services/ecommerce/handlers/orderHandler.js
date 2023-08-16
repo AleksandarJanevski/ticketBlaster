@@ -8,11 +8,13 @@ exports.createMany = async (req, res) => {
   try {
     const { decoded } = req;
     let orders = req.body;
+
     orders.forEach((element) => {
       if (!element.amount || !element.event || !element.eventDate) {
         return res.status(400).send("Purchase error");
       }
     });
+
     let events = await Event.find();
     events = events.filter((event) => new Date(event.date) > new Date());
     let array = [];
@@ -61,6 +63,7 @@ exports.get = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
+
 exports.getTicket = async (req, res) => {
   try {
     const order = await Order.findOne({ purchaseNo: req.params.purchase });

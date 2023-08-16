@@ -13,18 +13,10 @@ db.init();
 
 api.post("/api/v1/users", user.create);
 
-// api.use(
-//   jwt.expressjwt({
-//     secret: process.env.JWT_SECRET,
-//     algorithms: ["HS256"],
-//     getToken: auth.getAuthToken,
-//   })
-// );
-
 api.use(auth.protectRoute);
 api.get("/api/v1/users", user.getAll);
-api.get("/api/v1/users/one", user.getOne); //change from cookie/FE
-api.patch("/api/v1/users", user.update); //change from cookie/FE
+api.get("/api/v1/users/one", user.getOne);
+api.patch("/api/v1/users", user.update);
 api.patch("/api/v1/users/role/:id", user.role);
 api.delete("/api/v1/users/:id", user.delete);
 

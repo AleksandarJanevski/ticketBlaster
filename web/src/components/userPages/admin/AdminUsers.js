@@ -114,7 +114,24 @@ export const AdminUsers = () => {
                         setToggle(false);
                       }}
                     >
-                      {element.role === "admin" ? "Make User" : "Make Admin"}
+                      <a
+                        style={
+                          element.role === "admin"
+                            ? {
+                                color: "black",
+                                textDecoration: "none",
+                                letterSpacing: "-0.88px",
+                              }
+                            : {
+                                color: "#ff48ab",
+                                textDecoration: "none",
+                                letterSpacing: "-0.88px",
+                              }
+                        }
+                        href="#main_header"
+                      >
+                        {element.role === "admin" ? "Make User" : "Make Admin"}
+                      </a>
                     </button>
                     <button
                       type="button"
@@ -124,7 +141,16 @@ export const AdminUsers = () => {
                         setToggleB(false);
                       }}
                     >
-                      Delete User
+                      <a
+                        href="#main_header"
+                        style={{
+                          color: "white",
+                          textDecoration: "none",
+                          letterSpacing: "-0.88px",
+                        }}
+                      >
+                        Delete User
+                      </a>
                     </button>
                   </div>
                 </div>
