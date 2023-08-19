@@ -1,10 +1,12 @@
 const formData = require("form-data");
 const Mailgun = require("mailgun.js");
 const mailgun = new Mailgun(formData);
+const dotenv = require("dotenv");
+dotenv.config({ path: `${__dirname}/../config/config.env` });
 
 const mg = mailgun.client({
   username: "api",
-  key: "key-e97dec936ec158258f3f7d29d8f7d5ee",
+  key: process.env.MAILGUN,
 });
 
 const sendMailGun = async (options) => {
