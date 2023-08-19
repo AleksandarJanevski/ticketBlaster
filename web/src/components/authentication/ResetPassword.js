@@ -10,7 +10,7 @@ export const ResetPassword = () => {
   const { token } = useParams();
   const [reset, setReset] = useState({
     password: "",
-    confirm: "", //change variable names in service
+    confirm: "",
   });
   const [toggle, setToggle] = useState(false);
   const [enter, setEnter] = useState(false);
@@ -57,7 +57,7 @@ export const ResetPassword = () => {
         );
       }
       const response = await fetch(`/api/v1/auth/resetPassword/${token}`, {
-        method: "POST",
+        method: "PATCH",
         body: JSON.stringify(reset),
         headers: {
           "content-type": "application/json",

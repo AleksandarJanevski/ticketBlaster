@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import validator from "validator";
 import { useSelector } from "react-redux";
 
 export const ForgotPassword = () => {
   const client = useSelector((state) => state.userReducer.user);
+  const location = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [toggle, setToggle] = useState(true);
@@ -41,18 +42,23 @@ export const ForgotPassword = () => {
         method: "POST",
         body: JSON.stringify({
           email: email,
+          site: window.location.href.split("/")[2],
+          protocol: window.location.href.split("/")[0],
         }),
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
       });
+      if (response.status === 404) {
+        return alert("User does not exist");
+      }
       const result = await response.json();
       if (result.status === "success") {
         setToggle(false);
       }
     } catch (err) {
-      alert("User does not exist");
+      alert("Internal server error");
       setEnter(false);
       return console.log(err);
     }

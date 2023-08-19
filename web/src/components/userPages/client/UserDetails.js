@@ -88,7 +88,7 @@ export const UserDetails = () => {
         confirmPassword: confirmPassword,
       };
       const response = await fetch(`/api/v1/auth/changePassword`, {
-        method: "POST",
+        method: "PATCH",
         body: JSON.stringify(body),
         headers: {
           "content-type": "application/json",

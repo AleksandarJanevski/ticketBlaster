@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { sendEmail } = require("../../../pkg/mailer/nodemailer");
 const { mail } = require("../../../pkg/fsModules/fileReader");
+const sendMailGun = require("../../../pkg/mailer/mailgun");
 const crypto = require("crypto");
 
 const cryptoToken = () => {
@@ -62,7 +63,7 @@ exports.logout = async (req, res) => {
 
 exports.forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, site, protocol } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(404).send("user not found");
     const resetToken = cryptoToken();
@@ -70,10 +71,19 @@ exports.forgotPassword = async (req, res) => {
     user.passwordResetToken = hashedToken;
     user.passwordResetExpire = Date.now() + 30 * 60 * 1000;
     await user.save({ validateBeforeSave: false });
-    const resetUrl = `${req.protocol}://localhost:3000/resetPassword/${resetToken}`;
+    const resetUrl = `${protocol}//${site}/resetPassword/${resetToken}`;
     const message =
-      "Please click the link below to reset your passowrd. The link expires in 30 minutes";
+      "Please head to the link to reset your passowrd. The link expires in 30 minutes";
     const html = await mail("verify", message, resetUrl, "Reset Password");
+    // try {
+    //   await sendMailGun({
+    //     email: user.email,
+    //     subject: "Password Reset",
+    //     html: html,
+    //   });
+    // } catch (err) {
+    //   return console.log(err);
+    // }
     await sendEmail({
       email: user.email,
       subject: "Password Reset",
@@ -100,7 +110,7 @@ exports.resetPassword = async (req, res) => {
         .status(404)
         .send("Token is invalid, expired or user does not exist");
     const { password, confirm } = req.body;
-    if (!password || (!confirm && password !== confirm)) {
+    if (!password || !confirm || password !== confirm) {
       return res.status(400).send("passwords do not match");
     }
     user.password = password;

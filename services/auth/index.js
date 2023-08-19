@@ -10,13 +10,13 @@ db.init();
 
 api.post("/api/v1/auth/login", auth.login);
 api.post("/api/v1/auth/forgotPassword", auth.forgotPassword);
-api.post("/api/v1/auth/resetPassword/:token", auth.resetPassword);
+api.patch("/api/v1/auth/resetPassword/:token", auth.resetPassword);
 api.get("/api/v1/auth/verify/:token", auth.verify);
 
 api.use(auth.protectRoute);
 
 api.get("/api/v1/auth/logout", auth.logout);
-api.post("/api/v1/auth/changePassword", auth.changePassword);
+api.patch("/api/v1/auth/changePassword", auth.changePassword);
 
 api.listen(process.env.AUTH, (err) => {
   if (err) return console.log(err);

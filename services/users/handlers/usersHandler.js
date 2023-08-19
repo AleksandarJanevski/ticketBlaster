@@ -4,6 +4,7 @@ const { sendEmail } = require("../../../pkg/mailer/nodemailer");
 const crypto = require("crypto");
 const { mail } = require("../../../pkg/fsModules/fileReader");
 const { unlink } = require("../../../pkg/fsModules/pictureDelete");
+const sendMailGun = require("../../../pkg/mailer/mailgun");
 
 const cryptoToken = () => {
   return crypto.randomBytes(32).toString("hex");
@@ -51,6 +52,15 @@ exports.create = async (req, res) => {
     } catch (err) {
       return console.log(err);
     }
+    // try {
+    //   await sendMailGun({
+    //     email: user.email,
+    //     subject: "Email Verification",
+    //     html: html,
+    //   });
+    // } catch (err) {
+    //   return console.log(err);
+    // }
 
     res.status(201).json({ status: "success" });
   } catch (err) {
