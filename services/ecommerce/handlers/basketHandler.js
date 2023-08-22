@@ -43,11 +43,6 @@ exports.getBasket = async (req, res) => {
     if (basket.length === 0) {
       res.status(200);
     }
-    const expired = basket.filter(
-      (element) =>
-        new Date(element.event.date) < new Date().setHours(0, 0, 0, 0) &&
-        element.event.tickets < 0
-    );
     basket = basket.filter(
       (element) =>
         new Date(element.event.date) >= new Date().setHours(0, 0, 0, 0) &&

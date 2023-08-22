@@ -124,26 +124,6 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-exports.changePassword = async (req, res) => {
-  try {
-    const { decoded } = req;
-    const { newPassword, confirmPassword } = req.body;
-    if (!newPassword || !confirmPassword || newPassword !== confirmPassword) {
-      return res.status(400).send("Bad request");
-    }
-    const user = await User.findById(decoded.id);
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-    user.password = newPassword;
-    await user.save();
-    res.status(200).json({ status: "success" });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send("internal server error");
-  }
-};
-
 exports.protectRoute = async (req, res, next) => {
   try {
     let token;

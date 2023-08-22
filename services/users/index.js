@@ -2,7 +2,6 @@ const express = require("express");
 const db = require("../../pkg/database/index");
 const auth = require("../auth/handlers/authHandler");
 const user = require("./handlers/usersHandler");
-const jwt = require("express-jwt");
 
 const api = express();
 const cookieParser = require("cookie-parser");
@@ -17,6 +16,7 @@ api.use(auth.protectRoute);
 api.get("/api/v1/users", user.getAll);
 api.get("/api/v1/users/one", user.getOne);
 api.patch("/api/v1/users", user.update);
+api.patch("/api/v1/users/changePassword", user.changePassword);
 api.patch("/api/v1/users/role/:id", user.role);
 api.delete("/api/v1/users/:id", user.delete);
 

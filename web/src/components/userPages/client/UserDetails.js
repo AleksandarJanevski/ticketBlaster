@@ -21,7 +21,6 @@ export const UserDetails = () => {
   const [change, setChange] = useState(false);
   const picturePreview = (e) => {
     preview(e, setPreviewPic, setImage);
-    console.log(image, e.target);
   };
   useEffect(() => {
     if (sent) {
@@ -87,7 +86,7 @@ export const UserDetails = () => {
         newPassword: password,
         confirmPassword: confirmPassword,
       };
-      const response = await fetch(`/api/v1/auth/changePassword`, {
+      const response = await fetch(`/api/v1/users/changePassword`, {
         method: "PATCH",
         body: JSON.stringify(body),
         headers: {
