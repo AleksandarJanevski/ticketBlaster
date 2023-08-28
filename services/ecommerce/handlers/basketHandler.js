@@ -10,7 +10,11 @@ exports.addToBasket = async (req, res) => {
       event: event,
     });
     const basketEvent = await Event.findById(event);
-    if (amount > 4 || amount <= 0 || basketEvent.date < new Date()) {
+    if (
+      amount > 4 ||
+      amount <= 0 ||
+      basketEvent.date < new Date().setHours(0, 0, 0, 0)
+    ) {
       return res.status(400).send("Bad Request");
     }
     if (basketEvent.tickets < amount) {
