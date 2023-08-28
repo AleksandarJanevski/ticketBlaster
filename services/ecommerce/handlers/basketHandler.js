@@ -8,7 +8,7 @@ exports.addToBasket = async (req, res) => {
     const basketItem = await Basket.findOne({
       beholder: decoded.id,
       event: event,
-    });
+    }); //populate here instead
     const basketEvent = await Event.findById(event);
     if (
       amount > 4 ||
@@ -46,6 +46,20 @@ exports.getBasket = async (req, res) => {
     let basket = await Basket.find({ beholder: decoded.id }).populate("event");
     if (basket.length === 0) {
       res.status(200);
+    }
+    let expired = basket.filter((element) => {
+      if (new Date(element.event.date) < new Date().setHours(0, 0, 0, 0)) {
+        return element;
+      }
+    });
+    if (expired.length > 0) {
+      try {
+        await Basket.deleteMany({
+          _id: { $in: expired },
+        });
+      } catch (err) {
+        return console.log(err);
+      }
     }
     basket = basket.filter(
       (element) =>
