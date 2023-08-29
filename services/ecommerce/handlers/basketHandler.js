@@ -8,8 +8,14 @@ exports.addToBasket = async (req, res) => {
     const basketItem = await Basket.findOne({
       beholder: decoded.id,
       event: event,
-    }); //populate here instead
-    const basketEvent = await Event.findById(event);
+    }).populate("event");
+
+    let basketEvent;
+    if (!basketItem) {
+      basketEvent = await Event.findById(event);
+    } else {
+      basketEvent = basketItem.event;
+    }
     if (
       amount > 4 ||
       amount <= 0 ||
