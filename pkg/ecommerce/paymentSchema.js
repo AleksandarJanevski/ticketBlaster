@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const month = new Date().getMonth() + 1;
 const year = new Date().getFullYear();
-const max = 2000 + year + 5;
+const max = year + 5;
 const expiration = new mongoose.Schema({
   month: {
     type: Number,
@@ -18,7 +18,7 @@ const expiration = new mongoose.Schema({
   },
 });
 expiration.pre("validate", async function (next) {
-  if (this.month < month && this.year === year) {
+  if (this.month <= month && this.year === year) {
     return next(new Error("Card is out of date"));
   }
   next();
