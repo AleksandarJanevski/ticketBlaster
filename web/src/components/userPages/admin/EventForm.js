@@ -23,7 +23,7 @@ export const EventForm = () => {
   const [previewPic, setPreviewPic] = useState("");
   const [related, setRelated] = useState("");
   const currentDate = new Date().toISOString().split("T")[0];
-  const year = currentDate[3];
+  const year = currentDate.slice(0, 4);
   const maxDate = currentDate.replace(year, parseInt(year) + 5);
   const [event, setEvent] = useState({
     name: "",
@@ -136,7 +136,7 @@ export const EventForm = () => {
       }
     } catch (err) {
       setSent(false);
-      alert(err.message);
+      return alert(err.message);
     }
   };
 
@@ -144,7 +144,7 @@ export const EventForm = () => {
     e.preventDefault();
     if (related === "") {
       return alert(
-        "Please make sure you have selected a category or a related event!"
+        "Please make sure you have selected a category or an event!"
       );
     }
     const array = [...event.relatedEvents];
@@ -224,7 +224,6 @@ export const EventForm = () => {
   const createEvent = async () => {
     try {
       let valid = verifyData(event, true);
-      console.log(event.price, event.tickets);
       if (event.price < 0 || event.tickets < 0) {
         return alert("Invalid Event Data!");
       }

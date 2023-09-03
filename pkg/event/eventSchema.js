@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const today = new Date();
+let today = new Date().setHours(2, 0, 0, 0);
 
 const eventSchema = new mongoose.Schema({
   name: {
@@ -46,7 +46,11 @@ const eventSchema = new mongoose.Schema({
   },
 });
 eventSchema.pre("save", async function (next) {
-  today.setHours(0, 0, 0, 0);
+  today = new Date(today);
+  let check = this.date.toISOString();
+  if (check.split("T")[1].startsWith("22")) {
+    this.date = this.date.setHours(2, 0, 0, 0);
+  }
   if (this.date < today) {
     return next(new Error("Date cannot be less than today"));
   }

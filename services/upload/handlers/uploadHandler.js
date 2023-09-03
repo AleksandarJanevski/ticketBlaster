@@ -31,7 +31,7 @@ const upload = multer({
 });
 exports.uploadPicture = upload.single("picture");
 exports.adminFilter = (req, res, next) => {
-  if (req.decoded !== "admin" && req.params.destination === "event") {
+  if (req.decoded.role !== "admin" && req.params.destination === "event") {
     return res.status(401).send("Unauthorized");
   }
   next();

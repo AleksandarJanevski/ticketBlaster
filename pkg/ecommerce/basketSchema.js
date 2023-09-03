@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Event = require("../event/eventSchema");
 
 const basketSchema = new mongoose.Schema({
   amount: {
