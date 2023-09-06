@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { formatDate } from "../../utils/reusableFunctions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getBasket } from "../../../redux/actions/userActions";
 
 export const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.userReducer.basket);
   const user = useSelector((state) => state.userReducer.user);
-  const [rendered, setRendered] = useState(false);
-  useEffect(() => {
-    if (cart.length > 0) {
-      setRendered(true);
-    }
-  }, [cart]);
+
   const cartRemove = async (item, eventIndex) => {
     try {
       const response = await fetch(`/api/v1/ecommerce/basket`, {
@@ -89,6 +85,15 @@ export const Cart = () => {
             )}
           </div>
           <div id="cart_bottom">
+            {/* <a>
+                 <button
+                   onClick={() => {
+                     navigate(-1);
+                   }}
+                 >
+                   Back
+                 </button>
+               </a> */}
             {cart.length > 0 ? (
               <Link to="/">
                 <button>Back</button>

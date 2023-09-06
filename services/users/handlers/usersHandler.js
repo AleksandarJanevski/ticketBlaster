@@ -30,7 +30,7 @@ exports.create = async (req, res) => {
     if (existingUser) {
       return res
         .status(401)
-        .send("User already exists with that email address!"); //do the error on Front end
+        .send("User already exists with that email address!");
     }
     const verifyToken = cryptoToken();
     const hashedToken = hashToken(verifyToken);

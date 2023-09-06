@@ -66,18 +66,22 @@ export const SingleEvent = () => {
     try {
       setBtnToggle(false);
       if (!role) {
+        setBtnToggle(true);
         return alert(
           "Please log in or create an account to continue this action"
         );
       }
       if (event.tickets < amount) {
+        setBtnToggle(true);
         return alert("No tickets available");
       }
       if (amount > 4) {
+        setBtnToggle(true);
         setAmount(4);
         return alert("Maximum 4 tickets per user");
       }
       if (amount < 1) {
+        setBtnToggle(true);
         setAmount(1);
         return alert("Invalid Input");
       }
