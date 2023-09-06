@@ -3,12 +3,11 @@ const { unlink } = require("../../../pkg/fsModules/pictureDelete");
 
 exports.getAllStandUp = async (req, res) => {
   try {
-    let events = await Event.find({ category: "Stand-up Comedy" });
-    events = events.filter(
-      (element) => new Date(element.date) >= new Date().setHours(0, 0, 0, 0)
-    );
-    events.sort((a, b) => {
-      return a.date - b.date;
+    let events = await Event.find({
+      category: "Stand-up Comedy",
+      date: { $gt: new Date() },
+    }).sort({
+      date: 1,
     });
     res.status(200).json({ status: "success", data: { events } });
   } catch (err) {
@@ -19,12 +18,8 @@ exports.getAllStandUp = async (req, res) => {
 
 exports.getHero = async (req, res) => {
   try {
-    let events = await Event.find();
-    events = events.filter(
-      (element) => new Date(element.date) >= new Date().setHours(0, 0, 0, 0)
-    );
-    events.sort((a, b) => {
-      return a.date - b.date;
+    let events = await Event.find({ date: { $gt: new Date() } }).sort({
+      date: 1,
     });
     const hero = events[0];
     res.status(200).json({ status: "success", data: { hero } });
@@ -36,10 +31,12 @@ exports.getHero = async (req, res) => {
 
 exports.getAllConcerts = async (req, res) => {
   try {
-    let events = await Event.find({ category: "Musical Concert" });
-    events = events.filter(
-      (element) => new Date(element.date) >= new Date().setHours(0, 0, 0, 0)
-    );
+    let events = await Event.find({
+      category: "Musical Concert",
+      date: { $gt: new Date() },
+    }).sort({
+      date: 1,
+    });
     res.status(200).json({ status: "success", data: { events } });
   } catch (err) {
     console.log(err);
@@ -48,12 +45,8 @@ exports.getAllConcerts = async (req, res) => {
 };
 exports.getAll = async (req, res) => {
   try {
-    let events = await Event.find();
-    events = events.filter(
-      (element) => new Date(element.date) >= new Date().setHours(0, 0, 0, 0)
-    );
-    events.sort((a, b) => {
-      return a.date - b.date;
+    let events = await Event.find({ date: { $gt: new Date() } }).sort({
+      date: 1,
     });
     res.status(200).json({ status: "success", data: { events } });
   } catch (err) {
@@ -79,11 +72,16 @@ exports.create = async (req, res) => {
       return res.status(401).send("Unauthorized");
     }
     let data = req.body;
-
-    for (let key in data) {
-      if (!data[key]) {
-        return res.status(400).send("Please provide valid data for the event");
-      }
+    if (
+      !data.name ||
+      !data.category ||
+      !data.date ||
+      !data.price ||
+      !data.details ||
+      !data.tickets ||
+      !data.location
+    ) {
+      return res.status(400).send("Please provide valid data for the event");
     }
     if (data.price < 1 || data.tickets < 1) {
       return res.status(400).send("Please provide valid data for the event");

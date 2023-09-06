@@ -41,7 +41,7 @@ exports.create = async (req, res) => {
       verifyToken: hashedToken,
     });
     const verifyUrl = `${req.protocol}://localhost:9000/api/v1/auth/verify/${verifyToken}`;
-    const message = "Please Verify your account at the link below"; //its registration confirmation not verification
+    const message = "Please Verify your account at the link below";
     const html = await mail("verify", message, verifyUrl, "Verify Email");
     try {
       await sendEmail({

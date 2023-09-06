@@ -15,8 +15,7 @@ exports.createMany = async (req, res) => {
       }
     });
 
-    let events = await Event.find();
-    events = events.filter((event) => new Date(event.date) > new Date());
+    let events = await Event.find({ date: { $gt: new Date() } });
     let array = [];
     orders.forEach((order) => {
       const event = events.find(

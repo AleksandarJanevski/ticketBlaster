@@ -38,8 +38,9 @@ exports.login = async (req, res) => {
       return res.status(403).send("Unauthorized Access");
     }
     const validatePassword = bcrypt.compareSync(password, user.password);
-    if (!validatePassword)
+    if (!validatePassword) {
       return res.status(400).send("Invalid email or password");
+    }
     const token = jwtToken({ id: user._id, role: user.role });
     cookie(res, "jwt", token);
     res.status(200).json({ status: "success" });
@@ -105,10 +106,12 @@ exports.resetPassword = async (req, res) => {
       passwordResetToken: hashedToken,
       passwordResetExpire: { $gt: Date.now() },
     });
-    if (!user)
+    if (!user) {
       return res
         .status(404)
         .send("Token is invalid, expired or user does not exist");
+    }
+
     const { password, confirm } = req.body;
     if (!password || !confirm || password !== confirm) {
       return res.status(400).send("passwords do not match");

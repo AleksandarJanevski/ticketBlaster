@@ -19,7 +19,7 @@ exports.addToBasket = async (req, res) => {
     if (
       amount > 4 ||
       amount <= 0 ||
-      basketEvent.date < new Date().setHours(0, 0, 0, 0)
+      basketEvent.date < new Date().setHours(2, 0, 0, 0)
     ) {
       return res.status(400).send("Bad Request");
     }
@@ -54,7 +54,8 @@ exports.getBasket = async (req, res) => {
       res.status(200);
     }
     let expired = basket.filter((element) => {
-      if (new Date(element.event.date) < new Date().setHours(0, 0, 0, 0)) {
+      //$lt:Date.now()?
+      if (new Date(element.event.date) < new Date().setHours(2, 0, 0, 0)) {
         return element;
       }
     });
@@ -69,8 +70,8 @@ exports.getBasket = async (req, res) => {
     }
     basket = basket.filter(
       (element) =>
-        new Date(element.event.date) >= new Date().setHours(0, 0, 0, 0) &&
-        element.event.tickets > 0
+        new Date(element.event.date).getTime() >=
+          new Date().setHours(2, 0, 0, 0) && element.event.tickets > 0
     );
     await Promise.all(basket.map((cart) => cart.save()));
     res.status(200).json({ status: "success", data: { basket } });
