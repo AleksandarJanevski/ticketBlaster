@@ -30,8 +30,9 @@ const cookie = (res, name, token) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password)
+    if (!email || !password) {
       return res.status(400).send("Invalid email or password");
+    }
     const user = await User.findOne({ email });
     if (!user) return res.status(400).send("Invalid email or password");
     if (user.deleted === true) {
@@ -50,7 +51,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
+exports.logout = (req, res) => {
   try {
     res.clearCookie("jwt", {
       secure: false,
@@ -127,7 +128,7 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-exports.protectRoute = async (req, res, next) => {
+exports.protectRoute = (req, res, next) => {
   try {
     let token;
     if (req.cookies && req.cookies.jwt) {

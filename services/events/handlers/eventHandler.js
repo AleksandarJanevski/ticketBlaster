@@ -1,11 +1,13 @@
 const Event = require("../../../pkg/event/eventSchema");
 const { unlink } = require("../../../pkg/fsModules/pictureDelete");
 
+let today = new Date().setHours(2, 0, 0, 0);
+
 exports.getAllStandUp = async (req, res) => {
   try {
     let events = await Event.find({
       category: "Stand-up Comedy",
-      date: { $gt: new Date() },
+      date: { $gte: new Date(today) },
     }).sort({
       date: 1,
     });
@@ -18,7 +20,7 @@ exports.getAllStandUp = async (req, res) => {
 
 exports.getHero = async (req, res) => {
   try {
-    let events = await Event.find({ date: { $gt: new Date() } }).sort({
+    let events = await Event.find({ date: { $gte: new Date(today) } }).sort({
       date: 1,
     });
     const hero = events[0];
@@ -33,7 +35,7 @@ exports.getAllConcerts = async (req, res) => {
   try {
     let events = await Event.find({
       category: "Musical Concert",
-      date: { $gt: new Date() },
+      date: { $gte: new Date(today) },
     }).sort({
       date: 1,
     });
@@ -45,7 +47,9 @@ exports.getAllConcerts = async (req, res) => {
 };
 exports.getAll = async (req, res) => {
   try {
-    let events = await Event.find({ date: { $gt: new Date() } }).sort({
+    let events = await Event.find({
+      date: { $gte: new Date(today) },
+    }).sort({
       date: 1,
     });
     res.status(200).json({ status: "success", data: { events } });

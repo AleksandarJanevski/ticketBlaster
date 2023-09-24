@@ -54,7 +54,6 @@ exports.getBasket = async (req, res) => {
       res.status(200);
     }
     let expired = basket.filter((element) => {
-      //$lt:Date.now()?
       if (new Date(element.event.date) < new Date().setHours(2, 0, 0, 0)) {
         return element;
       }

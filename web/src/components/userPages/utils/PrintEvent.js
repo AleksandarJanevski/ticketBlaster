@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import printLogo from "../print.png";
 import QRCode from "react-qr-code";
 
