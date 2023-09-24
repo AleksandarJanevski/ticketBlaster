@@ -15,6 +15,7 @@
   width: 149px;
   height: 88px;
   background-size: cover;
+  background-position: center;
   border-radius: 20px;
 }
 #mve2_1:hover {
