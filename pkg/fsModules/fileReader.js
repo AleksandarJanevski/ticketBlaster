@@ -14,18 +14,9 @@ const read = async (template) => {
     );
   });
 };
-
-const readMail = async (template) => {
-  try {
-    const mail = await read(template);
-    return mail;
-  } catch (err) {
-    return console.log(err);
-  }
-};
 exports.mail = async (template, text, link, button) => {
   try {
-    let document = await readMail(template);
+    let document = await read(template);
     document = await document
       .replace("TEXTAREA", text)
       .replace("LINK", link)

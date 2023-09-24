@@ -5,10 +5,12 @@ const basketSchema = new mongoose.Schema({
     type: Number,
     min: 1,
     max: 4,
+    required: [true, "Must have amount of tickets"],
   },
   event: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Event",
+    required: [true, "Must have event identification"],
   },
   beholder: {
     type: mongoose.Schema.Types.ObjectId,

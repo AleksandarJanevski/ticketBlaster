@@ -8,13 +8,13 @@ const expiration = new mongoose.Schema({
     type: Number,
     min: 1,
     max: 12,
-    required: true,
+    required: [true],
   },
   year: {
     type: Number,
     min: year,
     max: max,
-    required: true,
+    required: [true],
   },
 });
 expiration.pre("validate", async function (next) {
