@@ -30,10 +30,10 @@ export const EventForm = () => {
     category: "",
     details: "",
     location: "",
-    picture: "",
     date: "",
     price: 0,
     tickets: 0,
+    picture: "",
     relatedEvents: [],
   });
   useEffect(() => {
@@ -120,26 +120,6 @@ export const EventForm = () => {
     preview(e, setPreviewPic, setImage);
   };
 
-  const handleUpload = async () => {
-    try {
-      let valid = verifyData(event, false); //fix this not executing if error
-      if (valid) {
-        await uploadFunc(
-          previewPic,
-          event.picture,
-          setEvent,
-          event,
-          setSent,
-          sent,
-          "event"
-        );
-      }
-    } catch (err) {
-      setSent(false);
-      return alert(err.message);
-    }
-  };
-
   const addRelated = (e) => {
     e.preventDefault();
     if (related === "") {
@@ -221,13 +201,34 @@ export const EventForm = () => {
     setEvent({ ...event, relatedEvents: array });
   };
 
+  const handleUpload = async () => {
+    try {
+      console.log("upload");
+      let valid = verifyData(event, false);
+      if (valid === undefined) {
+        await uploadFunc(
+          previewPic,
+          event.picture,
+          setEvent,
+          event,
+          setSent,
+          true,
+          "event"
+        );
+      }
+    } catch (err) {
+      setSent(false);
+      return alert(err.message);
+    }
+  };
+
   const createEvent = async () => {
     try {
       let valid = verifyData(event, true);
       if (event.price < 0 || event.tickets < 0) {
         return alert("Invalid Event Data!");
       }
-      if (valid) {
+      if (valid === undefined) {
         const response = await fetch("/api/v1/events", {
           method: "POST",
           body: JSON.stringify(event),
@@ -240,8 +241,11 @@ export const EventForm = () => {
         if (result.status === "success") {
           window.location.href = `/user/eventForm`;
         }
+      } else {
+        setSent(false);
       }
     } catch (err) {
+      setSent(false);
       return console.log(err);
     }
   };
@@ -252,8 +256,7 @@ export const EventForm = () => {
       if (event.price < 0 || event.tickets < 0) {
         return alert("Invalid Event Data!");
       }
-      if (valid) {
-        verifyData(event, true);
+      if (valid === undefined) {
         const response = await fetch(`/api/v1/events/${eventId}`, {
           method: "PATCH",
           body: JSON.stringify(event),
@@ -265,8 +268,9 @@ export const EventForm = () => {
         const result = await response.json();
         if (result.status === "success") {
           window.location.href = `/event/${eventId}`;
+        } else {
+          setSent(false);
         }
-        setSent(false);
       }
     } catch (err) {
       return console.log(err);
@@ -387,7 +391,7 @@ export const EventForm = () => {
                     required
                     value={event.tickets}
                     onChange={(e) => {
-                      setEvent({ ...event, tickets: e.target.value });
+                      setEvent({ ...event, tickets: Number(e.target.value) });
                     }}
                     name="amount"
                     min={1}

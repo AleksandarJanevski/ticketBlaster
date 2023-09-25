@@ -64,23 +64,23 @@ export const preview = (e, setUpload, setPreview) => {
 
 export function verifyData(obj, bool) {
   for (let key in obj) {
+    console.log(key, obj);
     if (
       (bool && typeof obj[key] === "string" && obj[key].trim() === "") ||
-      (obj[key] === null && obj[key] <= 0)
+      (typeof obj[key] === "number" && obj[key] <= 0)
     ) {
-      alert(`Please fill out the ${key} input field`);
+      alert(`Please check the ${key} input field!`);
       return false;
     } else if (
       (typeof obj[key] === "string" &&
         obj[key].trim() === "" &&
         key !== "picture") ||
-      (obj[key] === null && obj[key] <= 0)
+      (typeof obj[key] === "number" && obj[key] <= 0)
     ) {
-      alert(`Please fill out the ${key} input field`);
+      alert(`Please check the ${key} input field`);
       return false;
     }
   }
-  return true;
 }
 
 export const uploadFunc = async (
@@ -109,7 +109,7 @@ export const uploadFunc = async (
       const pictureName = data.filename;
       setObj({ ...object, picture: pictureName });
     }
-    setTrigger(!trigger);
+    setTrigger(trigger);
   } catch (err) {
     return console.log(err);
   }

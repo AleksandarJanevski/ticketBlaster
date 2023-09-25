@@ -61,7 +61,11 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id).populate("relatedEvents");
+    const event = await Event.findById(req.params.id)
+      .select(
+        "name category date price details relatedEvents tickets picture location"
+      )
+      .populate("relatedEvents");
     res.status(200).json({ status: "success", data: { event } });
   } catch (err) {
     console.log(err);
@@ -172,19 +176,19 @@ exports.delete = async (req, res) => {
     return res.status(500).send("internal server error");
   }
 };
-// exports.search = async (req, res) => {
-//   try {
-//     const keyword = req.params.keyword.toLowerCase();
-//     const events = await Event.find();
-//     let searchQuery = events.filter(
-//       (element) =>
-//         element.details.toLowerCase().includes(keyword) ||
-//         element.name.toLowerCase().includes(keyword) ||
-//         element.location.toLowerCase().includes(keyword)
-//     );
-//     res.status(200).json({ status: "success", data: { searchQuery } });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).send("internal server error");
-//   }
-// };
+exports.search = async (req, res) => {
+  try {
+    const keyword = req.params.keyword.toLowerCase();
+    const events = await Event.find();
+    let searchQuery = events.filter(
+      (element) =>
+        element.details.toLowerCase().includes(keyword) ||
+        element.name.toLowerCase().includes(keyword) ||
+        element.location.toLowerCase().includes(keyword)
+    );
+    res.status(200).json({ status: "success", data: { searchQuery } });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("internal server error");
+  }
+};

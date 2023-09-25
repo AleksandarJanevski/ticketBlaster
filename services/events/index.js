@@ -12,6 +12,7 @@ db.init();
 api.get("/api/v1/events", events.getAll);
 api.get("/api/v1/events/standUp", events.getAllStandUp);
 api.get("/api/v1/events/concerts", events.getAllConcerts);
+api.get("/api/v1/events/search/:keyword", events.search);
 api.get("/api/v1/events/:id", events.getOne);
 
 api.use(auth.protectRoute);

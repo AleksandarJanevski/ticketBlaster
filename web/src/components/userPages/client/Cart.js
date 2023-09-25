@@ -85,19 +85,22 @@ export const Cart = () => {
             )}
           </div>
           <div id="cart_bottom">
-            {/* <a>
-                 <button
-                   onClick={() => {
-                     navigate(-1);
-                   }}
-                 >
+            {/* <Link to="/">
+                 <button>
                    Back
                  </button>
-               </a> */}
+               </Link> */}
             {cart.length > 0 ? (
-              <Link to="/">
-                <button>Back</button>
-              </Link>
+              <button
+                id="backButton"
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(-1);
+                }}
+              >
+                Back
+              </button>
             ) : (
               <button style={{ opacity: "0" }}></button>
             )}
@@ -106,7 +109,9 @@ export const Cart = () => {
                 <button id="checkoutBtn">Checkout</button>
               </Link>
             ) : (
-              <button id="checkoutBtnfaded">Checkout</button>
+              <button type="button" id="checkoutBtnfaded">
+                Checkout
+              </button>
             )}
           </div>
         </>
