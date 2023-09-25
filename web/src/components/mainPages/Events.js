@@ -33,7 +33,7 @@ export const Events = () => {
               )}
               , {hero.location}
             </p>
-            {hero.tickets > 1 ? (
+            {hero.tickets > 0 ? (
               <Link id="hero_btn" to={`/event/${hero._id}`}>
                 <button id="hero_button"> Get Tickets</button>
               </Link>

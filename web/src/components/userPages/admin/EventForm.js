@@ -57,6 +57,7 @@ export const EventForm = () => {
   }, [event]);
 
   useEffect(() => {
+    console.log(sent);
     if (!eventId && sent) {
       createEvent();
     } else if (sent) {
@@ -203,7 +204,6 @@ export const EventForm = () => {
 
   const handleUpload = async () => {
     try {
-      console.log("upload");
       let valid = verifyData(event, false);
       if (valid) {
         await uploadFunc(
@@ -225,9 +225,10 @@ export const EventForm = () => {
   const createEvent = async () => {
     try {
       let valid = verifyData(event, true);
-      if (event.price < 0 || event.tickets < 0) {
-        return alert("Invalid Event Data!");
-      }
+      // if (event.price < 0 || event.tickets < 0 || event.tickets > 5000) {
+      //   setSent(false);
+      //   return alert("Invalid Event Data!");
+      // }
       if (valid) {
         const response = await fetch("/api/v1/events", {
           method: "POST",
@@ -245,6 +246,7 @@ export const EventForm = () => {
         setSent(false);
       }
     } catch (err) {
+      alert("Invalid Data Input");
       setSent(false);
       return console.log(err);
     }
@@ -253,9 +255,10 @@ export const EventForm = () => {
   const updateEvent = async () => {
     try {
       let valid = verifyData(event, true);
-      if (event.price < 0 || event.tickets < 0) {
-        return alert("Invalid Event Data!");
-      }
+      // if (event.price < 0 || event.tickets < 0 || event.tickets > 5000) {
+      //   setSent(false);
+      //   return alert("Invalid Event Data!");
+      // }
       if (valid) {
         const response = await fetch(`/api/v1/events/${eventId}`, {
           method: "PATCH",
@@ -379,7 +382,7 @@ export const EventForm = () => {
                     required
                     value={event.price}
                     onChange={(e) => {
-                      setEvent({ ...event, price: e.target.value });
+                      setEvent({ ...event, price: Number(e.target.value) });
                     }}
                     min={1}
                   />
