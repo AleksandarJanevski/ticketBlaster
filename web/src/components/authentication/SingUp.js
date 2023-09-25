@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { verifyData } from "../utils/reusableFunctions";
 import validator from "validator";
-import {
-  getUser,
-  getBasket,
-  getTickets,
-} from "../../redux/actions/userActions";
+// import {
+//   getUser,
+//   getBasket,
+//   getTickets,
+// } from "../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
-import { redux } from "../utils/reusableFunctions";
+// import { redux } from "../utils/reusableFunctions";
 
 export const SignUp = () => {
   const client = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -23,7 +23,7 @@ export const SignUp = () => {
   const [enter, setEnter] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("keypress", detectEnter, true);
+    document.addEventListener("keypress", detectEnter);
     return () => {
       document.removeEventListener("keypress", detectEnter);
     };
@@ -44,18 +44,20 @@ export const SignUp = () => {
       setEnter(true);
     }
   };
-  const fetchCart = async () => {
-    await redux("/api/v1/ecommerce/basket", dispatch, getBasket, 1);
-  };
-  const fetchUser = async () => {
-    await redux(`/api/v1/users/one`, dispatch, getUser, 2);
-  };
-  const fetchTickets = async () => {
-    await redux(`/api/v1/ecommerce/order`, dispatch, getTickets, 3);
-  };
+  // const fetchCart = async () => {
+  //   await redux("/api/v1/ecommerce/basket", dispatch, getBasket, 1);
+  // };
+  // const fetchUser = async () => {
+  //   await redux(`/api/v1/users/one`, dispatch, getUser, 2);
+  // };
+  // const fetchTickets = async () => {
+  //   await redux(`/api/v1/ecommerce/order`, dispatch, getTickets, 3);
+  // };
   async function singUp() {
     const verified = verifyData(user, true);
     if (!verified) return;
+    let twoNameCheck = user.fullName.split(" ");
+    if (twoNameCheck.length < 2) return alert("Please provide Full Name");
     if (user.password !== user.confirm) {
       return alert("Passwords do not match");
     }
@@ -66,7 +68,7 @@ export const SignUp = () => {
     const isPass = validator.isStrongPassword(user.password);
     if (!isPass) {
       return alert(
-        "Password needs to contain 8 characters, lowercase: 1, uppercase: 1, numbers: 1, symbols: 1."
+        "Password needs to contain 8 characters, at least lowercase: 1, uppercase: 1, numbers: 1, symbols: 1."
       );
     }
     try {

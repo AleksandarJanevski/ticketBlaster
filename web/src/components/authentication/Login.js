@@ -21,7 +21,7 @@ export const Login = () => {
   const [fail, setFail] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("keypress", detectEnter, true);
+    document.addEventListener("keypress", detectEnter);
     return () => {
       document.removeEventListener("keypress", detectEnter);
     };

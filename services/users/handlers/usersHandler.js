@@ -107,7 +107,7 @@ exports.changePassword = async (req, res) => {
       return res.status(400).send("Bad request");
     }
     const user = await User.findById(decoded.id);
-    if (!user) {
+    if (!user || user.deleted === true) {
       return res.status(404).send("User not found");
     }
     user.password = newPassword;
@@ -123,11 +123,8 @@ exports.update = async (req, res) => {
   try {
     const { decoded } = req;
     const user = await User.findById(decoded.id);
-    if (!user) {
+    if (!user || user.deleted === true) {
       return res.status(404).send("User not found");
-    }
-    if (user.deleted === true) {
-      return res.status(401).send("User has been deleted");
     }
     if (user.picture !== req.body.picture && user.picture !== "default.png") {
       await unlink(user.picture);
@@ -155,7 +152,7 @@ exports.delete = async (req, res) => {
     await User.findByIdAndUpdate(req.params.id, {
       deleted: true,
     });
-    res.status(204).json({ status: "success", data: "User deleted" });
+    res.status(204).json({ status: "success", message: "User deleted" });
   } catch (err) {
     console.log(err);
     return res.status(500).send("internal server error");
@@ -173,7 +170,7 @@ exports.role = async (req, res) => {
       return res.status(400).send("Bad request");
     }
     const user = await User.findById(req.params.id);
-    if (!user) {
+    if (!user || user.deleted === true) {
       return res.status(404).send("User not found");
     }
     user.role = role;

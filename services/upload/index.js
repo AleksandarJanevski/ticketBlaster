@@ -1,7 +1,6 @@
 const express = require("express");
 const db = require("../../pkg/database/index");
 const upload = require("./handlers/uploadHandler");
-const jwt = require("express-jwt");
 const auth = require("../auth/handlers/authHandler");
 const cookieParser = require("cookie-parser");
 

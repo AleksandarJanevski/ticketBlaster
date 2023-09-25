@@ -20,7 +20,7 @@ export const SingleEvent = () => {
 
   useEffect(() => {
     if (event && event.tickets <= 0) {
-      window.location.href = "/";
+      navigate("/");
     }
   }, [event]);
 

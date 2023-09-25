@@ -5,15 +5,14 @@ import { useSelector } from "react-redux";
 
 export const ForgotPassword = () => {
   const client = useSelector((state) => state.userReducer.user);
-  const location = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [toggle, setToggle] = useState(true);
   const [enter, setEnter] = useState(false);
   useEffect(() => {
-    document.addEventListener("keypress", detectEnter, true);
+    document.addEventListener("keypress", detectEnter);
     return () => {
-      document.removeEventListener("keypress", detectEnter, true);
+      document.removeEventListener("keypress", detectEnter);
     };
   }, []);
   useEffect(() => {

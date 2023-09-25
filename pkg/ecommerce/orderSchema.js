@@ -26,7 +26,7 @@ const orderSchema = new mongoose.Schema({
   },
   eventDate: {
     type: Date,
-    required: [true, "Must have date"],
+    required: [true, "Order must have date"],
   },
 });
 

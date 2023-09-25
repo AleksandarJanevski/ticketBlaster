@@ -18,12 +18,12 @@ export const ResetPassword = () => {
   useEffect(() => {
     document
       .getElementById("reset_password")
-      .addEventListener("keypress", detectEnter, true);
-    // return () => {
-    //   document
-    //     .getElementById("reset_password")
-    //     .removeEventListener("keypress", detectEnter, true);
-    // };
+      .addEventListener("keypress", detectEnter);
+    return () => {
+      document
+        .getElementById("reset_password")
+        .removeEventListener("keypress", detectEnter);
+    };
   }, []);
   useEffect(() => {
     if (enter) {
