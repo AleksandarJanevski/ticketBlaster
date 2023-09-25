@@ -205,7 +205,7 @@ export const EventForm = () => {
     try {
       console.log("upload");
       let valid = verifyData(event, false);
-      if (valid === undefined) {
+      if (valid) {
         await uploadFunc(
           previewPic,
           event.picture,
@@ -228,7 +228,7 @@ export const EventForm = () => {
       if (event.price < 0 || event.tickets < 0) {
         return alert("Invalid Event Data!");
       }
-      if (valid === undefined) {
+      if (valid) {
         const response = await fetch("/api/v1/events", {
           method: "POST",
           body: JSON.stringify(event),
@@ -256,7 +256,7 @@ export const EventForm = () => {
       if (event.price < 0 || event.tickets < 0) {
         return alert("Invalid Event Data!");
       }
-      if (valid === undefined) {
+      if (valid) {
         const response = await fetch(`/api/v1/events/${eventId}`, {
           method: "PATCH",
           body: JSON.stringify(event),

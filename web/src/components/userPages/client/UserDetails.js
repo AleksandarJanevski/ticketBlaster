@@ -38,7 +38,7 @@ export const UserDetails = () => {
           setUser,
           user,
           setSent,
-          sent,
+          true,
           "profile"
         );
       }

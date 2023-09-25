@@ -64,7 +64,6 @@ export const preview = (e, setUpload, setPreview) => {
 
 export function verifyData(obj, bool) {
   for (let key in obj) {
-    console.log(key, obj);
     if (
       (bool && typeof obj[key] === "string" && obj[key].trim() === "") ||
       (typeof obj[key] === "number" && obj[key] <= 0)
@@ -81,6 +80,7 @@ export function verifyData(obj, bool) {
       return false;
     }
   }
+  return true;
 }
 
 export const uploadFunc = async (
