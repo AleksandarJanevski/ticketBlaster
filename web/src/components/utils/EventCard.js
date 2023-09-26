@@ -17,6 +17,7 @@ export const EventCard = ({
         if (element.tickets === 0) {
           return (
             <button
+              type="button"
               id="getTickets"
               style={{ color: "white", cursor: "default" }}
             >
@@ -33,6 +34,7 @@ export const EventCard = ({
       case 2:
         return (
           <button
+            type="button"
             onClick={() => {
               setOne(true);
               setTwo(element._id);

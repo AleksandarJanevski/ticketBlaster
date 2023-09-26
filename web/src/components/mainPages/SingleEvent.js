@@ -162,6 +162,7 @@ export const SingleEvent = () => {
               </span>
               <span id="ticket_number">
                 <input
+                  title="Events are limited to 4 tickets per user"
                   type="number"
                   value={amount}
                   max={maxTickets()}

@@ -129,6 +129,7 @@ export const SignUp = () => {
             Password
           </label>
           <input
+            title="Password must include 8 characters, of which 1 lowercase, 1 uppercase, 1 number and 1 symbol"
             type="password"
             className="inputField"
             required
@@ -143,6 +144,7 @@ export const SignUp = () => {
             Re-type Password
           </label>
           <input
+            title="Password must include 8 characters, of which 1 lowercase, 1 uppercase, 1 number and 1 symbol"
             type="password"
             className="inputField"
             required

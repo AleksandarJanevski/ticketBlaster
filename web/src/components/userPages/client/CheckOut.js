@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { formatDate, verifyData } from "../../utils/reusableFunctions";
+import { formatDate } from "../../utils/reusableFunctions";
 import { PrintEvent } from "../utils/PrintEvent";
 import { Link, useNavigate } from "react-router-dom";
 import { getBasket, getTickets } from "../../../redux/actions/userActions";
@@ -21,8 +21,8 @@ export const CheckOut = () => {
     fullName: "",
     cardNo: 0,
     expire: {
-      month: 10,
-      year: 2023,
+      month: 0,
+      year: 0,
     },
     pin: 0,
   });
@@ -98,7 +98,15 @@ export const CheckOut = () => {
             " digits. 16 required!"
         );
       }
-      verifyData(payment, true);
+      if (
+        !payment.fullName ||
+        !payment.pin ||
+        payment.expire.month < 1 ||
+        payment.expire.month > 12 ||
+        payment.expire.year < new Date().getFullYear
+      ) {
+        return alert("Please provide correct CC information");
+      }
       const response = await fetch("/api/v1/ecommerce/payment", {
         method: "POST",
         body: JSON.stringify(payment),
@@ -109,6 +117,10 @@ export const CheckOut = () => {
       });
       if (response.status === 200) {
         setTransaction(!transaction);
+      } else if (response.status === 500) {
+        return alert(
+          "We are having trouble with your transaction, please try again later"
+        );
       }
     } catch (err) {
       return alert("Invalid Credit Card Info");
