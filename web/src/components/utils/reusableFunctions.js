@@ -45,7 +45,7 @@ export const formatDate = (date, bool) => {
 };
 export const preview = (e, setUpload, setPreview) => {
   const file = e.target.files[0];
-  if (file.size > 1024 * 1024) {
+  if (file && file.size > 1024 * 1024) {
     return alert("File exceeds limit of 1MB");
   }
   setUpload(file);
