@@ -57,7 +57,6 @@ export const EventForm = () => {
   }, [event]);
 
   useEffect(() => {
-    console.log(sent);
     if (!eventId && sent) {
       createEvent();
     } else if (sent) {

@@ -8,7 +8,6 @@ export const PrintCard = () => {
   const card = useSelector((state) => state.printReducer.print);
   const navgate = useNavigate();
   useEffect(() => {
-    console.log(card);
     document.getElementById("main_header").style.opacity = 0;
     document.getElementById("footer").style.opacity = 0;
     window.print();

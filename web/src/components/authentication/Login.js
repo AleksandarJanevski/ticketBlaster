@@ -72,7 +72,6 @@ export const Login = () => {
         return alert("Your Account has been suspended");
       }
       const result = await response.json();
-      console.log(result);
       if (result.status === "success") {
         fetchUser();
         fetchCart();

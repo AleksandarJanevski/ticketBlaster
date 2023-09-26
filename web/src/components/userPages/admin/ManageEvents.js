@@ -47,7 +47,6 @@ export const ManageEvents = () => {
           dispatch(getHero(filter[0]));
         }
         if (updateEvents[0].category === "Musical Concert") {
-          console.log("yes");
           let arr = [...concerts];
           arr = arr.filter((element) => element !== updateEvents[0]);
           dispatch(getConcerts(arr));

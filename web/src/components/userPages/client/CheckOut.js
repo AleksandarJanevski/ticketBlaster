@@ -149,7 +149,7 @@ export const CheckOut = () => {
         dispatch(getTickets(arr2));
       }
     } catch (err) {
-      console.log(err);
+      return console.log(err);
     }
   };
 
@@ -161,7 +161,6 @@ export const CheckOut = () => {
         event: element.event._id,
         eventDate: element.event.date,
       }));
-      console.log(arr);
       const response = await fetch("/api/v1/ecommerce/order", {
         method: "POST",
         body: JSON.stringify(arr),
@@ -355,7 +354,6 @@ export const CheckOut = () => {
                             image: `/img/event/${element.event.picture}`,
                             purchaseNo: element.purchaseNo,
                           };
-                          console.log(obj);
                           setPrint(obj);
                           setToggleB(true);
                         }}
