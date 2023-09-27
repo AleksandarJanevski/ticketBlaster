@@ -16,13 +16,9 @@ export const ResetPassword = () => {
   const [enter, setEnter] = useState(false);
 
   useEffect(() => {
-    document
-      .getElementById("reset_password")
-      .addEventListener("keypress", detectEnter);
+    document.addEventListener("keypress", detectEnter);
     return () => {
-      document
-        .getElementById("reset_password")
-        .removeEventListener("keypress", detectEnter);
+      document.removeEventListener("keypress", detectEnter);
     };
   }, []);
   useEffect(() => {
