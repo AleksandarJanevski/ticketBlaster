@@ -98,15 +98,18 @@ export const CheckOut = () => {
             " digits. 16 required!"
         );
       }
+      if (!payment.pin || isNaN(payment.pin)) {
+        return alert("Please provide a correct pin");
+      }
       if (
         !payment.fullName ||
-        !payment.pin ||
         payment.expire.month < 1 ||
         payment.expire.month > 12 ||
         payment.expire.year < new Date().getFullYear
       ) {
         return alert("Please provide correct CC information");
       }
+
       const response = await fetch("/api/v1/ecommerce/payment", {
         method: "POST",
         body: JSON.stringify(payment),
