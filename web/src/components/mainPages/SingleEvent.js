@@ -39,8 +39,8 @@ export const SingleEvent = () => {
 
   const getEvent = () => {
     let events = [...concerts].concat([...standUp]);
-    let filter = events.filter((element) => element._id === id);
-    setEvent(filter[0]);
+    let filter = events.find((element) => element._id === id);
+    setEvent(filter);
     setToggle(!toggle);
   };
   const getRelated = () => {

@@ -67,7 +67,7 @@ export function verifyData(obj, bool) {
     if (
       (bool && typeof obj[key] === "string" && obj[key].trim() === "") ||
       (typeof obj[key] === "number" && obj[key] <= 0) ||
-      obj[key] > 5000
+      (typeof obj[key] === "number" && obj[key] > 5000)
     ) {
       alert(`Please check the ${key} input field!`);
       return false;
@@ -76,7 +76,7 @@ export function verifyData(obj, bool) {
         obj[key].trim() === "" &&
         key !== "picture") ||
       (typeof obj[key] === "number" && obj[key] <= 0) ||
-      obj[key] > 5000
+      (typeof obj[key] === "number" && obj[key] > 5000)
     ) {
       alert(`Please check the ${key} input field`);
       return false;

@@ -24,8 +24,10 @@ export const TicketCard = ({ array, setPrint, setToggle }) => {
               }}
             ></div>
             <div id="event_info">
-              <p id="ticket_name">{element.event.name}</p>
-              <p id="ticket_date">{date}</p>
+              <div id="event_name_location">
+                <p id="ticket_name">{element.event.name}</p>
+                <p id="ticket_date">{date}</p>
+              </div>
               <div id="details">
                 <p>{element.event.details}</p>
               </div>

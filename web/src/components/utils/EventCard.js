@@ -31,18 +31,18 @@ export const EventCard = ({
             </Link>
           );
         }
-      case 2:
-        return (
-          <button
-            type="button"
-            onClick={() => {
-              setOne(true);
-              setTwo(element._id);
-            }}
-          >
-            Delete Event
-          </button>
-        );
+      // case 2:
+      //   return (
+      //     <button
+      //       type="button"
+      //       onClick={() => {
+      //         setOne(true);
+      //         setTwo(element._id);
+      //       }}
+      //     >
+      //       Delete Event
+      //     </button>
+      //   );
       case 3:
         return (
           <button id="removeRelated" onClick={() => func(element)}>
@@ -60,12 +60,11 @@ export const EventCard = ({
           let date = formatDate(
             new Date(element.date).toLocaleDateString("en-GB")
           );
-          if (i >= load) return null;
+          if (i >= load) return;
           return (
             <div key={i} id={id}>
-              {option === 2 ? (
+              {/* {option === 2 ? (
                 <Link to={`/eventForm/${element._id}`}>
-                  {" "}
                   <div
                     id="event_picture"
                     style={{
@@ -73,14 +72,14 @@ export const EventCard = ({
                     }}
                   ></div>
                 </Link>
-              ) : (
-                <div
-                  id="event_picture"
-                  style={{
-                    backgroundImage: `url(/img/event/${element.picture})`,
-                  }}
-                ></div>
-              )}
+              ) : ( */}
+              <div
+                id="event_picture"
+                style={{
+                  backgroundImage: `url(/img/event/${element.picture})`,
+                }}
+              ></div>
+              {/* )} */}
               <div id="event_info">
                 <div id="event_name_location">
                   <p>{element.name}</p>

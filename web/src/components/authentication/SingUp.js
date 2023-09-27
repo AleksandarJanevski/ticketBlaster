@@ -54,10 +54,8 @@ export const SignUp = () => {
   //   await redux(`/api/v1/ecommerce/order`, dispatch, getTickets, 3);
   // };
   async function singUp() {
-    const verified = verifyData(user, true);
-    if (!verified) return;
-    let twoNameCheck = user.fullName.split(" ");
-    if (twoNameCheck.length < 2) return alert("Please provide Full Name");
+    let NameCheck = user.fullName.split(" ");
+    if (NameCheck.length < 2) return alert("Please provide Full Name");
     if (user.password !== user.confirm) {
       return alert("Passwords do not match");
     }

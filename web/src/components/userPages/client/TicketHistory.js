@@ -53,7 +53,7 @@ export const TicketHistory = () => {
             image={print.image}
             location={print.location}
             date={print.date}
-            value={`192.168.0.28:9000/api/v1/ecommerce/ticket/${print.purchaseId}`}
+            value={`http://192.168.0.28:9000/api/v1/ecommerce/ticket/${print.purchaseId}`}
           />
           <button
             id="printCard"
@@ -65,7 +65,7 @@ export const TicketHistory = () => {
                   image: print.image,
                   location: print.location,
                   date: print.date,
-                  value: `192.168.0.28:9000/api/v1/ecommerce/ticket/${print.purchaseId}`,
+                  value: `http://192.168.0.28:9000/api/v1/ecommerce/ticket/${print.purchaseId}`,
                 })
               );
               navigate("/printPage");

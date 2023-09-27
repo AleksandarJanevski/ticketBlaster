@@ -17,9 +17,9 @@ export const Events = () => {
 
   return (
     <div id="events">
-      {hero && (
+      {hero.picture && (
         <div
-          style={hero && { backgroundImage: `url(/img/event/${hero.picture})` }}
+          style={{ backgroundImage: `url(/img/event/${hero.picture})` }}
           id="hero"
         >
           <div id="hero_name">
@@ -35,7 +35,7 @@ export const Events = () => {
             </p>
             {hero.tickets > 0 ? (
               <Link id="hero_btn" to={`/event/${hero._id}`}>
-                <button id="hero_button"> Get Tickets</button>
+                <button id="hero_button">Get Tickets</button>
               </Link>
             ) : (
               <button id="hero_sold">Sold Out</button>

@@ -51,10 +51,10 @@ export const CategoryEvents = () => {
             setLoad(load + 5);
           }}
         >
-          Load More{" "}
+          Load More
           {type === "musicalConcerts"
-            ? "Musical Concerts"
-            : "Stand-up Comedy Shows"}{" "}
+            ? " Musical Concerts"
+            : " Stand-up Comedy Shows"}
         </button>
       ) : null}
     </div>

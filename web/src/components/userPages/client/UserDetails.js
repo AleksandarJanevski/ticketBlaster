@@ -30,8 +30,15 @@ export const UserDetails = () => {
   const handleUpload = async (e) => {
     try {
       e.preventDefault();
-      let valid = verifyData(user, false);
-      if (valid) {
+      const valid = verifyData(user, false);
+      if (
+        user.email === userRedux.email &&
+        user.fullName === userRedux.fullName &&
+        !previewPic
+      ) {
+        return alert("Nothing to update!");
+      }
+      if (previewPic && valid) {
         await uploadFunc(
           previewPic,
           user.picture,
@@ -41,6 +48,8 @@ export const UserDetails = () => {
           true,
           "profile"
         );
+      } else if (valid) {
+        setSent(true);
       }
     } catch (err) {
       alert(err.message);
@@ -196,6 +205,7 @@ export const UserDetails = () => {
                       Password
                     </label>
                     <input
+                      title="Password must include 8 characters, of which 1 lowercase, 1 uppercase, 1 number and 1 symbol"
                       type="password"
                       className="inputField"
                       required
@@ -210,6 +220,7 @@ export const UserDetails = () => {
                       Re-Type Password
                     </label>
                     <input
+                      title="Password must include 8 characters, of which 1 lowercase, 1 uppercase, 1 number and 1 symbol"
                       type="password"
                       className="inputField"
                       required

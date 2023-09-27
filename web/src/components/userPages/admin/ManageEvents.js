@@ -76,7 +76,6 @@ export const ManageEvents = () => {
                   <div id="mve1">
                     <span id="mve2">
                       <Link to={`/user/eventForm/${element._id}`}>
-                        {" "}
                         <div
                           id="mve2_1"
                           style={{

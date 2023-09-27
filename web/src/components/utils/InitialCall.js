@@ -21,7 +21,11 @@ export const InitialCall = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (concerts.length < 1 && standUp.length < 1 && hero) {
+    if (
+      concerts.length < 1 ||
+      standUp.length < 1 ||
+      Object.keys(hero).length === 0
+    ) {
       fetchEvents();
     }
   }, []);

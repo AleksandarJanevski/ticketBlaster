@@ -65,7 +65,7 @@ export const Navigation = () => {
           <ul>
             <li>
               <Link to="/">
-                <img src={logo} alt="" />
+                <img src={logo} alt="TicketBlaster" />
               </Link>
             </li>
             <li>

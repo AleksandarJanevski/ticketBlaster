@@ -78,8 +78,8 @@ export const User = () => {
             </span>
 
             <div id="user_nav">
-              {role === "admin" ? (
-                <ul>
+              <ul>
+                {role === "admin" ? (
                   <li>
                     <Link
                       style={{ color: focus === 1 ? "#ff48ab" : "#393939" }}
@@ -88,6 +88,8 @@ export const User = () => {
                       Events
                     </Link>
                   </li>
+                ) : null}
+                {role === "admin" ? (
                   <li>
                     <Link
                       style={{ color: focus === 2 ? "#ff48ab" : "#393939" }}
@@ -96,27 +98,28 @@ export const User = () => {
                       Users
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      style={{ color: focus === 0 ? "#ff48ab" : "#393939" }}
-                      to="/user/ticketHistory"
-                    >
-                      Ticket History
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      style={{ color: focus === 3 ? "#ff48ab" : "#393939" }}
-                      to="/user/details"
-                    >
-                      User Details
-                    </Link>
-                  </li>
-                  <li>
-                    <button onClick={log_out}>Log Out</button>
-                  </li>
-                </ul>
-              ) : (
+                ) : null}
+                <li>
+                  <Link
+                    style={{ color: focus === 0 ? "#ff48ab" : "#393939" }}
+                    to="/user/ticketHistory"
+                  >
+                    Ticket History
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    style={{ color: focus === 3 ? "#ff48ab" : "#393939" }}
+                    to="/user/details"
+                  >
+                    User Details
+                  </Link>
+                </li>
+                <li>
+                  <button onClick={log_out}>Log Out</button>
+                </li>
+              </ul>
+              {/* ) : (
                 <ul>
                   <li>
                     <Link
@@ -138,7 +141,7 @@ export const User = () => {
                     <button onClick={log_out}>Log Out</button>
                   </li>
                 </ul>
-              )}
+              )} */}
             </div>
           </div>
 
