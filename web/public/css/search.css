@@ -47,3 +47,6 @@
 #search_card #bottom_card button {
   margin-top: 1.2rem;
 }
+#search_card #bottom_card div {
+  margin-top: -8px;
+}
