@@ -224,10 +224,6 @@ export const EventForm = () => {
   const createEvent = async () => {
     try {
       let valid = verifyData(event, true);
-      // if (event.price < 0 || event.tickets < 0 || event.tickets > 5000) {
-      //   setSent(false);
-      //   return alert("Invalid Event Data!");
-      // }
       if (valid) {
         const response = await fetch("/api/v1/events", {
           method: "POST",
@@ -396,7 +392,7 @@ export const EventForm = () => {
                       setEvent({ ...event, tickets: Number(e.target.value) });
                     }}
                     name="amount"
-                    min={1}
+                    min={0}
                     max={5000}
                   />
                 </span>

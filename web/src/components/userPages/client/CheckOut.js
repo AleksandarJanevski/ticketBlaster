@@ -98,7 +98,8 @@ export const CheckOut = () => {
             " digits. 16 required!"
         );
       }
-      if (!payment.pin || isNaN(payment.pin)) {
+      console.log(payment.pin);
+      if (!payment.pin || isNaN(payment.pin) || payment.pin < 1000) {
         return alert("Please provide a correct pin");
       }
       if (
@@ -297,6 +298,7 @@ export const CheckOut = () => {
                   className="inputField"
                   type="password"
                   id="pin"
+                  minLength={4}
                   maxLength={4}
                   onChange={(e) => {
                     setPayment({ ...payment, pin: parseInt(e.target.value) });
