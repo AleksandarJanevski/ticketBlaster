@@ -31,18 +31,24 @@ export const EventCard = ({
             </Link>
           );
         }
-      // case 2:
-      //   return (
-      //     <button
-      //       type="button"
-      //       onClick={() => {
-      //         setOne(true);
-      //         setTwo(element._id);
-      //       }}
-      //     >
-      //       Delete Event
-      //     </button>
-      //   );
+      case 2:
+        if (element.tickets === 0) {
+          return (
+            <button
+              type="button"
+              id="getTickets"
+              style={{ color: "white", cursor: "default" }}
+            >
+              Sold Out
+            </button>
+          );
+        } else {
+          return (
+            <Link id="getTicketsAnchor" to={`/event/${element._id}`}>
+              <button id="getTickets">Get Tickets</button>
+            </Link>
+          );
+        }
       case 3:
         return (
           <button id="removeRelated" onClick={() => func(element)}>
@@ -63,27 +69,16 @@ export const EventCard = ({
           if (i >= load) return;
           return (
             <div key={i} id={id}>
-              {/* {option === 2 ? (
-                <Link to={`/eventForm/${element._id}`}>
-                  <div
-                    id="event_picture"
-                    style={{
-                      backgroundImage: `url(/img/event/${element.picture})`,
-                    }}
-                  ></div>
-                </Link>
-              ) : ( */}
               <div
                 id="event_picture"
                 style={{
                   backgroundImage: `url(/img/event/${element.picture})`,
                 }}
               ></div>
-              {/* )} */}
               <div id="event_info">
                 <div id="event_name_location">
                   <p>{element.name}</p>
-                  <p>{date}</p>
+                  {option !== 2 ? <p>{date}</p> : null}
                   {option !== 3 ? null : <p>{element.location}</p>}
                 </div>
                 {option !== 3 ? (
@@ -91,10 +86,20 @@ export const EventCard = ({
                     <p>{element.details}</p>
                   </div>
                 ) : null}
-                <div id="bottom_card">
-                  {option !== 3 ? <p>{element.location}</p> : null}
-                  {buttonType(option, element, func)}
-                </div>
+                {option !== 2 ? (
+                  <div id="bottom_card">
+                    {option !== 3 ? <p>{element.location}</p> : null}
+                    {buttonType(option, element, func)}
+                  </div>
+                ) : (
+                  <div id="bottom_card">
+                    <div>
+                      <p id="search_date">{date}</p>
+                      <p>{element.location}</p>
+                    </div>
+                    {buttonType(option, element, func)}
+                  </div>
+                )}
               </div>
             </div>
           );

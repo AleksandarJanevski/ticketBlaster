@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 38px;
+  gap: 55px;
 }
 #user h1 {
   font-size: 44px;

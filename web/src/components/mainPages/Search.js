@@ -35,7 +35,7 @@ export const Search = () => {
   return (
     <div id="search_results">
       <h1>Search Results for : {param}</h1>
-      {query && <EventCard id={"search_card"} array={query} option={1} />}
+      {query && <EventCard id={"search_card"} array={query} option={2} />}
     </div>
   );
 };

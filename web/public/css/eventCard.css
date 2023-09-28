@@ -57,7 +57,7 @@
   justify-content: space-between;
   align-items: center;
 }
-#bottom_card p {
+#bottom_card {
   font-weight: bold;
   letter-spacing: -0.77px;
   color: #393939;
@@ -74,4 +74,11 @@
   background-color: black;
   border: none;
   border-radius: 20px;
+}
+#search_date {
+  color: #ff48ab;
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.99px;
 }
