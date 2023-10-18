@@ -168,7 +168,7 @@ export const SingleEvent = () => {
                   max={maxTickets()}
                   min={1}
                   onChange={(e) => {
-                    setAmount(e.target.value);
+                    setAmount(parseInt(e.target.value));
                   }}
                 />
                 {btnToggle ? (

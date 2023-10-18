@@ -44,9 +44,6 @@ export const Login = () => {
   const fetchCart = async () => {
     await redux("/api/v1/ecommerce/basket", dispatch, getBasket, 1);
   };
-  const fetchUser = async () => {
-    await redux(`/api/v1/users/one`, dispatch, getUser, 2);
-  };
   const fetchTickets = async () => {
     await redux(`/api/v1/ecommerce/order`, dispatch, getTickets, 3);
   };
@@ -73,7 +70,7 @@ export const Login = () => {
       }
       const result = await response.json();
       if (result.status === "success") {
-        fetchUser();
+        dispatch(getUser(result.data.user));
         fetchCart();
         fetchTickets();
         navigate("/");
@@ -96,9 +93,10 @@ export const Login = () => {
             type="text"
             className="inputField"
             required
+            name="email"
             value={user.email}
             onChange={(e) => {
-              setUser({ ...user, email: e.target.value });
+              setUser({ ...user, email: e.target.value.trim() });
             }}
           />
         </span>
@@ -111,9 +109,10 @@ export const Login = () => {
             type="password"
             className="inputField"
             required
+            name="password"
             value={user.password}
             onChange={(e) => {
-              setUser({ ...user, password: e.target.value });
+              setUser({ ...user, password: e.target.value.trim() });
             }}
           />
         </span>

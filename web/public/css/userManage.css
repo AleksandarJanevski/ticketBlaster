@@ -1,6 +1,6 @@
-#admin_users {
+/* #admin_users {
   position: relative;
-}
+} */
 #list_users {
   display: flex;
   flex-direction: column;
@@ -64,8 +64,8 @@
   color: white;
 }
 #admin_popup {
-  position: absolute;
-  top: 18px;
+  position: fixed;
+  top: 30%;
   right: 0;
   left: 0;
   margin: 0 auto;

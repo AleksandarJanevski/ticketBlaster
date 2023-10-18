@@ -33,6 +33,7 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "cypress": "^13.3.0"
   }
 }

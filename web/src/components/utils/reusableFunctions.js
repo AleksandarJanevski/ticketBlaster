@@ -63,7 +63,17 @@ export const preview = (e, setUpload, setPreview) => {
 };
 
 export function verifyData(obj, bool) {
+  const invalid = [";", "<", ">", "{", "}", "[", "]", "%", "&"];
   for (let key in obj) {
+    let value = obj[key];
+    // if (typeof value === "string" && value.length > 40) {
+    //   alert(
+    //     `${
+    //       key.charAt(0).toUpperCase() + key.slice(1)
+    //     } input cannot be longer than 40 characters`
+    //   );
+    //   return false;
+    // }
     if (
       (bool && typeof obj[key] === "string" && obj[key].trim() === "") ||
       (typeof obj[key] === "number" && obj[key] < 0) ||
@@ -80,6 +90,14 @@ export function verifyData(obj, bool) {
     ) {
       alert(`Please check the ${key} input field`);
       return false;
+    }
+    if (typeof value === "string") {
+      for (let char of value) {
+        if (invalid.includes(char)) {
+          alert("Please check the " + key + " input field");
+          return false;
+        }
+      }
     }
   }
   return true;

@@ -107,6 +107,19 @@ export const AdminUsers = () => {
                     <button
                       id={element.role === "admin" ? "makeUser" : "makeAdmin"}
                       type="button"
+                      style={
+                        element.role === "admin"
+                          ? {
+                              color: "black",
+                              textDecoration: "none",
+                              letterSpacing: "-0.88px",
+                            }
+                          : {
+                              color: "#ff48ab",
+                              textDecoration: "none",
+                              letterSpacing: "-0.88px",
+                            }
+                      }
                       onClick={() => {
                         setUserId(element._id);
                         setUserRole(element.role);
@@ -114,43 +127,22 @@ export const AdminUsers = () => {
                         setToggle(false);
                       }}
                     >
-                      <a
-                        style={
-                          element.role === "admin"
-                            ? {
-                                color: "black",
-                                textDecoration: "none",
-                                letterSpacing: "-0.88px",
-                              }
-                            : {
-                                color: "#ff48ab",
-                                textDecoration: "none",
-                                letterSpacing: "-0.88px",
-                              }
-                        }
-                        href="#main_header"
-                      >
-                        {element.role === "admin" ? "Make User" : "Make Admin"}
-                      </a>
+                      {element.role === "admin" ? "Make User" : "Make Admin"}
                     </button>
                     <button
                       type="button"
+                      style={{
+                        color: "white",
+                        textDecoration: "none",
+                        letterSpacing: "-0.88px",
+                      }}
                       onClick={() => {
                         setUserId(element._id);
                         setToggle(true);
                         setToggleB(false);
                       }}
                     >
-                      <a
-                        href="#main_header"
-                        style={{
-                          color: "white",
-                          textDecoration: "none",
-                          letterSpacing: "-0.88px",
-                        }}
-                      >
-                        Delete User
-                      </a>
+                      Delete User
                     </button>
                   </div>
                 </div>

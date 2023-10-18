@@ -54,6 +54,18 @@ export const SignUp = () => {
   //   await redux(`/api/v1/ecommerce/order`, dispatch, getTickets, 3);
   // };
   async function singUp() {
+    const invalid = [";", "<", ">", "{", "}", "[", "]", "%", "&"];
+    for (let key in user) {
+      if (user[key].length > 40) {
+        return alert("Invalid Data");
+      }
+    }
+    for (let char of user.fullName) {
+      if (invalid.includes(char)) {
+        alert("Invalid Name");
+      }
+    }
+
     let NameCheck = user.fullName.split(" ");
     if (NameCheck.length < 2) return alert("Please provide Full Name");
     if (user.password !== user.confirm) {
@@ -102,6 +114,7 @@ export const SignUp = () => {
             type="text"
             className="inputField"
             required
+            name="sName"
             value={user.fullName}
             onChange={(e) => {
               setUser({ ...user, fullName: e.target.value });
@@ -116,9 +129,10 @@ export const SignUp = () => {
             type="text"
             className="inputField"
             required
+            name="sEmail"
             value={user.email}
             onChange={(e) => {
-              setUser({ ...user, email: e.target.value });
+              setUser({ ...user, email: e.target.value.trim() });
             }}
           />
         </span>
@@ -131,9 +145,10 @@ export const SignUp = () => {
             type="password"
             className="inputField"
             required
+            name="sPass"
             value={user.password}
             onChange={(e) => {
-              setUser({ ...user, password: e.target.value });
+              setUser({ ...user, password: e.target.value.trim() });
             }}
           />
         </span>
@@ -146,13 +161,14 @@ export const SignUp = () => {
             type="password"
             className="inputField"
             required
+            name="sRpass"
             value={user.confirm}
             onChange={(e) => {
-              setUser({ ...user, confirm: e.target.value });
+              setUser({ ...user, confirm: e.target.value.trim() });
             }}
           />
         </span>
-        <button id="authBtn" type="button" onClick={singUp}>
+        <button name="authBtn" id="authBtn" type="button" onClick={singUp}>
           Create Account
         </button>
         <Link to={"/login"}>

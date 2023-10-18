@@ -33,7 +33,9 @@ exports.login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).send("Invalid email or password");
     }
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email }).select(
+      "fullName password email picture role deleted"
+    );
     if (!user) return res.status(400).send("Invalid email or password");
     if (user.deleted === true) {
       return res.status(403).send("Unauthorized Access");
@@ -44,7 +46,11 @@ exports.login = async (req, res) => {
     }
     const token = jwtToken({ id: user._id, role: user.role });
     cookie(res, "jwt", token);
-    res.status(200).json({ status: "success" });
+    user = user.toObject();
+    delete user.deleted;
+    delete user._id;
+    delete user.password;
+    res.status(200).json({ status: "success", data: { user } });
   } catch (err) {
     console.log(err);
     return res.status(500).send("internal server error");

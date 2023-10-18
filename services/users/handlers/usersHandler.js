@@ -93,6 +93,7 @@ exports.getOne = async (req, res) => {
     }
     user = user.toObject();
     delete user.deleted;
+    delete user._id;
     res.status(200).json({ status: "success", data: { user } });
   } catch (err) {
     console.log(err);

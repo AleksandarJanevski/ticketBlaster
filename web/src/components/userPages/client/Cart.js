@@ -107,7 +107,7 @@ export const Cart = () => {
               Back
             </button>
           ) : (
-            <button style={{ opacity: "0" }}></button>
+            <button style={{ opacity: "0", cursor: "default" }}></button>
           )}
           {cart.length > 0 ? (
             <Link to={"/checkout"}>

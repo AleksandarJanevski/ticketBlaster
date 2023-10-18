@@ -250,10 +250,18 @@ export const EventForm = () => {
   const updateEvent = async () => {
     try {
       let valid = verifyData(event, true);
-      // if (event.price < 0 || event.tickets < 0 || event.tickets > 5000) {
-      //   setSent(false);
-      //   return alert("Invalid Event Data!");
-      // }
+      const invalid = [";", "<", ">", "{", "}"];
+      for (let key in event) {
+        let value = event[key];
+        if (typeof value === "string") {
+          for (let char of value) {
+            if (invalid.includes(char)) {
+              setSent(false);
+              return alert("Please check the " + key + " input field");
+            }
+          }
+        }
+      }
       if (valid) {
         const response = await fetch(`/api/v1/events/${eventId}`, {
           method: "PATCH",

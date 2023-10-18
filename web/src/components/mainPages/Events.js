@@ -11,6 +11,24 @@ export const Events = () => {
   const [standUpFilter, setStandUpFilter] = useState([]);
   const [concertFilter, setConcertFilter] = useState([]);
   useEffect(() => {
+    const userAgent = navigator.userAgent;
+    let browserName;
+
+    if (userAgent.indexOf("Edg") > -1) {
+      browserName = "Microsoft Edge";
+    } else if (userAgent.indexOf("Chrome") > -1) {
+      browserName = "Google Chrome";
+    } else if (
+      userAgent.indexOf("Opera") > -1 ||
+      userAgent.indexOf("OPR") > -1
+    ) {
+      browserName = "Opera";
+    } else if (userAgent.indexOf("Safari") > -1) {
+      browserName = "Safari";
+    } else {
+      browserName = "Unknown";
+    }
+    console.log(`You are using ${browserName}.`);
     setStandUpFilter(standUp.filter((element) => element.name !== hero.name));
     setConcertFilter(concerts.filter((element) => element.name !== hero.name));
   }, [hero, concerts, standUp]);
